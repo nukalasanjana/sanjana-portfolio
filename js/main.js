@@ -40,12 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.classList.add('active');
         const filter = btn.dataset.filter;
         projectCards.forEach(card => {
-          const category = card.dataset.category || '';
-          const show = filter === 'all' || category === filter;
-          card.style.opacity    = show ? '1' : '0.25';
-          card.style.pointerEvents = show ? 'auto' : 'none';
-          card.style.transform  = show ? 'none' : 'scale(0.97)';
-          card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+          const show = filter === 'all' || (card.dataset.category || '').split(' ').includes(filter);
+          if (show) {
+            card.style.display = '';
+            requestAnimationFrame(() => { card.style.opacity = '1'; });
+          } else {
+            card.style.opacity = '0';
+            card.addEventListener('transitionend', function hide() {
+              if (card.style.opacity === '0') card.style.display = 'none';
+              card.removeEventListener('transitionend', hide);
+            });
+          }
+          card.style.transition = 'opacity 0.2s ease';
         });
       });
     });

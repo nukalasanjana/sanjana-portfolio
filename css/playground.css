@@ -1,0 +1,109 @@
+/* ============================================================
+   PLAYGROUND.CSS — playground/index.html
+   ============================================================ */
+
+/* ── HERO ────────────────────────────────────────────────── */
+.pg-hero {
+  padding: 160px var(--page-pad) 80px;
+  background:
+    radial-gradient(ellipse 60% 80% at 100% 0%,   #e8d5f5 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 0%   100%, #fde8d3 0%, transparent 60%),
+    var(--bg);
+}
+.pg-hero h1 {
+  font-size: clamp(42px, 6vw, 86px);
+  font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;
+  opacity: 0; animation: fadeUp 0.8s 0.1s ease forwards;
+}
+.pg-hero h1 em {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+}
+.pg-hero p {
+  margin-top: 20px; max-width: 440px;
+  opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards;
+}
+
+/* ── SECTION HEADERS ─────────────────────────────────────── */
+.pg-section {
+  padding: var(--section-pad) 0 28px;
+  border-top: 1px solid var(--border);
+}
+.pg-section:first-of-type { border-top: none; padding-top: 60px; }
+.pg-section-title {
+  font-size: clamp(22px, 2.8vw, 32px);
+  font-weight: 800; letter-spacing: -0.02em;
+}
+.pg-section-sub {
+  font-size: 13.5px; color: var(--ink-soft);
+  margin-top: 4px; font-weight: 500;
+}
+
+/* ── GALLERY ─────────────────────────────────────────────── */
+.pg-gallery {
+  padding-bottom: var(--section-pad);
+  columns: 3;
+  column-gap: 20px;
+}
+.pg-gallery--single {
+  columns: 1;
+  max-width: 780px;
+}
+
+.pg-item {
+  break-inside: avoid;
+  margin-bottom: 20px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: zoom-in;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.pg-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.pg-item img {
+  width: 100%; height: auto; display: block;
+}
+.pg-item figcaption {
+  padding: 12px 16px;
+  font-size: 12.5px; color: var(--ink-soft);
+  font-family: var(--serif); font-style: italic;
+  border-top: 1px solid var(--border);
+}
+
+/* Wide items (banners) span all columns */
+.pg-item--wide {
+  column-span: all;
+}
+.pg-item--wide img {
+  max-height: 320px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ── EMPTY STATE ─────────────────────────────────────────── */
+.pg-empty {
+  column-span: all;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 320px;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 15px; line-height: 1.7;
+}
+.pg-empty code {
+  font-family: monospace; font-size: 13px;
+  background: var(--tag-bg); padding: 2px 6px; border-radius: 4px;
+  color: var(--ink-mid);
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .pg-gallery { columns: 2; }
+}
+@media (max-width: 560px) {
+  .pg-gallery { columns: 1; }
+}
