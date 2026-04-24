@@ -107,3 +107,6 @@
 @media (max-width: 560px) {
   .pg-gallery { columns: 1; }
 }
+@media (max-width: 640px) {
+  .pg-hero { padding: 110px var(--page-pad) 56px; }
+}

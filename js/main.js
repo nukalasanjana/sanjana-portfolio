@@ -4,6 +4,51 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // ── Mobile Hamburger Menu ────────────────────────────────
+  const nav = document.querySelector('.nav');
+  if (nav) {
+    const hamburger = document.createElement('button');
+    hamburger.className = 'nav-hamburger';
+    hamburger.setAttribute('aria-label', 'Open menu');
+    const iconOpen  = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><line x1="2" y1="4.5" x2="16" y2="4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="9" x2="16" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="13.5" x2="16" y2="13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+    const iconClose = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><line x1="3" y1="3" x2="15" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="3" x2="3" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+    hamburger.innerHTML = iconOpen;
+    nav.appendChild(hamburger);
+
+    const mobileMenu = document.createElement('div');
+    mobileMenu.className = 'nav-mobile-menu';
+    mobileMenu.innerHTML = `
+      <a href="/">Home</a>
+      <a href="/work/">Work</a>
+      <a href="/playground/">Playground</a>
+      <button data-resume-trigger-mobile>Resume</button>
+      <div class="mobile-cta"><a href="mailto:nukalasanjana8@gmail.com">Let's Collaborate ↗</a></div>
+    `;
+    document.body.appendChild(mobileMenu);
+
+    let menuOpen = false;
+    const toggleMenu = (open) => {
+      menuOpen = open;
+      mobileMenu.classList.toggle('open', menuOpen);
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+      hamburger.setAttribute('aria-label', menuOpen ? 'Close menu' : 'Open menu');
+      hamburger.innerHTML = menuOpen ? iconClose : iconOpen;
+    };
+
+    hamburger.addEventListener('click', () => toggleMenu(!menuOpen));
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => toggleMenu(false));
+    });
+
+    // Set active states for mobile menu links
+    const path = window.location.pathname;
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      const href = a.getAttribute('href');
+      if (href && path.includes(href) && href !== '/') a.classList.add('active');
+      else if (href === '/' && path === '/') a.classList.add('active');
+    });
+  }
+
   // ── Scroll Reveal ────────────────────────────────────────
   const reveals = document.querySelectorAll('.reveal');
   if (reveals.length) {
@@ -86,9 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Resume Modal ─────────────────────────────────────────
-  const resumeTrigger = document.querySelector('[data-resume-trigger]');
-  if (resumeTrigger) {
-    // Inject modal HTML once
+  const resumeTriggers = document.querySelectorAll('[data-resume-trigger]');
+  if (resumeTriggers.length) {
     const modal = document.createElement('div');
     modal.id = 'resume-modal';
     modal.innerHTML = `
@@ -106,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.body.appendChild(modal);
 
-    // Resolve path to PDF relative to current page depth
     function getResumeSrc() {
       const depth = window.location.pathname.replace(/\/$/, '').split('/').filter(Boolean).length;
       return '../'.repeat(depth) + "resources/Sanjana Nukala's Resume 3.5.26.pdf";
@@ -130,7 +173,12 @@ document.addEventListener('DOMContentLoaded', () => {
       frame.src = '';
     }
 
-    resumeTrigger.addEventListener('click', openModal);
+    resumeTriggers.forEach(t => t.addEventListener('click', openModal));
+
+    // Also bind mobile resume button injected by hamburger menu
+    const mobileResumeTrigger = document.querySelector('[data-resume-trigger-mobile]');
+    if (mobileResumeTrigger) mobileResumeTrigger.addEventListener('click', openModal);
+
     closeBtn.addEventListener('click', closeModal);
     backdrop.addEventListener('click', closeModal);
     document.addEventListener('keydown', (e) => {
@@ -167,7 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Smooth hover cursor shift (optional enhancement) ─────
-  // Adds a subtle magnetic pull to .btn-dark elements
   document.querySelectorAll('.btn-dark, .nav-cta').forEach(el => {
     el.addEventListener('mousemove', (e) => {
       const rect  = el.getBoundingClientRect();

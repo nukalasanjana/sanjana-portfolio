@@ -264,6 +264,54 @@ ul   { list-style: none; }
   background: #f5f5f3;
 }
 
+/* ── NAV HAMBURGER ───────────────────────────────────────── */
+.nav-hamburger {
+  display: none;
+  background: white; border: 1px solid var(--border); cursor: pointer;
+  width: 36px; height: 36px;
+  align-items: center; justify-content: center;
+  border-radius: 8px; padding: 0; flex-shrink: 0;
+  color: var(--ink); transition: background 0.2s;
+}
+.nav-hamburger:hover { background: rgba(0,0,0,0.04); }
+
+/* ── MOBILE NAV MENU ─────────────────────────────────────── */
+.nav-mobile-menu {
+  display: none;
+  position: fixed; top: 65px; left: 0; right: 0; z-index: 99;
+  background: var(--bg); border-top: 1px solid var(--border);
+  padding: 12px 20px 28px;
+  flex-direction: column; gap: 2px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a,
+.nav-mobile-menu button {
+  display: block; width: 100%; text-align: left;
+  font-size: 15px; font-weight: 500; padding: 12px 16px;
+  border-radius: var(--radius); border: none; background: none;
+  cursor: pointer; color: var(--ink); font-family: var(--sans);
+  letter-spacing: 0; transition: background 0.15s;
+}
+.nav-mobile-menu a:hover,
+.nav-mobile-menu button:hover { background: rgba(0,0,0,0.04); }
+.nav-mobile-menu a.active { background: var(--ink); color: white; }
+.nav-mobile-menu .mobile-cta {
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.nav-mobile-menu .mobile-cta a {
+  display: block; text-align: center;
+  background: var(--ink); color: white;
+  border-radius: var(--radius-full);
+  font-weight: 600; padding: 13px 24px;
+}
+.nav-mobile-menu .mobile-cta a:hover { opacity: 0.85; background: var(--ink); }
+
+/* ── RESPONSIVE UTILITY GRIDS ────────────────────────────── */
+.rg-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.rg-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 900px) {
   :root { --page-pad: 20px; }
@@ -271,8 +319,15 @@ ul   { list-style: none; }
   .footer-nav { flex-direction: column; gap: 40px; text-align: center; }
   .footer-nav-link.right { text-align: center; }
   .site-footer { flex-direction: column; gap: 10px; text-align: center; }
+  .rg-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
 }
 @media (max-width: 600px) {
   #resume-modal { padding: 12px; }
   .resume-modal-panel { height: 95vh; border-radius: 14px; }
+  .rg-3 { grid-template-columns: 1fr; }
+  .rg-2 { grid-template-columns: 1fr; }
 }

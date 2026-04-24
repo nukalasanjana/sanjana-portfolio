@@ -384,3 +384,19 @@
   .feature-showcase-screens { width: 100%; }
   .feature-showcase-screens img { max-height: 280px; }
 }
+@media (max-width: 640px) {
+  .cs-hero { padding: 110px var(--page-pad) 48px; min-height: auto; }
+  .cs-hero.cs-hero-split { padding: 110px var(--page-pad) 48px; }
+  .cs-hero-chips { margin-top: 28px; gap: 8px; }
+  .callout { padding: 24px 20px; }
+  .outcome-strip { padding: 28px 20px; margin: 40px 0; }
+  .feature-showcase-screens img { max-height: 220px; }
+  .process-step { gap: 16px; }
+}
+@media (max-width: 480px) {
+  .info-grid { grid-template-columns: 1fr; }
+  .info-cell { padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .info-cell:last-child { border-bottom: none; }
+  .screenshot-frame { height: 220px; }
+  .feature-showcase-screens { min-height: 200px; padding: 20px 16px; }
+}

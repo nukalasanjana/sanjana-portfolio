@@ -160,6 +160,12 @@
       .truth-row { grid-template-columns: 80px 1fr; }
       .pdf-iframe { height: 500px; }
     }
+    @media (max-width: 480px) {
+      .truth-row { grid-template-columns: 1fr; }
+      .truth-pill-col { border-right: none; border-bottom: 1px solid var(--border); padding: 12px 16px; justify-content: flex-start; }
+      .truth-text-col { padding: 14px 16px; }
+      .pdf-iframe { height: 380px; }
+    }
   </style>
 </head>
 <body>
