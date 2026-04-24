@@ -1,0 +1,99 @@
+/* ============================================================
+   WORK.CSS — work/index.html specific styles
+   ============================================================ */
+
+/* ── WORK HERO ───────────────────────────────────────────── */
+.work-hero {
+  padding: 160px var(--page-pad) 80px;
+  background:
+    radial-gradient(ellipse 50% 80% at 0% 50%, #cee3f5 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 100% 20%, #f5e8d3 0%, transparent 60%),
+    var(--bg);
+}
+.work-hero h1 {
+  font-size: clamp(42px, 6vw, 86px);
+  font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;
+  opacity: 0; animation: fadeUp 0.8s 0.1s ease forwards;
+}
+.work-hero h1 em {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+}
+.work-hero p {
+  margin-top: 20px; max-width: 480px;
+  opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards;
+}
+
+/* ── FILTER TABS ─────────────────────────────────────────── */
+.filter-bar {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.filter-btn {
+  border: 1px solid var(--border); border-radius: var(--radius-full);
+  padding: 8px 18px; font-size: 13.5px; font-weight: 500;
+  background: white; cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  font-family: var(--sans);
+}
+.filter-btn.active,
+.filter-btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
+
+/* ── PROJECTS GRID ───────────────────────────────────────── */
+.projects-grid {
+  padding: var(--section-pad) 0;
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 48px 32px;
+}
+.project-card { display: block; }
+.project-thumb {
+  width: 100%; aspect-ratio: 16/10;
+  border-radius: var(--radius-lg); overflow: hidden;
+  background: linear-gradient(135deg, var(--bg-cool), var(--bg-warm));
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex; align-items: center; justify-content: center;
+}
+.project-card:hover .project-thumb {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.project-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb-placeholder {
+  font-family: var(--serif); font-style: italic;
+  font-size: 16px; color: var(--ink-soft);
+}
+.project-info { margin-top: 20px; }
+.project-meta {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 8px;
+}
+.project-category {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.10em; text-transform: uppercase; color: var(--ink-soft);
+}
+.project-year {
+  font-size: 11px; color: var(--ink-soft); opacity: 0.6;
+}
+.project-year::before { content: "·"; margin-right: 10px; }
+.project-info h3 {
+  font-size: clamp(19px, 2.2vw, 26px); font-weight: 800;
+  letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 10px;
+  transition: opacity 0.2s;
+}
+.project-card:hover .project-info h3 { opacity: 0.45; }
+.project-info p {
+  font-size: 14.5px; color: var(--ink-mid); line-height: 1.65;
+  max-width: 420px;
+}
+.project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.project-tag {
+  font-size: 11.5px; font-weight: 500;
+  background: var(--tag-bg); color: var(--tag-text);
+  border-radius: var(--radius-full); padding: 4px 12px;
+}
+
+/* ── RESPONSIVE: WORK ────────────────────────────────────── */
+@media (max-width: 900px) {
+  .projects-grid { grid-template-columns: 1fr; gap: 40px; }
+}

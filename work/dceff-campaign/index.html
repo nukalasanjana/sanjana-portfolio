@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DCEFF × Levi's 'Dream Against the Current' Campaign — Art direction, logo design, and shoot bible by Sanjana Nukala." />
+  <title>DCEFF × Levi's Campaign — Sanjana Nukala</title>
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="../../css/case-study.css" />
+  <style>
+    /* ── Campaign tokens ──────────────────────────────────── */
+    :root {
+      --dceff-dark:  #0e2822;
+      --dceff-green: #2a6b3e;
+      --blue-mid:    #4a7ca0;
+      --blue-light:  #d9eaf5;
+      --amber:       #8b6914;
+      --amber-light: #f5e9c8;
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .cs-hero.dceff-hero {
+      background:
+        radial-gradient(ellipse 60% 70% at 5% 10%, rgba(42,107,62,.16) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 95% 90%, rgba(184,212,232,.2) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    /* ── Full-width image banner ──────────────────────────── */
+    .img-banner {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .img-banner-wrap {
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      line-height: 0;
+    }
+
+    /* ── Image grid layouts ───────────────────────────────── */
+    .img-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .img-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .img-frame {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      line-height: 0;
+      background: #f0f0ee;
+    }
+    .img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .img-frame.tall  { height: 480px; }
+    .img-frame.med   { height: 360px; }
+    .img-frame.short { height: 260px; }
+    .img-frame.auto  { height: auto; }
+
+    /* ── Shot card (real photos) ──────────────────────────── */
+    .shot-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      background: white;
+    }
+    .shot-photo {
+      height: 320px;
+      overflow: hidden;
+      line-height: 0;
+    }
+    .shot-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .shot-card:hover .shot-photo img { transform: scale(1.03); }
+    .shot-info { padding: 18px 20px; }
+    .shot-num  { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+    .shot-desc { font-size: 14px; line-height: 1.6; color: var(--ink-mid); }
+    .shot-props { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .shot-prop  { font-size: 11px; background: var(--tag-bg); padding: 3px 10px; border-radius: 99px; color: var(--tag-text); }
+
+    /* ── PDF embed ────────────────────────────────────────── */
+    .pdf-block {
+      margin: 40px 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .pdf-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+    .pdf-toolbar-left { display: flex; align-items: center; gap: 10px; }
+    .pdf-dots { display: flex; gap: 5px; }
+    .pdf-dot  { width: 10px; height: 10px; border-radius: 50%; }
+    .pdf-dot:nth-child(1) { background: #f87171; }
+    .pdf-dot:nth-child(2) { background: #fbbf24; }
+    .pdf-dot:nth-child(3) { background: #4ade80; }
+    .pdf-label { font-size: 11.5px; font-weight: 600; color: var(--ink-soft); }
+    .pdf-open-btn {
+      font-size: 12px; font-weight: 700;
+      color: var(--ink); background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 99px; padding: 5px 14px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background .2s;
+    }
+    .pdf-open-btn:hover { background: var(--border); }
+    .pdf-open-btn::after { content: "↗"; font-size: 10px; }
+    .pdf-iframe {
+      display: block;
+      width: 100%;
+      height: 700px;
+      border: none;
+      background: #f5f5f3;
+    }
+
+    /* ── Logo showcase ────────────────────────────────────── */
+    .logo-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .logo-card {
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: white;
+      box-shadow: var(--shadow-sm);
+    }
+    .logo-card-img {
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 260px;
+      background: #fafafa;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo-card-img img {
+      max-width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+    }
+    .logo-card-info { padding: 18px 20px; }
+    .logo-card-info h5 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .logo-card-info p  { font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+
+    /* ── Mockup spotlight ─────────────────────────────────── */
+    .mockup-row {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 16px;
+      margin-top: 32px;
+      align-items: start;
+    }
+
+    /* ── cs-section spacing ───────────────────────────────── */
+    .cs-section { padding: var(--section-pad) 0; border-bottom: 1px solid var(--border); }
+    .cs-section:last-of-type { border-bottom: none; }
+
+    /* ── Concept quote ────────────────────────────────────── */
+    .concept-quote {
+      border-left: 3px solid var(--blue-mid);
+      padding: 20px 24px;
+      background: var(--blue-light);
+      border-radius: 0 12px 12px 0;
+      margin: 32px 0;
+    }
+    .concept-quote p {
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(16px,1.8vw,20px); line-height: 1.6;
+      color: var(--blue-mid);
+    }
+
+    /* ── Section divider ──────────────────────────────────── */
+    .section-divider {
+      display: flex; align-items: center; gap: 16px; margin: 20px 0 36px;
+    }
+    .section-divider::before, .section-divider::after {
+      content: ""; flex: 1; height: 1px; background: var(--border);
+    }
+    .section-divider span {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--ink-soft); white-space: nowrap;
+    }
+
+    /* ── Outcome strip ────────────────────────────────────── */
+    .outcome-strip.dceff { background: var(--dceff-dark); }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .img-grid-3  { grid-template-columns: 1fr; }
+      .img-grid-2  { grid-template-columns: 1fr; }
+      .logo-showcase { grid-template-columns: 1fr; }
+      .mockup-row  { grid-template-columns: 1fr; }
+      .img-frame.tall  { height: 320px; }
+      .img-frame.med   { height: 260px; }
+      .pdf-iframe  { height: 500px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M19 5H6C2 5 2 20 11 20C21 20 23 37 13 40H4"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M25 4V40 M25 4L40 40 M40 4V40"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Sanjana Nukala
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/work/" class="active">Work</a>
+      <button data-resume-trigger>Resume</button>
+    </div>
+    <a href="mailto:nukalasanjana8@gmail.com" class="nav-cta">Let's Collaborate</a>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="cs-hero dceff-hero cs-hero-split">
+    <div class="cs-hero-content">
+      <span class="tag dot">Art Direction · Visual Storytelling · Campaign Design</span>
+      <h1>DCEFF × Levi's<br /><em>Dream Against the Current</em></h1>
+      <p class="cs-hero-sub t-large">
+        A full campaign developed for the DC Environmental Film Festival — spanning concept design,
+        logo identity, and a fashion shoot bible inspired by the documentary "The Bluebird Man."
+      </p>
+      <div class="cs-hero-chips">
+        <span class="chip">Adobe Firefly</span>
+        <span class="chip">Illustrator</span>
+        <span class="chip">Photoshop</span>
+        <span class="chip">Canva</span>
+        <span class="chip">Art Direction</span>
+        <span class="chip">Concept Design</span>
+      </div>
+      <div class="cs-scroll-hint">Scroll to explore</div>
+    </div>
+    <div class="cs-hero-media">
+      <div class="img-banner-wrap">
+        <img src="assets/campaign-poster.png" alt="Dream Against the Current — DCEFF × Levi's campaign poster" class="img-banner" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IN-PAGE SECTION NAV ───────────────────────────────── -->
+  <nav class="cs-section-nav" aria-label="Jump to section">
+    <a href="#overview">Overview</a>
+    <a href="#concept">Concept & Print</a>
+    <a href="#nestled">Nestled</a>
+    <a href="#logo">Theme Logo</a>
+    <a href="#shoot">Shoot Bible</a>
+    <a href="#process">Process</a>
+    <a href="#reflection">Reflection</a>
+  </nav>
+
+  <!-- ── PROJECT INFO STRIP ────────────────────────────────── -->
+  <div class="container">
+    <div class="info-grid reveal">
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Role</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">Art Director</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Concept · Identity · Shoot Direction</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Context</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">MEJO 572 Class Project</p>
+        <p style="font-size:13px;color:var(--ink-soft)">UNC Chapel Hill</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Collaborators</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">Shayna Patel</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Johanna Lohmus · Bhagyashree Behera</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Deliverables</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">4 Campaign Pieces</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Concept · Perfume · Logo · Shoot Bible</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 1 — OVERVIEW
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="overview">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">01 /</span> Overview</p>
+        <h2 class="cs-title">The Campaign<br /><em>Brief & Context</em></h2>
+      </div>
+      <div class="two-col-wide reveal" style="margin-top:32px">
+        <div>
+          <p class="t-body">
+            This campaign was developed as part of a hands-on visual storytelling class, where
+            we partnered with the <strong>DC Environmental Film Festival (DCEFF)</strong> to create
+            a real-world campaign for their annual theme: <em>"Against the Current."</em>
+          </p>
+          <p class="t-body" style="margin-top:16px">
+            The campaign drew direct inspiration from the documentary <strong>"The Bluebird Man"</strong> —
+            a film about conservationists dedicated to saving the Eastern Bluebird. Every piece of
+            work was anchored in the film's themes: connecting with nature, advocacy through quiet
+            persistence, and the serenity that comes from doing meaningful environmental work.
+          </p>
+          <p class="t-body" style="margin-top:16px">
+            The project produced four deliverables: a <strong>concept collage and Levi's print design</strong>,
+            a <strong>perfume product concept ("Nestled")</strong>, a <strong>DCEFF theme logo</strong>,
+            and a full <strong>shoot bible</strong> for a Levi's × DCEFF fashion campaign — including
+            the final photos and campaign poster.
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="insight-card">
+            <h4>The Film</h4>
+            <p>"The Bluebird Man" follows a conservationist's lifelong mission to protect Eastern Bluebirds — centering themes of environmental advocacy, patience, and humanity's relationship with nature.</p>
+          </div>
+          <div class="insight-card">
+            <h4>The Brief</h4>
+            <p>Build a visual campaign identity for DCEFF's "Against the Current" theme — spanning product concept, logo design, Levi's print design, and a fashion shoot bible with final photographs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 — CONCEPT COLLAGE & LEVI'S PRINT
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="concept">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">02 /</span> Concept Collage & Levi's Print Design</p>
+        <h2 class="cs-title">From Film to Fabric —<br /><em>Translating the Bluebird's World</em></h2>
+        <p class="t-body" style="max-width:600px;margin-top:12px">
+          The first assignment was a concept collage capturing the visual essence of "The Bluebird Man."
+          That visual language then became the foundation for a Levi's t-shirt print design.
+        </p>
+      </div>
+
+      <!-- Main print design image -->
+      <div class="reveal" style="margin-top:36px">
+        <div class="img-frame auto" style="max-width:520px;margin:0 auto;">
+          <img src="assets/levis-print.png" alt="MEJO 572 Levi's print design — bluebird concept collage on denim" />
+        </div>
+        <p style="text-align:center;font-size:12px;color:var(--ink-soft);margin-top:10px;font-style:italic;">
+          Levi's T-Shirt Print Design — bluebird concept collage on denim texture
+        </p>
+      </div>
+
+      <div class="two-col reveal" style="margin-top:48px">
+        <div>
+          <h4 style="font-size:17px;font-weight:700;margin-bottom:12px;">Reading the Film Through a Design Lens</h4>
+          <p class="t-body">
+            I watched "The Bluebird Man" twice — once for the story, once for the visual language.
+            I noted the recurring palette: soft sky blues, warm rustic browns, the green of meadows,
+            and the orange-rust of the bluebirds' chests. I also noticed the "Long Trail" signage and
+            wooden birdhouse structures that gave the film its rustic throughline.
+          </p>
+          <p class="t-body" style="margin-top:14px">
+            The mirrored collage composition — sky reflected in water — came from a bathing scene
+            that stuck with me. The concept collage and print both carry that symmetry: nature above,
+            nature below, the bluebird centered in it all.
+          </p>
+        </div>
+        <div>
+          <h4 style="font-size:17px;font-weight:700;margin-bottom:12px;">Color Story</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;border-radius:8px;background:#7aabce;flex-shrink:0;border:1px solid var(--border)"></div>
+              <div><p style="font-size:13px;font-weight:600">Sky Blue</p><p style="font-size:12px;color:var(--ink-soft)">The bluebird's wings · open sky · hope</p></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;border-radius:8px;background:#c8a855;flex-shrink:0;border:1px solid var(--border)"></div>
+              <div><p style="font-size:13px;font-weight:600">Warm Amber</p><p style="font-size:12px;color:var(--ink-soft)">Trail signs · wood · rustic craft</p></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;border-radius:8px;background:#6a9c70;flex-shrink:0;border:1px solid var(--border)"></div>
+              <div><p style="font-size:13px;font-weight:600">Meadow Green</p><p style="font-size:12px;color:var(--ink-soft)">Wildflower fields · conservation</p></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;border-radius:8px;background:#e8d5c0;flex-shrink:0;border:1px solid var(--border)"></div>
+              <div><p style="font-size:13px;font-weight:600">Soft Cream</p><p style="font-size:12px;color:var(--ink-soft)">Morning light · morning dew</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept Assignment PDF embed -->
+      <div class="reveal" style="margin-top:56px">
+        <div class="section-divider"><span>Full Pitch Deck</span></div>
+        <h4 style="font-size:17px;font-weight:700;margin-bottom:6px">Concept Assignment Presentation</h4>
+        <p class="t-body" style="max-width:540px;margin-bottom:0">
+          The full slide deck submitted for the concept assignment — including the collage,
+          the Nestled perfume concept, and the creative process reflection.
+        </p>
+        <div class="pdf-block reveal">
+          <div class="pdf-toolbar">
+            <div class="pdf-toolbar-left">
+              <div class="pdf-dots">
+                <div class="pdf-dot"></div>
+                <div class="pdf-dot"></div>
+                <div class="pdf-dot"></div>
+              </div>
+              <span class="pdf-label">Concept Assignment 1 Part 2.pdf</span>
+            </div>
+            <a href="assets/concept-assignment.pdf" target="_blank" class="pdf-open-btn">Open Full PDF</a>
+          </div>
+          <iframe
+            src="assets/concept-assignment.pdf"
+            class="pdf-iframe"
+            title="Concept Assignment slide deck"
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 — NESTLED PERFUME
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="nestled" style="background:linear-gradient(180deg,#fdf8f0 0%,var(--bg) 100%)">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">03 /</span> Product Design</p>
+        <h2 class="cs-title">"Nestled" —<br /><em>A Perfume Born from the Film</em></h2>
+        <p class="t-body" style="max-width:600px;margin-top:12px">
+          Using the visual language of the concept collage, I designed a perfume product inspired
+          by the film's emotional core: the feeling of being nestled in nature, cared for, at home.
+        </p>
+      </div>
+
+      <div class="two-col reveal" style="margin-top:40px;align-items:center;">
+        <!-- Actual Firefly-generated perfume bottle -->
+        <div class="img-frame auto" style="background:#fff;">
+          <img src="assets/concept_perfume.png" alt="Nestled perfume bottle — birdhouse shape, Firefly AI illustration" />
+        </div>
+        <div>
+          <h3 style="font-size:clamp(32px,5vw,52px);font-weight:800;color:var(--amber);letter-spacing:-0.03em;line-height:1;margin-bottom:18px">Nestled</h3>
+          <div style="background:var(--amber-light);border-radius:12px;padding:18px 20px;border:1px solid rgba(139,105,20,.15);margin-bottom:20px">
+            <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:8px">Scent Notes</p>
+            <p style="font-size:16px;line-height:1.65;color:var(--ink-mid)">Oak and wildflowers with notes of<br/><em>birdsong echo</em> and <em>morning dew</em></p>
+          </div>
+          <p class="t-body">
+            The bottle is shaped like a birdhouse — referencing the film's focus on creating homes
+            for bluebirds. A ceramic bluebird perches on the wooden cap. The amber-to-clear liquid
+            gradient reflects the film's warm, rustic palette. The name "Nestled" evokes the cozy
+            intimacy of being sheltered in nature.
+          </p>
+          <p class="t-body" style="margin-top:14px">
+            Generated using <strong>Adobe Firefly</strong> after multiple rounds of prompting.
+            The biggest challenge: Firefly would lock onto its first interpretation of a prompt and
+            resist refinement — requiring completely reworked prompts rather than incremental adjustments.
+          </p>
+        </div>
+      </div>
+
+      <div class="concept-quote reveal">
+        <p>"I wanted a name that felt cozy and intimate, not dramatic. 'Nestled' captures the feeling of being held by nature — the bluebirds finding safety in the nesting boxes, and the humans finding peace in caring for them."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 4 — DCEFF THEME LOGO
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="logo" style="background:linear-gradient(180deg,#0a1f1a,#0e2822)">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label" style="color:rgba(255,255,255,.4)"><span class="num">04 /</span> Logo Design</p>
+        <h2 class="cs-title" style="color:white">"Against the Current"<br /><em style="color:#4a9b60">DCEFF Theme Logo</em></h2>
+        <p class="t-body" style="max-width:560px;margin-top:12px;color:rgba(255,255,255,.65)">
+          The second major deliverable was a theme logo for DCEFF's "Against the Current" annual season.
+          I designed two iterations — a bold sans-serif version and an all-script final update.
+        </p>
+      </div>
+
+      <!-- Both logo versions side by side -->
+      <div class="logo-showcase reveal">
+        <div class="logo-card">
+          <div class="logo-card-img">
+            <img src="assets/logo-v1.png" alt="DCEFF Against the Current logo — version 1, bold sans-serif with liquid Current" />
+          </div>
+          <div class="logo-card-info">
+            <h5>Version 1 — Bold Resistance</h5>
+            <p>"Against the" in heavy black sans-serif for defiance and clarity. "Current" in liquid blue letterforms — the word itself dissolves, showing the current weakening under change.</p>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-card-img" style="background:#f8f8f6;">
+            <img src="assets/logo-v2.png" alt="DCEFF Against the Current logo — updated version, all script with liquid Current" />
+          </div>
+          <div class="logo-card-info">
+            <h5>Updated Version — Unified Flow</h5>
+            <p>"Against the" shifts to flowing script, creating a unified handwritten quality. The tension becomes subtler — both elements share the same fluid nature, with "Current" still dissolving below.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout reveal" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);margin-top:40px">
+        <p style="color:rgba(255,255,255,.75)">"I didn't want a literal wave or fish icon — that felt too expected. Instead, I made the word 'Current' itself behave like water: pooling, dripping, barely holding its form. The letterforms dissolve and reform, suggesting that the current — the status quo — weakens under the weight of people who push against it."</p>
+      </div>
+
+      <div class="two-col reveal" style="margin-top:40px">
+        <div>
+          <h4 style="font-size:17px;font-weight:700;margin-bottom:12px;color:white">Why Liquid Typography?</h4>
+          <p class="t-body" style="color:rgba(255,255,255,.65)">
+            I went through eight sketch concepts — waves, spirals, mixed scripts, stacked layouts —
+            before landing on the idea of making the word "Current" perform its own meaning.
+            The arrow pointing backwards in the "t" of "Against" quietly reinforces the concept:
+            reversing direction, going against the flow.
+          </p>
+        </div>
+        <div>
+          <h4 style="font-size:17px;font-weight:700;margin-bottom:12px;color:white">Connecting to DCEFF's Mission</h4>
+          <p class="t-body" style="color:rgba(255,255,255,.65)">
+            DCEFF highlights changemakers — documentary filmmakers, environmental advocates,
+            scientists who push against the current direction of environmental damage.
+            The logo had to feel both defiant and hopeful, just like the films it represents.
+          </p>
+        </div>
+      </div>
+
+      <!-- Logo Design PDF embed -->
+      <div class="reveal" style="margin-top:56px">
+        <div class="section-divider"><span style="color:rgba(255,255,255,.35);border-color:rgba(255,255,255,.15)">Full Pitch Deck</span></div>
+        <h4 style="font-size:17px;font-weight:700;margin-bottom:6px;color:white">DCEFF Logo Design Presentation</h4>
+        <p class="t-body" style="max-width:540px;margin-bottom:0;color:rgba(255,255,255,.6)">
+          The complete logo design deck — including sketches, moodboard, final logo, and updated iteration.
+        </p>
+        <div class="pdf-block reveal" style="border-color:rgba(255,255,255,.12)">
+          <div class="pdf-toolbar">
+            <div class="pdf-toolbar-left">
+              <div class="pdf-dots">
+                <div class="pdf-dot"></div><div class="pdf-dot"></div><div class="pdf-dot"></div>
+              </div>
+              <span class="pdf-label">DCEFF Logo Design.pdf</span>
+            </div>
+            <a href="assets/dceff-logo-design.pdf" target="_blank" class="pdf-open-btn">Open Full PDF</a>
+          </div>
+          <iframe
+            src="assets/dceff-logo-design.pdf"
+            class="pdf-iframe"
+            title="DCEFF Logo Design slide deck"
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 5 — SHOOT BIBLE & CAMPAIGN PHOTOS
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="shoot">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">05 /</span> Shoot Bible & Campaign</p>
+        <h2 class="cs-title">Dream Against<br /><em>the Current</em></h2>
+        <p class="t-body" style="max-width:620px;margin-top:12px">
+          The final deliverable was a comprehensive shoot bible for a DCEFF × Levi's fashion campaign,
+          followed by a real shoot at Coker Arboretum. Below are the three planned shots — and the
+          final photographs.
+        </p>
+      </div>
+
+      <!-- Final campaign poster -->
+      <div class="reveal" style="margin-top:40px">
+        <div class="section-divider"><span>Final Campaign Poster</span></div>
+        <div class="mockup-row">
+          <div class="img-frame tall">
+            <img src="assets/campaign-poster.png" alt="Dream Against the Current — final DCEFF × Levi's campaign poster" />
+          </div>
+          <div class="img-frame tall">
+            <img src="assets/mockup.jpg" alt="Campaign poster in bus stop mockup" />
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--ink-soft);margin-top:10px;font-style:italic">
+          Left: final campaign poster. Right: bus stop placement mockup.
+        </p>
+      </div>
+
+      <!-- Three shots -->
+      <div class="reveal" style="margin-top:56px">
+        <div class="section-divider"><span>The Three Shots</span></div>
+        <p class="t-body" style="max-width:560px;margin-bottom:8px">
+          Each shot was pre-planned in the shoot bible with specific framing, lighting, and
+          post-production instructions. Here are the final photographs from the shoot.
+        </p>
+      </div>
+
+      <div class="img-grid-3 reveal">
+        <!-- Shot 1 -->
+        <div class="shot-card">
+          <div class="shot-photo">
+            <img src="assets/shot-1.jpg" alt="Shot 1 — low angle, model reaching up for the Levi's shirt falling from the sky" />
+          </div>
+          <div class="shot-info">
+            <p class="shot-num">Shot 01 — Low Angle</p>
+            <p class="shot-desc">
+              Model reaches up toward the falling Levi's shirt against an open sky. Backlit, low angle.
+              The shirt was tossed and captured mid-air, then composited.
+            </p>
+            <div class="shot-props">
+              <span class="shot-prop">Featured shirt</span>
+              <span class="shot-prop">Denim skirt</span>
+              <span class="shot-prop">Low angle</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shot 2 -->
+        <div class="shot-card">
+          <div class="shot-photo">
+            <img src="assets/shot-2.jpg" alt="Shot 2 — model lying in the grass wearing the Levi's shirt, daydreaming" />
+          </div>
+          <div class="shot-info">
+            <p class="shot-num">Shot 02 — Overhead</p>
+            <p class="shot-desc">
+              Model lies in the grass and fallen leaves wearing the featured Levi's shirt —
+              the image of daydreaming realized. Overhead perspective, soft autumn light.
+            </p>
+            <div class="shot-props">
+              <span class="shot-prop">Featured shirt</span>
+              <span class="shot-prop">Denim skirt</span>
+              <span class="shot-prop">Overhead</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shot 3 -->
+        <div class="shot-card">
+          <div class="shot-photo">
+            <img src="assets/shot-3.jpg" alt="Shot 3 — blurred motion shot of model spinning freely in the arboretum" />
+          </div>
+          <div class="shot-info">
+            <p class="shot-num">Shot 03 — Motion</p>
+            <p class="shot-desc">
+              Blurred motion shot of the model spinning freely at Coker Arboretum. Warm golden light,
+              hair and jacket caught mid-movement. Shot in burst mode for the motion blur effect.
+            </p>
+            <div class="shot-props">
+              <span class="shot-prop">Featured shirt</span>
+              <span class="shot-prop">Burst shots</span>
+              <span class="shot-prop">Motion blur</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Raw campaign still -->
+      <div class="reveal" style="margin-top:40px">
+        <div class="section-divider"><span>Behind the Poster</span></div>
+        <div class="img-grid-2" style="margin-top:24px">
+          <div>
+            <div class="img-frame med">
+              <img src="assets/campaign-still-raw.png" alt="Raw campaign still before type and branding were added" />
+            </div>
+            <p style="font-size:12px;color:var(--ink-soft);margin-top:8px;font-style:italic">Raw still — before typography and DCEFF × Levi's branding were added in post.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;justify-content:center;gap:16px;">
+            <div class="insight-card">
+              <h4>Post-Production</h4>
+              <p>The shirt was composited higher into the frame using Photoshop — per the shoot bible's instruction to leave sufficient space between the model's hand and the object in-frame.</p>
+            </div>
+            <div class="insight-card">
+              <h4>Typography</h4>
+              <p>"Dream" in bold blue type and "against the current" in the matching script used in the logo — keeping the campaign visually unified across all deliverables.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shoot Bible PDF embed -->
+      <div class="reveal" style="margin-top:56px">
+        <div class="section-divider"><span>Full Shoot Bible</span></div>
+        <h4 style="font-size:17px;font-weight:700;margin-bottom:6px">Complete Shoot Bible PDF</h4>
+        <p class="t-body" style="max-width:540px;margin-bottom:0">
+          The full shoot bible — including the campaign concept, moodboard, shot list with
+          post-production notes, video storyboard, styling, hair & makeup, and location details.
+        </p>
+        <div class="pdf-block">
+          <div class="pdf-toolbar">
+            <div class="pdf-toolbar-left">
+              <div class="pdf-dots">
+                <div class="pdf-dot"></div><div class="pdf-dot"></div><div class="pdf-dot"></div>
+              </div>
+              <span class="pdf-label">Sanjana Nukala — Shoot Bible.pdf</span>
+            </div>
+            <a href="assets/shoot-bible.pdf" target="_blank" class="pdf-open-btn">Open Full PDF</a>
+          </div>
+          <iframe
+            src="assets/shoot-bible.pdf"
+            class="pdf-iframe"
+            title="DCEFF Dream Against the Current shoot bible"
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 6 — CREATIVE PROCESS
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="process">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">06 /</span> Creative Process</p>
+        <h2 class="cs-title">How I Got<br /><em>from Blank to Brief</em></h2>
+      </div>
+      <div class="process-list reveal">
+        <div class="process-step">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <h4>Deep Watching</h4>
+            <p>
+              I watched "The Bluebird Man" twice — once for the story, once for the visual language.
+              I paused on color palettes, noted recurring textures (wood, sky, wildflowers), and tracked
+              the emotional register of each scene. This became my creative brief to myself.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <h4>Rapid Sketching Without Judgment</h4>
+            <p>
+              The in-class sketching sessions were transformative. I typically get paralyzed trying to
+              make something perfect before it exists. Sketching freely let me generate 8–10 concept
+              directions in a sitting. The birdhouse bottle and the liquid typography both emerged
+              from this low-pressure space.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <h4>Iterating on Feedback</h4>
+            <p>
+              Each deliverable went through at least one formal revision. Concept collage: fixed the
+              symmetry axis. Nestled: adjusted label typography spacing. Logo: evolved "Against the"
+              from bold sans-serif to script in the final version. The first version is always
+              just the starting point.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">4</span>
+          <div class="step-body">
+            <h4>Working With (and Against) Generative AI</h4>
+            <p>
+              Adobe Firefly was part of the workflow for the perfume bottle imagery. The key learning:
+              Firefly locks onto its initial interpretation and resists incremental adjustments.
+              Instead of adding descriptors, I found it more effective to scrap and restart with
+              an entirely reframed prompt. Working <em>with</em> how the tool thinks became a skill in itself.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">5</span>
+          <div class="step-body">
+            <h4>Building the Shoot Bible as a Communication Document</h4>
+            <p>
+              The shoot bible had to communicate my vision clearly to a photographer, model, and stylist
+              who each had their own expertise. Writing post-production notes — spacing requirements,
+              burst shot instructions, background clearing — taught me that great art direction
+              anticipates editing before you even pick up a camera.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 7 — REFLECTION
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="reflection">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">07 /</span> Reflection</p>
+        <h2 class="cs-title">What I Took<br /><em>Away</em></h2>
+      </div>
+      <div class="two-col reveal" style="margin-top:36px">
+        <div>
+          <ul class="reflection-list">
+            <li>Constraints are generative. Designing for a real client (DCEFF) with a real brief pushed me harder than open-ended prompts ever have.</li>
+            <li>Naming is design. "Nestled" vs. "Bluebird No. 1" — the right name is a creative decision that cascades into every other design choice.</li>
+            <li>Typography can perform meaning. The liquid letterforms in the logo weren't decoration — they were the argument the logo was making.</li>
+            <li>Pre-production thinking saves post-production hours. The shoot bible's precision on framing and spacing was directly tied to compositing feasibility on set.</li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="insight-card">
+            <h4>Biggest Surprise</h4>
+            <p>I expected ideation to be the hard part. Execution — specifically getting AI tools to actualize my vision — was where I spent the most energy and learned the most.</p>
+          </div>
+          <div class="insight-card">
+            <h4>What I'd Do Differently</h4>
+            <p>Start Firefly prompting much earlier. Generative AI rewards iteration volume — I'd give myself more time to experiment with prompt strategies before committing to a direction.</p>
+          </div>
+          <div class="insight-card">
+            <h4>How This Shapes My Practice</h4>
+            <p>This project confirmed I want to work at the intersection of storytelling and visual strategy — using design to communicate ideas that matter, not just to make things look good.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OUTCOME STRIP ──────────────────────────────────────── -->
+  <div class="container">
+    <div class="outcome-strip dceff reveal">
+      <h2>A Campaign Built on<br /><em>Empathy for a Film</em></h2>
+      <div class="outcome-body">
+        <p>
+          Four deliverables. One through-line: the feeling of standing in nature and believing
+          that small acts of care — for bluebirds, for community, for the environment — add up
+          to something bigger than ourselves. That's what "Against the Current" means to me.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER NAV ─────────────────────────────────────────── -->
+  <div class="container">
+    <div class="footer-nav">
+      <a href="/work/peermarket/" class="footer-nav-link">
+        <span class="nav-dir">← Previous</span>
+        <span class="nav-title">PeerMarket</span>
+      </a>
+      <a href="/work/depression-dashboard/" class="footer-nav-link right">
+        <span class="nav-dir">Next →</span>
+        <span class="nav-title">Depression Dashboard</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Sanjana Nukala &nbsp;·&nbsp; © 2026</p>
+    <p>Art Direction · Product Design · UI/UX</p>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>

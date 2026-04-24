@@ -1,0 +1,278 @@
+/* ============================================================
+   GLOBAL.CSS — Sanjana Nukala Portfolio
+   Shared tokens, components, and utilities
+   ============================================================ */
+
+/* ── Google Fonts ────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Instrument+Serif:ital@0;1&display=swap');
+
+/* ── CSS Variables ───────────────────────────────────────── */
+:root {
+  /* Colors */
+  --bg:          #faf9f7;
+  --bg-warm:     #fdf6ee;
+  --bg-cool:     #eef4fb;
+  --ink:         #111110;
+  --ink-mid:     #4a4845;
+  --ink-soft:    #8a8680;
+  --border:      rgba(17,17,16,0.10);
+  --tag-bg:      rgba(17,17,16,0.07);
+  --tag-text:    #2c2c2a;
+
+  /* Typography */
+  --serif:  'Instrument Serif', Georgia, serif;
+  --sans:   'DM Sans', system-ui, sans-serif;
+
+  /* Spacing */
+  --section-pad: clamp(60px, 8vw, 120px);
+  --page-pad:    40px;
+  --radius:      14px;
+  --radius-lg:   20px;
+  --radius-full: 99px;
+
+  /* Shadows */
+  --shadow-sm:  0 2px 12px rgba(0,0,0,0.05);
+  --shadow-md:  0 8px 28px rgba(0,0,0,0.07);
+  --shadow-lg:  0 20px 60px rgba(0,0,0,0.09);
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+img  { display: block; max-width: 100%; }
+a    { text-decoration: none; color: inherit; }
+ul   { list-style: none; }
+
+/* ── Typography ─────────────────────────────────────────── */
+.t-serif   { font-family: var(--serif); }
+.t-italic  { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.t-label   {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.t-body    { font-size: clamp(15px, 1.3vw, 17px); color: var(--ink-mid); line-height: 1.75; }
+.t-large   { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-mid); line-height: 1.7; }
+
+/* ── Layout ─────────────────────────────────────────────── */
+.container  { max-width: 1100px; margin: 0 auto; padding: 0 var(--page-pad); }
+.section    { padding: var(--section-pad) 0; border-bottom: 1px solid var(--border); }
+.section:last-of-type { border-bottom: none; }
+.divider    { border: none; border-top: 1px solid var(--border); }
+
+/* ── NAV ─────────────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px var(--page-pad);
+  background: rgba(250,249,247,0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 600; font-size: 14.5px; letter-spacing: 0.01em;
+}
+.nav-logo svg { width: 26px; height: 26px; }
+.nav-links {
+  display: flex; align-items: center; gap: 4px;
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--radius-full); padding: 5px 8px;
+}
+.nav-links a {
+  font-size: 13.5px; font-weight: 500; padding: 5px 14px;
+  border-radius: var(--radius-full); transition: background 0.2s, color 0.2s;
+}
+.nav-links a.active { background: var(--ink); color: white; }
+.nav-links a:hover:not(.active) { background: rgba(0,0,0,0.05); }
+.nav-cta {
+  background: var(--ink); color: white;
+  border-radius: var(--radius-full); padding: 10px 20px;
+  font-size: 13.5px; font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+  transition: opacity 0.2s;
+}
+.nav-cta::after { content: "↗"; font-size: 12px; }
+.nav-cta:hover  { opacity: 0.8; }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px var(--page-pad);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.site-footer p { font-size: 13px; color: var(--ink-soft); }
+
+/* Footer case-study prev/next nav */
+.footer-nav {
+  padding: 60px 0;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-nav-link { display: flex; flex-direction: column; gap: 6px; }
+.footer-nav-link.right { text-align: right; }
+.footer-nav-link .nav-dir  { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+.footer-nav-link .nav-title { font-size: clamp(16px, 2vw, 22px); font-weight: 800; letter-spacing: -0.025em; transition: opacity 0.2s; }
+.footer-nav-link:hover .nav-title { opacity: 0.45; }
+
+/* ── CHIPS & TAGS ────────────────────────────────────────── */
+.chip {
+  border: 1px solid var(--border); border-radius: var(--radius-full);
+  padding: 7px 16px; font-size: 13px; font-weight: 500;
+  background: rgba(255,255,255,0.7); display: inline-block;
+}
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--tag-bg); color: var(--tag-text);
+  border-radius: var(--radius-full); padding: 6px 14px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.tag.dot::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: #3b82f6; flex-shrink: 0;
+}
+
+/* ── CARDS ───────────────────────────────────────────────── */
+.card {
+  background: white; border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.card-body { padding: 24px; }
+
+/* ── CALLOUT ─────────────────────────────────────────────── */
+.callout {
+  background: linear-gradient(135deg, var(--bg-cool), var(--bg-warm));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  margin: 40px 0;
+}
+.callout p {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(18px, 2vw, 24px); line-height: 1.55;
+}
+
+/* ── BUTTONS ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  border-radius: var(--radius-full); padding: 11px 24px;
+  font-family: var(--sans); font-size: 14px; font-weight: 600;
+  transition: opacity 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+.btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn-dark  { background: var(--ink); color: white; }
+.btn-light { background: white; color: var(--ink); border: 1px solid var(--border); }
+.btn::after { content: "↗"; font-size: 11px; }
+
+/* ── SCROLL REVEAL ───────────────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── ANIMATIONS ──────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── RESUME NAV BUTTON ───────────────────────────────────── */
+.nav-links [data-resume-trigger] {
+  font-size: 13.5px; font-weight: 500; padding: 5px 14px;
+  border-radius: var(--radius-full);
+  transition: background 0.2s, color 0.2s;
+  background: none; border: none; cursor: pointer;
+  color: inherit; font-family: var(--sans);
+}
+.nav-links [data-resume-trigger]:hover { background: rgba(0,0,0,0.05); }
+
+/* ── RESUME MODAL ────────────────────────────────────────── */
+#resume-modal {
+  display: none;
+  position: fixed; inset: 0; z-index: 1000;
+  align-items: center; justify-content: center;
+  padding: 24px;
+}
+#resume-modal.open { display: flex; }
+.resume-modal-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(17,17,16,0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.resume-modal-panel {
+  position: relative; z-index: 1;
+  background: white; border-radius: 20px;
+  width: 100%; max-width: 860px;
+  height: 90vh; max-height: 1000px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  animation: modalSlideUp 0.25s ease;
+}
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+.resume-modal-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: white; flex-shrink: 0;
+}
+.resume-modal-title {
+  font-size: 13.5px; font-weight: 600; color: var(--ink);
+}
+.resume-modal-actions { display: flex; align-items: center; gap: 10px; }
+.resume-open-link {
+  font-size: 12px; font-weight: 700; color: var(--ink);
+  background: var(--tag-bg); border: 1px solid var(--border);
+  border-radius: 99px; padding: 5px 14px;
+  display: inline-flex; align-items: center; gap: 5px;
+  transition: background 0.2s;
+}
+.resume-open-link::after { content: "↗"; font-size: 10px; }
+.resume-open-link:hover { background: var(--border); }
+.resume-modal-close {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--tag-bg); border: 1px solid var(--border);
+  font-size: 14px; cursor: pointer; color: var(--ink-mid);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.resume-modal-close:hover { background: var(--ink); color: white; }
+.resume-modal-frame {
+  flex: 1; border: none; width: 100%;
+  background: #f5f5f3;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  :root { --page-pad: 20px; }
+  .nav-cta { display: none; }
+  .footer-nav { flex-direction: column; gap: 40px; text-align: center; }
+  .footer-nav-link.right { text-align: center; }
+  .site-footer { flex-direction: column; gap: 10px; text-align: center; }
+}
+@media (max-width: 600px) {
+  #resume-modal { padding: 12px; }
+  .resume-modal-panel { height: 95vh; border-radius: 14px; }
+}

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TripShare — A collaborative travel itinerary web app built with Next.js, Supabase, and OpenAI by Sanjana Nukala." />
+  <title>TripShare — Sanjana Nukala</title>
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="../../css/case-study.css" />
+  <style>
+    /* ── TripShare tokens ─────────────────────────────────── */
+    :root {
+      --trip-teal:    #0d9488;
+      --trip-teal-lt: #e6f7f6;
+      --trip-sky:     #0ea5e9;
+      --trip-warm:    #f97316;
+      --trip-warm-lt: #fff7ed;
+      --trip-sand:    #fdf6eb;
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .cs-hero.trip-hero {
+      background:
+        radial-gradient(ellipse 60% 65% at 8% 12%, rgba(13,148,136,.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 55% at 92% 85%, rgba(14,165,233,.10) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    /* ── Live badge ───────────────────────────────────────── */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(13,148,136,.1);
+      border: 1px solid rgba(13,148,136,.22);
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--trip-teal);
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+    }
+    .live-badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--trip-teal);
+      animation: livepulse 2s ease infinite;
+    }
+    @keyframes livepulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    /* ── App preview card ─────────────────────────────────── */
+    .app-preview {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .app-preview-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: #f5f5f3;
+      border-bottom: 1px solid var(--border);
+    }
+    .app-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .app-dot:nth-child(1) { background: #f87171; }
+    .app-dot:nth-child(2) { background: #fbbf24; }
+    .app-dot:nth-child(3) { background: #4ade80; }
+    .app-url {
+      flex: 1;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      font-family: var(--sans);
+    }
+
+    /* ── Trip card mock ───────────────────────────────────── */
+    .trip-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 24px;
+      background: #fafaf9;
+    }
+    .trip-card-mock {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .trip-card-img {
+      height: 96px;
+      background: linear-gradient(135deg, #b2f0ea, #7dd3fc);
+      position: relative;
+      overflow: hidden;
+    }
+    .trip-card-img.warm { background: linear-gradient(135deg, #fed7aa, #fca5a5); }
+    .trip-card-img.cool { background: linear-gradient(135deg, #bfdbfe, #c7d2fe); }
+    .trip-card-body {
+      padding: 10px 12px;
+    }
+    .trip-card-body .tcb-title {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      color: var(--ink);
+    }
+    .trip-card-body .tcb-meta {
+      font-size: 10px;
+      color: var(--ink-soft);
+    }
+    .trip-card-likes {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--ink-soft);
+    }
+
+    /* ── AI chat preview ──────────────────────────────────── */
+    .ai-chat {
+      background: var(--flare-navy, #0f1535);
+      background: #0f1c35;
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 32px;
+    }
+    .ai-chat-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 16px;
+    }
+    .chat-bubble {
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      margin-bottom: 10px;
+      max-width: 85%;
+    }
+    .chat-bubble.user {
+      background: rgba(255,255,255,.1);
+      color: white;
+      margin-left: auto;
+      border-radius: 12px 12px 2px 12px;
+    }
+    .chat-bubble.ai {
+      background: rgba(13,148,136,.25);
+      color: rgba(255,255,255,.9);
+      border-radius: 12px 12px 12px 2px;
+    }
+    .chat-bubble.ai strong {
+      color: #5eead4;
+    }
+
+    /* ── Theme toggle demo ────────────────────────────────── */
+    .theme-demo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .theme-panel {
+      border-radius: 12px;
+      padding: 18px;
+      border: 1px solid var(--border);
+    }
+    .theme-panel.light-mode {
+      background: white;
+    }
+    .theme-panel.dark-mode {
+      background: #1a1a2e;
+      border-color: rgba(255,255,255,.1);
+    }
+    .theme-panel-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .theme-panel.light-mode .theme-panel-label { color: #aaa; }
+    .theme-panel.dark-mode  .theme-panel-label { color: rgba(255,255,255,.35); }
+    .theme-bar {
+      height: 8px;
+      border-radius: 99px;
+      margin-bottom: 6px;
+    }
+    .theme-panel.light-mode .theme-bar { background: #eee; }
+    .theme-panel.dark-mode  .theme-bar { background: rgba(255,255,255,.1); }
+    .theme-bar.accent { background: var(--trip-teal) !important; width: 60%; }
+
+    /* ── Tech stack ───────────────────────────────────────── */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 36px;
+    }
+    .tech-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 20px;
+    }
+    .tech-icon { font-size: 26px; margin-bottom: 10px; }
+    .tech-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .tech-card p  { font-size: 12.5px; color: var(--ink-mid); line-height: 1.55; }
+
+    /* ── Feature icon override ────────────────────────────── */
+    .trip-icon {
+      background: linear-gradient(135deg, rgba(13,148,136,.18), rgba(14,165,233,.15));
+    }
+
+    /* ── Outcome strip ────────────────────────────────────── */
+    .outcome-strip.trip { background: #0a2a26; }
+
+    /* ── cs-section spacing ───────────────────────────────── */
+    .cs-section { padding: var(--section-pad) 0; border-bottom: 1px solid var(--border); }
+    .cs-section:last-of-type { border-bottom: none; }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .tech-grid       { grid-template-columns: 1fr 1fr; }
+      .trip-card-grid  { grid-template-columns: 1fr 1fr; }
+      .theme-demo      { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .tech-grid       { grid-template-columns: 1fr; }
+      .trip-card-grid  { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M19 5H6C2 5 2 20 11 20C21 20 23 37 13 40H4"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M25 4V40 M25 4L40 40 M40 4V40"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Sanjana Nukala
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/work/" class="active">Work</a>
+      <button data-resume-trigger>Resume</button>
+    </div>
+    <a href="mailto:nukalasanjana8@gmail.com" class="nav-cta">Let's Collaborate</a>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="cs-hero trip-hero cs-hero-split">
+    <div class="cs-hero-content">
+      <div class="live-badge">Live on Vercel</div>
+      <span class="tag dot">Web Development · UI/UX · Full-Stack</span>
+      <h1>TripShare —<br /><em>Plan, Share & Discover Trips</em></h1>
+      <p class="cs-hero-sub t-large">
+        A collaborative travel itinerary web app built with Next.js, React, and Supabase —
+        featuring social sharing, real-time updates, and an AI travel assistant powered by OpenAI.
+      </p>
+      <div class="cs-hero-chips">
+        <span class="chip">Next.js</span>
+        <span class="chip">React</span>
+        <span class="chip">Supabase</span>
+        <span class="chip">OpenAI</span>
+        <span class="chip">shadcn/ui</span>
+        <span class="chip">Figma</span>
+      </div>
+      <div class="cs-scroll-hint">Scroll to explore</div>
+    </div>
+    <div class="cs-hero-media">
+      <div class="img-frame">
+        <img src="assets/tripshare_mockup.png" alt="TripShare — collaborative travel itinerary web app shown on a laptop" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IN-PAGE SECTION NAV ───────────────────────────────── -->
+  <nav class="cs-section-nav" aria-label="Jump to section">
+    <a href="#overview">Overview</a>
+    <a href="#features">Features</a>
+    <a href="#stack">Tech Stack</a>
+    <a href="#process">Process</a>
+    <a href="#reflection">Reflection</a>
+  </nav>
+
+  <!-- ── PROJECT INFO STRIP ────────────────────────────────── -->
+  <div class="container">
+    <div class="info-grid reveal">
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Type</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">Personal Project</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Designed & developed solo</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Role</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">Full-Stack & UI/UX</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Design · Frontend · Backend</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Stack</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">Next.js · Supabase</p>
+        <p style="font-size:13px;color:var(--ink-soft)">OpenAI · shadcn/ui · Figma</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Status</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">Live on Vercel</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Deployed & accessible</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 1 — OVERVIEW
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="overview">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">01 /</span> Overview</p>
+        <h2 class="cs-title">A Social Layer<br /><em>for Travel Planning</em></h2>
+      </div>
+      <div class="two-col-wide reveal" style="margin-top:32px">
+        <div>
+          <p class="t-body">
+            TripShare is a collaborative travel itinerary web application designed to help users
+            plan, share, and discover trips within a social travel community. It combines the
+            structure of an itinerary builder with the discovery and interaction model of a social
+            feed — all in one place.
+          </p>
+          <p class="t-body" style="margin-top:16px">
+            The platform brings together three distinct experiences: <strong>itinerary creation</strong>
+            for logged-in users to build detailed trip plans, <strong>community discovery</strong>
+            to browse, like, and save others' itineraries, and an <strong>AI travel assistant</strong>
+            for real-time destination ideas and planning guidance powered by OpenAI.
+          </p>
+          <p class="t-body" style="margin-top:16px">
+            By combining social features, real-time functionality, and AI-powered interaction,
+            TripShare demonstrates how modern web technologies can support a community-driven
+            approach to travel planning.
+          </p>
+          <a href="https://tripshare-14-ofaf.vercel.app/login" target="_blank" rel="noopener" class="outcome-link" style="margin-top:28px;background:#0a2a26;color:white;">
+            View Live App
+          </a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="insight-card">
+            <h4>The Idea</h4>
+            <p>Travel planning is fragmented — notes apps, spreadsheets, group chats. TripShare puts the plan, the community, and an AI assistant in one place, removing the friction of coordinating across tools.</p>
+          </div>
+          <div class="insight-card">
+            <h4>The Approach</h4>
+            <p>Design-first in Figma using shadcn/ui's component system, then build with Next.js and Supabase for a real backend — not a prototype, but a fully deployed, working application.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- App preview mockup -->
+      <div class="reveal" style="margin-top:56px">
+        <p class="t-label" style="margin-bottom:16px">App Preview — Itinerary Discovery Feed</p>
+        <div class="app-preview">
+          <div class="app-preview-bar">
+            <div class="app-dot"></div>
+            <div class="app-dot"></div>
+            <div class="app-dot"></div>
+            <div class="app-url">tripshare-14-ofaf.vercel.app</div>
+          </div>
+          <div class="trip-card-grid">
+            <div class="trip-card-mock">
+              <div class="trip-card-img"></div>
+              <div class="trip-card-body">
+                <p class="tcb-title">Tokyo in 7 Days</p>
+                <p class="tcb-meta">4 cities · 12 stops</p>
+              </div>
+              <div class="trip-card-likes">♡ 42</div>
+            </div>
+            <div class="trip-card-mock">
+              <div class="trip-card-img warm"></div>
+              <div class="trip-card-body">
+                <p class="tcb-title">Amalfi Coast</p>
+                <p class="tcb-meta">3 cities · 8 stops</p>
+              </div>
+              <div class="trip-card-likes">♡ 31</div>
+            </div>
+            <div class="trip-card-mock">
+              <div class="trip-card-img cool"></div>
+              <div class="trip-card-body">
+                <p class="tcb-title">Iceland Road Trip</p>
+                <p class="tcb-meta">6 cities · 20 stops</p>
+              </div>
+              <div class="trip-card-likes">♡ 58</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 — FEATURES
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="features" style="background:linear-gradient(180deg,#f5fdf9 0%,var(--bg) 100%)">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">02 /</span> Key Features</p>
+        <h2 class="cs-title">Everything a Traveler<br /><em>Actually Needs</em></h2>
+        <p class="t-body" style="max-width:580px;margin-top:12px">
+          Five core features that together form a complete social travel planning experience —
+          from building your first itinerary to getting AI-powered recommendations on the fly.
+        </p>
+      </div>
+
+      <div class="feature-grid reveal">
+        <div class="feature-card">
+          <div class="feature-icon trip-icon">🔐</div>
+          <h4>User Authentication & Profiles</h4>
+          <p>Sign-up and login with personalized experiences. Itineraries, likes, and saved posts are all linked to individual user accounts via Supabase Auth.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon trip-icon">🗺️</div>
+          <h4>Itinerary Creation System</h4>
+          <p>Logged-in users can build structured trip plans — adding cities, descriptions, locations, and photos in a clean, step-by-step format.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon trip-icon">🌐</div>
+          <h4>Content Discovery & Interaction</h4>
+          <p>Browse community itineraries, view trip details, like and save posts, and search across the full library of shared trips. Dedicated pages for saved and liked content.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon trip-icon">🤖</div>
+          <h4>AI Travel Assistant</h4>
+          <p>An integrated chat panel powered by OpenAI provides destination ideas, itinerary suggestions, and travel planning guidance — in real time, without leaving the app.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon trip-icon">🎨</div>
+          <h4>Theme Customization</h4>
+          <p>Users can switch between light, dark, or system theme modes — improving accessibility and letting each user set the interface to their preference.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon trip-icon">⚡</div>
+          <h4>Real-Time Updates</h4>
+          <p>Built on Supabase's real-time subscriptions — likes, saves, and new posts update across the feed without a page refresh, keeping the community experience live.</p>
+        </div>
+      </div>
+
+      <!-- AI chat preview -->
+      <div class="reveal" style="margin-top:56px">
+        <p class="t-label" style="margin-bottom:16px">AI Travel Assistant — In-App Chat</p>
+        <div class="ai-chat">
+          <p class="ai-chat-label">TripShare AI · Powered by OpenAI</p>
+          <div class="chat-bubble user">
+            What are some underrated spots in Portugal I should add to my itinerary?
+          </div>
+          <div class="chat-bubble ai">
+            Great choice! A few underrated spots worth adding: <strong>Évora</strong> for Roman ruins and the bone chapel, <strong>Óbidos</strong> for its walled medieval village, and <strong>Comporta</strong> for quiet beaches away from the Algarve crowds. Want me to suggest a route that connects these with Lisbon?
+          </div>
+          <div class="chat-bubble user">
+            Yes — 7 days starting and ending in Lisbon.
+          </div>
+          <div class="chat-bubble ai">
+            Perfect. Here's a 7-day loop: <strong>Day 1–2</strong> Lisbon → <strong>Day 3</strong> Évora → <strong>Day 4</strong> Óbidos → <strong>Day 5–6</strong> Comporta → <strong>Day 7</strong> back to Lisbon via Setúbal. Each stop is under 2 hours by car. Want me to flesh out stops for any of these days?
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme toggle demo -->
+      <div class="reveal" style="margin-top:40px">
+        <p class="t-label" style="margin-bottom:16px">Theme Customization — Light & Dark Modes</p>
+        <div class="theme-demo">
+          <div class="theme-panel light-mode">
+            <p class="theme-panel-label">Light Mode</p>
+            <div class="theme-bar accent"></div>
+            <div class="theme-bar" style="width:80%"></div>
+            <div class="theme-bar" style="width:50%"></div>
+          </div>
+          <div class="theme-panel dark-mode">
+            <p class="theme-panel-label">Dark Mode</p>
+            <div class="theme-bar accent"></div>
+            <div class="theme-bar" style="width:80%;background:rgba(255,255,255,.15)"></div>
+            <div class="theme-bar" style="width:50%;background:rgba(255,255,255,.15)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 — TECH STACK
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="stack" style="background:linear-gradient(180deg,#0a2a26,#0d3530)">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label" style="color:rgba(255,255,255,.4)"><span class="num">03 /</span> Tech Stack</p>
+        <h2 class="cs-title" style="color:white">Choosing Tools<br /><em style="color:#5eead4">That Do the Work</em></h2>
+        <p class="t-body" style="max-width:600px;margin-top:12px;color:rgba(255,255,255,.6)">
+          Every choice in this stack was deliberate — optimizing for a great developer experience,
+          real backend functionality, and a polished UI that didn't start from scratch.
+        </p>
+      </div>
+
+      <div class="tech-grid reveal">
+        <div class="tech-card">
+          <div class="tech-icon">▲</div>
+          <h4>Next.js</h4>
+          <p>App router, server-side rendering, and API routes. Handles routing, performance, and the bridge between the React frontend and Supabase backend.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">⚛</div>
+          <h4>React</h4>
+          <p>Component-based architecture for the UI. Pairs with shadcn/ui for a consistent design system built on Radix UI primitives and Tailwind CSS.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">🟢</div>
+          <h4>Supabase</h4>
+          <p>PostgreSQL database with real-time subscriptions and built-in authentication. Handles user accounts, itinerary storage, likes, saves, and live feed updates.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">🤖</div>
+          <h4>OpenAI API</h4>
+          <p>Powers the in-app AI travel assistant. The chat panel sends user queries to the OpenAI API and streams responses back into the UI without page reloads.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">🧩</div>
+          <h4>shadcn/ui</h4>
+          <p>Pre-built, accessible component library built on Radix UI and Tailwind. Accelerated UI development while maintaining full control over styling and behavior.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">✦</div>
+          <h4>Figma</h4>
+          <p>Full design work done in Figma before a single line of code — layouts, component states, light/dark themes, and responsive breakpoints all designed first.</p>
+        </div>
+      </div>
+
+      <div class="callout reveal" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);margin-top:40px">
+        <p style="color:rgba(255,255,255,.75)">
+          "Supabase made the backend genuinely simple — authentication, the database, and real-time
+          updates are all one service. It let me focus on product decisions rather than infrastructure,
+          which is the right trade-off for a solo project."
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 4 — PROCESS
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="process">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">04 /</span> Process</p>
+        <h2 class="cs-title">How I Built<br /><em>TripShare</em></h2>
+      </div>
+      <div class="process-list reveal">
+        <div class="process-step">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <h4>Design First in Figma</h4>
+            <p>
+              Before writing any code, I built the full design in Figma — every screen, both
+              light and dark themes, and the key component states. Designing first meant I could
+              make layout and interaction decisions cheaply, before the cost of changing them
+              was measured in code refactors.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <h4>Setting Up the Data Model</h4>
+            <p>
+              With the design in place, I mapped out the Supabase schema: users, itineraries,
+              cities, locations, likes, and saves. Getting the relational structure right before
+              building the UI meant I didn't have to rewrite queries mid-feature — the data model
+              drove the component structure.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <h4>Authentication & Profiles</h4>
+            <p>
+              Supabase Auth handled the heavy lifting for sign-up and login. The challenge was
+              connecting auth state to the app's social features — ensuring likes, saves, and
+              created itineraries were always tied to the right user and persisted correctly
+              across sessions.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">4</span>
+          <div class="step-body">
+            <h4>Building the Itinerary Creator</h4>
+            <p>
+              The itinerary creation flow was the most complex UI piece — a multi-step form
+              that lets users add cities, descriptions, locations, and photos in sequence.
+              Using shadcn/ui components sped up the form work considerably, letting me focus
+              on the state management and validation logic.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">5</span>
+          <div class="step-body">
+            <h4>Integrating the OpenAI Assistant</h4>
+            <p>
+              The AI chat panel was the last major feature. I connected the OpenAI API through
+              a Next.js API route so the key never exposes to the client, then wired up streaming
+              responses so answers appear token by token — making the interaction feel live
+              rather than waiting for a full response block.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">6</span>
+          <div class="step-body">
+            <h4>Deployment on Vercel</h4>
+            <p>
+              Vercel's Next.js-native deployment made shipping straightforward — environment
+              variables for Supabase and OpenAI keys, automatic preview deployments on every
+              push, and a production URL from day one. The app has been publicly accessible
+              since launch.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 5 — REFLECTION
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="reflection">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">05 /</span> Reflection</p>
+        <h2 class="cs-title">What I Took<br /><em>Away</em></h2>
+      </div>
+      <div class="two-col reveal" style="margin-top:36px">
+        <div>
+          <ul class="reflection-list">
+            <li>Design before code pays dividends. Every hour in Figma saved three in refactoring. The component system I designed became the structure I built.</li>
+            <li>Data modeling is a product decision. How you structure the database determines what features are easy or hard — the schema is as much a design artifact as the UI.</li>
+            <li>Shipping beats perfecting. Deploying early and iterating on a live URL changed how I thought about the product — real access reveals problems that wireframes don't.</li>
+            <li>API keys belong in server routes. Integrating OpenAI through a Next.js API route kept the key server-side — a small architectural decision with real security implications.</li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="insight-card">
+            <h4>Hardest Part</h4>
+            <p>The itinerary creator's multi-step state management — coordinating city additions, location lists, and photo uploads in a single form without the state collapsing.</p>
+          </div>
+          <div class="insight-card">
+            <h4>Most Satisfying</h4>
+            <p>Watching the AI assistant stream a real, contextual travel plan in response to a user query. It's the moment the product went from a CRUD app to something that felt genuinely useful.</p>
+          </div>
+          <div class="insight-card">
+            <h4>What I'd Add Next</h4>
+            <p>Collaborative itineraries — letting multiple users edit a shared trip plan in real time. Supabase's real-time infrastructure is already in place; it's a product and UI problem now.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OUTCOME STRIP ──────────────────────────────────────── -->
+  <div class="container">
+    <div class="outcome-strip trip reveal">
+      <h2>A Social Travel App,<br /><em>Fully Deployed</em></h2>
+      <div class="outcome-body">
+        <p>
+          From design in Figma to a live Vercel deployment — TripShare is a complete,
+          working product. It combines a real backend, community social features, and
+          AI travel assistance in a single, accessible web app.
+        </p>
+        <a href="https://tripshare-14-ofaf.vercel.app/login" target="_blank" rel="noopener" class="outcome-link">
+          Open TripShare
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER NAV ─────────────────────────────────────────── -->
+  <div class="container">
+    <div class="footer-nav">
+      <a href="/work/flare/" class="footer-nav-link">
+        <span class="nav-dir">← Previous</span>
+        <span class="nav-title">Flare</span>
+      </a>
+      <a href="/work/peermarket/" class="footer-nav-link right">
+        <span class="nav-dir">Next →</span>
+        <span class="nav-title">PeerMarket</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Sanjana Nukala &nbsp;·&nbsp; © 2026</p>
+    <p>Full-Stack Development · Product Design · UI/UX</p>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>

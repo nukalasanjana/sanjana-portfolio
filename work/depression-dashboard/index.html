@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Depression Hotspots Dashboard — a D3.js data visualization case study by Sanjana Nukala." />
+  <title>Depression Hotspots Dashboard — Sanjana Nukala</title>
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="../../css/case-study.css" />
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M19 5H6C2 5 2 20 11 20C21 20 23 37 13 40H4"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M25 4V40 M25 4L40 40 M40 4V40"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Sanjana Nukala
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/work/" class="active">Work</a>
+      <button data-resume-trigger>Resume</button>
+    </div>
+    <a href="mailto:hello@youremail.com" class="nav-cta">Let's Collaborate</a>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="cs-hero cs-hero-split">
+    <div class="cs-hero-content">
+      <span class="tag dot">Data Visualization</span>
+      <h1>Depression Hotspots<br /><em>Dashboard</em></h1>
+      <p class="cs-hero-sub t-large">
+        Visualizing how geographic and socioeconomic factors influence
+        depression rates across North Carolina to support smarter mental health policy.
+      </p>
+      <div class="cs-hero-chips">
+        <span class="chip">D3.js</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">HTML/CSS</span>
+        <span class="chip">GeoJSON</span>
+        <span class="chip">Census Data</span>
+      </div>
+      <div class="cs-scroll-hint">Scroll to explore</div>
+    </div>
+    <div class="cs-hero-media">
+      <div class="img-frame">
+        <!-- Replace src with your actual dashboard screenshot -->
+        <img
+          src="https://framerusercontent.com/images/kxCLZZokEHmuJMpOi8MoUzLgnXw.png"
+          alt="Depression Hotspots Dashboard full view"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IN-PAGE SECTION NAV ───────────────────────────────── -->
+  <nav class="cs-section-nav" aria-label="Jump to section">
+    <a href="#overview">Overview</a>
+    <a href="#problem">Problem</a>
+    <a href="#research">Research</a>
+    <a href="#process">Process</a>
+    <a href="#features">Features</a>
+    <a href="#insights">Insights</a>
+    <a href="#reflection">Reflection</a>
+    <a href="#outcome">Outcome</a>
+  </nav>
+
+  <!-- ── PROJECT INFO STRIP ────────────────────────────────── -->
+  <div class="container">
+    <div class="info-grid reveal">
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Role</p>
+        <p style="font-size:15px; font-weight:500; line-height:1.5">
+          Data Visualization Designer<br/>Interaction Designer
+        </p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Timeline</p>
+        <p style="font-size:15px; font-weight:500">1 Week</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Course</p>
+        <p style="font-size:15px; font-weight:500; line-height:1.5">
+          COMP 590 —<br/>Information Visualization
+        </p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Tools</p>
+        <p style="font-size:15px; font-weight:500; line-height:1.5">
+          D3.js · JavaScript<br/>HTML/CSS · GeoJSON
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OVERVIEW ──────────────────────────────────────────── -->
+  <section id="overview" class="section container reveal">
+    <p class="cs-eyebrow t-label">Project Overview</p>
+    <div class="two-col-wide">
+      <div>
+        <h2 class="cs-title">An interactive tool for <em>public health insight</em></h2>
+        <p class="t-body">
+          Depression Hotspots Dashboard is an interactive data visualization that explores
+          how geographic and socioeconomic factors influence depression rates across North
+          Carolina counties. Rather than examining depression only at an individual level,
+          this project investigates how structural variables such as income, education,
+          poverty, and regional context correlate with mental health outcomes.
+        </p>
+        <p class="t-body" style="margin-top:16px">
+          The dashboard was designed to help policymakers and public health stakeholders
+          identify geographic patterns and prioritize areas that may require additional
+          mental health support.
+        </p>
+      </div>
+      <div>
+        <h3 style="font-size:17px; font-weight:700; margin-bottom:16px;">Key Components</h3>
+        <ul style="display:flex; flex-direction:column; gap:14px;">
+          <li style="display:flex; gap:12px; font-size:14.5px; color:var(--ink-mid);">
+            <span style="color:var(--ink); font-weight:700; flex-shrink:0;">→</span>
+            Choropleth map of county-level depression rates
+          </li>
+          <li style="display:flex; gap:12px; font-size:14.5px; color:var(--ink-mid);">
+            <span style="color:var(--ink); font-weight:700; flex-shrink:0;">→</span>
+            Scatterplots comparing demographic variables
+          </li>
+          <li style="display:flex; gap:12px; font-size:14.5px; color:var(--ink-mid);">
+            <span style="color:var(--ink); font-weight:700; flex-shrink:0;">→</span>
+            Customizable "Needs Index" vulnerability scoring
+          </li>
+          <li style="display:flex; gap:12px; font-size:14.5px; color:var(--ink-mid);">
+            <span style="color:var(--ink); font-weight:700; flex-shrink:0;">→</span>
+            Linked county detail panel for drill-down
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROBLEM ───────────────────────────────────────────── -->
+  <section id="problem" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">01</span>Problem</p>
+    <h2 class="cs-title">The <em>gap</em> in the conversation</h2>
+    <p class="t-body">
+      Discussions about depression often focus on individual experiences — personal
+      isolation or lifestyle factors. However, this perspective can overlook how broader
+      environmental conditions like income, education, poverty, and geography influence
+      mental health outcomes.
+    </p>
+    <div class="callout">
+      <p>
+        "How might we visualize geographic and demographic patterns in depression rates
+        so that policymakers can better identify communities that may need additional
+        mental health resources?"
+      </p>
+    </div>
+    <p class="t-body">
+      Without tools to visualize these contextual factors together, it becomes difficult
+      for public health organizations to identify which communities most need support.
+    </p>
+  </section>
+
+  <!-- ── RESEARCH ──────────────────────────────────────────── -->
+  <section id="research" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">02</span>Research & Data</p>
+    <h2 class="cs-title">Building the <em>dataset</em></h2>
+    <div class="two-col">
+      <div>
+        <p class="t-body">
+          We gathered county-level datasets for North Carolina and combined them into a
+          single analytical dataset, joining demographic data with geographic data using
+          county FIPS codes — allowing the information to be mapped spatially.
+        </p>
+      </div>
+      <div>
+        <h3 style="font-size:17px; font-weight:700; margin-bottom:16px;">Data Sources</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="card" style="border-radius:12px; padding:0;">
+            <div class="card-body" style="display:flex; gap:12px; align-items:center; padding:16px 18px;">
+              <span style="font-size:18px;">📍</span>
+              <span style="font-size:14px; font-weight:500;">County-level depression rates</span>
+            </div>
+          </div>
+          <div class="card" style="border-radius:12px; padding:0;">
+            <div class="card-body" style="display:flex; gap:12px; align-items:center; padding:16px 18px;">
+              <span style="font-size:18px;">💰</span>
+              <span style="font-size:14px; font-weight:500;">Median household income</span>
+            </div>
+          </div>
+          <div class="card" style="border-radius:12px; padding:0;">
+            <div class="card-body" style="display:flex; gap:12px; align-items:center; padding:16px 18px;">
+              <span style="font-size:18px;">📊</span>
+              <span style="font-size:14px; font-weight:500;">Poverty rates & education levels</span>
+            </div>
+          </div>
+          <div class="card" style="border-radius:12px; padding:0;">
+            <div class="card-body" style="display:flex; gap:12px; align-items:center; padding:16px 18px;">
+              <span style="font-size:18px;">🗺️</span>
+              <span style="font-size:14px; font-weight:500;">County geographic boundaries (GeoJSON)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DESIGN PROCESS ────────────────────────────────────── -->
+  <section id="process" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">03</span>Design Process</p>
+    <h2 class="cs-title">From data to <em>experience</em></h2>
+    <p class="t-body">
+      The design process focused on transforming complex demographic data into an interface
+      that allowed users to explore geographic patterns and relationships between variables.
+    </p>
+    <div class="process-list">
+      <div class="process-step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h4>Defining Analytical Questions</h4>
+          <p>Identified key questions a policymaker would want to answer — where are rates highest, how do socioeconomic factors correlate, and which counties need more resources?</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h4>Selecting Visualization Types</h4>
+          <p>Chose complementary views: a choropleth map for geographic patterns, scatterplots for statistical correlations, and a detail panel for drill-down analysis.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h4>Iterating on Dashboard Layout</h4>
+          <p>Designed a clear visual hierarchy — the choropleth as the central overview, analytical tools in a side panel, tabbed modes to reduce clutter.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h4>Designing Interactive Exploration</h4>
+          <p>Implemented linked interactions: hover tooltips, click selection that highlights counties across both map and graphs, region filters, and cluster selection.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── KEY FEATURES ──────────────────────────────────────── -->
+  <section id="features" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">04</span>Key Features</p>
+    <h2 class="cs-title">What makes it <em>work</em></h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🗺️</div>
+        <h4>Choropleth Map</h4>
+        <p>Sequential luminance color scale highlighting counties with higher rates in darker red. Hover, click, and filter by region (West, Central, East).</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h4>Interactive Scatterplots</h4>
+        <p>Three plots exploring correlations with income, poverty, and education. Linked highlighting connects statistical patterns to geographic context.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎚️</div>
+        <h4>Adjustable Needs Index</h4>
+        <p>Users adjust sliders to change the weight of each factor — flexible for different policy priorities and research perspectives.</p>
+      </div>
+    </div>
+
+    <!-- Screenshot pair — replace placeholders with real images -->
+    <div class="screenshot-pair">
+      <div class="screenshot-frame">
+        <img src="" alt="Choropleth Map" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span class="img-placeholder" style="font-size:15px">Choropleth Map Screenshot</span>
+      </div>
+      <div class="screenshot-frame" style="background:linear-gradient(135deg,#f8ead4,#eee)">
+        <img src="" alt="Scatterplot + Needs Index" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+        <span class="img-placeholder" style="font-size:15px">Scatterplot + Needs Index</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── KEY INSIGHTS ──────────────────────────────────────── -->
+  <section id="insights" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">05</span>Key Insights</p>
+    <h2 class="cs-title">What the data <em>revealed</em></h2>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <h4>Geographic Patterns</h4>
+        <p>Depression rates are not evenly distributed. Western and eastern counties show higher concentrations, suggesting strong regional context effects.</p>
+      </div>
+      <div class="insight-card">
+        <h4>Income Relationship</h4>
+        <p>A negative correlation between income and depression emerged — counties with higher median income generally showed lower depression rates.</p>
+      </div>
+      <div class="insight-card">
+        <h4>Outlier Clusters</h4>
+        <p>Some Eastern NC counties showed high depression rates despite moderate income, suggesting additional contextual factors are at play.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REFLECTION ────────────────────────────────────────── -->
+  <section id="reflection" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">06</span>Reflection</p>
+    <h2 class="cs-title">What I <em>learned</em></h2>
+    <ul class="reflection-list">
+      <li><strong>Designing for exploration:</strong> Interactive elements allowed users to move fluidly between geographic and statistical perspectives without losing context.</li>
+      <li><strong>Balancing clarity and complexity:</strong> Presenting multiple datasets simultaneously required hierarchy and tabbing to keep the experience manageable.</li>
+      <li><strong>User-driven analysis:</strong> Allowing users to adjust Needs Index sliders created a more transparent, flexible tool that reduces analytical bias.</li>
+    </ul>
+  </section>
+
+  <!-- ── OUTCOME ───────────────────────────────────────────── -->
+  <div id="outcome" class="container reveal">
+    <div class="outcome-strip">
+      <h2>The final<br/><em>outcome</em></h2>
+      <div class="outcome-body">
+        <p>
+          The dashboard revealed geographic and socioeconomic patterns in depression
+          rates across North Carolina — including a negative relationship between income
+          and depression, and regional outlier clusters pointing to additional contextual
+          factors. By combining spatial visualization with interactive analysis, the
+          project demonstrates how data visualization can support evidence-based
+          decision making for mental health resource allocation.
+        </p>
+        <a href="https://comp-590-visualization.vercel.app/" target="_blank" rel="noopener" class="outcome-link">
+          View Live Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER NAV ─────────────────────────────────────────── -->
+  <div class="container">
+    <div class="footer-nav reveal">
+      <a href="/work/" class="footer-nav-link">
+        <span class="nav-dir">← Back</span>
+        <span class="nav-title">All Works</span>
+      </a>
+      <a href="/work/dceff-campaign/" class="footer-nav-link right">
+        <span class="nav-dir">Next →</span>
+        <span class="nav-title">DCEFF × Levi's Campaign</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Sanjana Nukala &nbsp;·&nbsp; © 2026</p>
+    <p>Product & UI/UX Designer</p>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Skullcandy Campaign — Brand strategy, creative direction, and advertising campaign by Sanjana Nukala." />
+  <title>Skullcandy Campaign — Sanjana Nukala</title>
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="../../css/case-study.css" />
+  <style>
+    /* ── Campaign tokens ──────────────────────────────────── */
+    :root {
+      --sc-red:        #e50000;
+      --sc-red-dark:   #140000;
+      --sc-red-light:  #fff0f0;
+      --sc-red-border: rgba(229,0,0,.15);
+      --sc-yellow:     #ffd000;
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .cs-hero.sc-hero {
+      background:
+        radial-gradient(ellipse 55% 60% at 0% 0%,   rgba(229,0,0,.18) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 55% at 100% 95%, rgba(229,0,0,.10) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    /* ── Single truth card ────────────────────────────────── */
+    .truth-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      background: white;
+      box-shadow: var(--shadow-sm);
+    }
+    .truth-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      align-items: stretch;
+      border-bottom: 1px solid var(--border);
+    }
+    .truth-row:last-child { border-bottom: none; }
+    .truth-pill-col {
+      display: flex; align-items: center; justify-content: center;
+      padding: 22px 16px;
+      border-right: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .truth-pill {
+      font-size: 9px; font-weight: 800; letter-spacing: .1em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 99px;
+    }
+    .truth-pill.fact { background: #f0f0ee; color: var(--ink-soft); }
+    .truth-pill.obs  { background: #eef4fb; color: #4a7ca0; }
+    .truth-pill.ins  { background: var(--sc-red); color: white; }
+    .truth-text-col { padding: 20px 28px; }
+    .truth-text-col p { font-size: 15px; color: var(--ink-mid); line-height: 1.6; }
+    .truth-insight { font-size: clamp(17px,2vw,22px) !important; font-weight: 800 !important; color: var(--ink) !important; letter-spacing: -.02em; line-height: 1.2 !important; text-transform: uppercase; }
+
+    /* ── Strategy card ────────────────────────────────────── */
+    .strategy-card {
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--sc-red-dark);
+      box-shadow: var(--shadow-md);
+    }
+    .strategy-header {
+      padding: 28px 36px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .strategy-header p {
+      font-size: 10px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 8px;
+    }
+    .strategy-header h4 {
+      font-size: clamp(20px,2.5vw,30px);
+      font-weight: 800; color: white; letter-spacing: -.025em;
+    }
+    .strategy-header h4 em {
+      font-family: var(--serif); font-style: italic;
+      font-weight: 400; color: var(--sc-yellow);
+    }
+    .strategy-rows {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+    }
+    .strategy-cell {
+      padding: 24px 28px;
+      border-right: 1px solid rgba(255,255,255,.07);
+    }
+    .strategy-cell:last-child { border-right: none; }
+    .strat-label {
+      font-size: 9px; font-weight: 800; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--sc-yellow); margin-bottom: 8px;
+    }
+    .strategy-cell p { font-size: 13.5px; color: rgba(255,255,255,.6); line-height: 1.65; }
+
+    /* ── Tagline display ──────────────────────────────────── */
+    .tagline-display {
+      padding: 40px 44px;
+      background: var(--sc-red);
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    }
+    .tagline-display .t-label { color: rgba(255,255,255,.55); margin-bottom: 10px; }
+    .tagline-display h3 {
+      font-size: clamp(26px,4vw,52px);
+      font-weight: 800; letter-spacing: -.04em; color: white; line-height: 1;
+    }
+    .tagline-note {
+      flex-shrink: 0; max-width: 260px;
+      font-size: 14px; color: rgba(255,255,255,.65); line-height: 1.65;
+    }
+
+    /* ── PDF embed ────────────────────────────────────────── */
+    .pdf-block {
+      margin: 40px 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .pdf-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+    .pdf-toolbar-left { display: flex; align-items: center; gap: 10px; }
+    .pdf-dots  { display: flex; gap: 5px; }
+    .pdf-dot   { width: 10px; height: 10px; border-radius: 50%; }
+    .pdf-dot:nth-child(1) { background: #f87171; }
+    .pdf-dot:nth-child(2) { background: #fbbf24; }
+    .pdf-dot:nth-child(3) { background: #4ade80; }
+    .pdf-label { font-size: 11.5px; font-weight: 600; color: var(--ink-soft); }
+    .pdf-open-btn {
+      font-size: 12px; font-weight: 700;
+      color: var(--ink); background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 99px; padding: 5px 14px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background .2s;
+    }
+    .pdf-open-btn:hover { background: var(--border); }
+    .pdf-open-btn::after { content: "↗"; font-size: 10px; }
+    .pdf-iframe {
+      display: block; width: 100%; height: 700px;
+      border: none; background: #f5f5f3;
+    }
+
+    /* ── Shared ───────────────────────────────────────────── */
+    .cs-section { padding: var(--section-pad) 0; border-bottom: 1px solid var(--border); }
+    .cs-section:last-of-type { border-bottom: none; }
+    .outcome-strip.sc { background: var(--sc-red-dark); }
+
+    @media (max-width: 900px) {
+      .strategy-rows { grid-template-columns: 1fr; }
+      .strategy-cell { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); }
+      .strategy-cell:last-child { border-bottom: none; }
+      .tagline-display { flex-direction: column; }
+      .truth-row { grid-template-columns: 80px 1fr; }
+      .pdf-iframe { height: 500px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M19 5H6C2 5 2 20 11 20C21 20 23 37 13 40H4"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M25 4V40 M25 4L40 40 M40 4V40"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Sanjana Nukala
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/work/" class="active">Work</a>
+      <button data-resume-trigger>Resume</button>
+    </div>
+    <a href="mailto:nukalasanjana8@gmail.com" class="nav-cta">Let's Collaborate</a>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="cs-hero sc-hero cs-hero-split">
+    <div class="cs-hero-content">
+      <span class="tag dot">Art Direction · Brand Strategy · Advertising</span>
+      <h1>Skullcandy<br /><em>Campaign Design</em></h1>
+      <p class="cs-hero-sub t-large">
+        A full advertising campaign for Skullcandy — built from a single brand truth
+        through strategy, manifesto, tagline, and a suite of campaign deliverables.
+      </p>
+      <div class="cs-hero-chips">
+        <span class="chip">Art Direction</span>
+        <span class="chip">Brand Strategy</span>
+        <span class="chip">Copywriting</span>
+        <span class="chip">Campaign Design</span>
+        <span class="chip">Consumer Insight</span>
+      </div>
+      <div class="cs-scroll-hint">Scroll to explore</div>
+    </div>
+    <div class="cs-hero-media">
+      <div class="img-frame">
+        <img src="assets/skullcandy mockup.png" alt="Skullcandy campaign mockup" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IN-PAGE SECTION NAV ───────────────────────────────── -->
+  <nav class="cs-section-nav" aria-label="Jump to section">
+    <a href="#overview">Overview</a>
+    <a href="#brainstorming">Brainstorming</a>
+    <a href="#pitch">Full Pitch</a>
+  </nav>
+
+  <!-- ── PROJECT INFO STRIP ────────────────────────────────── -->
+  <div class="container">
+    <div class="info-grid reveal">
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Role</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">Art Director</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Strategy · Copy · Creative Direction</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Context</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">MEJO 371 Class Project</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Advertising Creative · UNC Chapel Hill</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Duration</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">2 Weeks</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Research through final deliverables</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Deliverables</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">Full Campaign System</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Truth · Strategy · Manifesto · Ads · Activations</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 1 — OVERVIEW
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="overview">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">01 /</span> Overview</p>
+        <h2 class="cs-title">The Brief &<br /><em>Context</em></h2>
+      </div>
+      <div class="two-col-wide reveal" style="margin-top:32px">
+        <div>
+          <p class="t-body">
+            This project tasked us with developing a full advertising campaign for
+            <strong>Skullcandy</strong> — the audio brand founded in 2003 in Park City, Utah,
+            originally built for the outdoor action sports demographic and since expanded
+            into the premium audio market.
+          </p>
+          <p class="t-body" style="margin-top:16px">
+            The process moved from brand research through consumer insight, creative strategy,
+            and ultimately a full suite of campaign deliverables — manifesto, tagline, video spot,
+            billboard, social, branded content, partnerships, and IRL activations.
+          </p>
+          <p class="t-body" style="margin-top:16px">
+            Our research pointed to one consistent finding: <strong>Skullcandy listeners are
+            primarily attracted to the bass.</strong> That became the thread the entire campaign
+            is built on.
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="insight-card">
+            <h4>The Brand</h4>
+            <p>Bold visual identity, powerful bass, and a culture rooted in music, movement, and unapologetic self-expression.</p>
+          </div>
+          <div class="insight-card">
+            <h4>The Challenge</h4>
+            <p>Avoid the generic "music for everyone" angle. Skullcandy's power is in who it's <em>not</em> for — finding that edge and making it the campaign's center of gravity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 — BRAINSTORMING
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="brainstorming">
+    <div class="container">
+
+      <!-- Brand Truth -->
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">02 /</span> Brainstorming</p>
+        <h2 class="cs-title">Brand Truth,<br /><em>Strategy & Big Idea</em></h2>
+        <p class="t-body" style="max-width:580px;margin-top:12px">
+          Before any creative, we worked through a brand truth, a focused creative strategy,
+          and a central idea that the whole campaign could stand on.
+        </p>
+      </div>
+
+      <div class="truth-card reveal" style="margin-top:36px">
+        <div class="truth-row">
+          <div class="truth-pill-col"><span class="truth-pill fact">Fact</span></div>
+          <div class="truth-text-col"><p>Skullcandy is known for its powerful bass, creating a deep and immersive listening experience.</p></div>
+        </div>
+        <div class="truth-row">
+          <div class="truth-pill-col"><span class="truth-pill obs">Observation</span></div>
+          <div class="truth-text-col"><p>People who don't like Skullcandy find the bass too intense.</p></div>
+        </div>
+        <div class="truth-row">
+          <div class="truth-pill-col"><span class="truth-pill ins">Insight</span></div>
+          <div class="truth-text-col"><p class="truth-insight">Skullcandy is only for the ones that can handle it.</p></div>
+        </div>
+      </div>
+
+      <!-- Strategy -->
+      <div class="strategy-card reveal" style="margin-top:40px">
+        <div class="strategy-header">
+          <p>Convince</p>
+          <h4>"All or Nothing" <em>Types</em></h4>
+        </div>
+        <div class="strategy-rows">
+          <div class="strategy-cell">
+            <p class="strat-label">That</p>
+            <p>With Skullcandy, you don't have to settle for an ordinary listening experience.</p>
+          </div>
+          <div class="strategy-cell">
+            <p class="strat-label">Because</p>
+            <p>Skullcandy creates a listening experience that matches your intensity.</p>
+          </div>
+          <div class="strategy-cell">
+            <p class="strat-label">Support</p>
+            <p>Skullcandy headphones have a strong, immersive bass fit for the bold, intense, and extreme — you can feel it in your bones.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Idea Statement + Tagline -->
+      <div class="two-col reveal" style="margin-top:40px">
+        <div>
+          <p class="t-label" style="margin-bottom:12px">Idea Statement</p>
+          <h3 style="font-size:clamp(20px,2.5vw,30px);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:14px">Let's unleash your intensity.</h3>
+          <p class="t-body">You deserve not just to listen to music, but to feel and embody it. Skullcandy is made for people who want to live life bolder and louder — more bass, more color, more expression.</p>
+        </div>
+        <div style="display:flex;align-items:center;">
+          <div class="tagline-display" style="width:100%">
+            <div>
+              <p class="t-label">Campaign Tagline</p>
+              <h3>Live Life on Full Blast.</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 — FULL PITCH DECK
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="pitch">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">03 /</span> Full Pitch</p>
+        <h2 class="cs-title">The Complete<br /><em>Campaign Presentation</em></h2>
+        <p class="t-body" style="max-width:560px;margin-top:12px">
+          The full deck covers the manifesto, tagline, billboard concept, TV spot script,
+          social strategy, branded content, brand partnership, technology activation,
+          influencer collaboration, campus pop-up, and wild card — all in one place.
+        </p>
+      </div>
+
+      <div class="pdf-block reveal">
+        <div class="pdf-toolbar">
+          <div class="pdf-toolbar-left">
+            <div class="pdf-dots">
+              <div class="pdf-dot"></div>
+              <div class="pdf-dot"></div>
+              <div class="pdf-dot"></div>
+            </div>
+            <span class="pdf-label">Skullcandy Campaign Pitch Deck.pdf</span>
+          </div>
+          <a href="assets/skullcandy-pitch.pdf" target="_blank" class="pdf-open-btn">Open Full PDF</a>
+        </div>
+        <iframe
+          src="assets/skullcandy-pitch.pdf"
+          class="pdf-iframe"
+          title="Skullcandy Campaign Pitch Deck"
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OUTCOME STRIP ──────────────────────────────────────── -->
+  <div class="container">
+    <div class="outcome-strip sc reveal">
+      <h2>A Campaign Built on<br /><em>One Honest Insight</em></h2>
+      <div class="outcome-body">
+        <p>
+          The bass is too much for some people. We stopped treating that as a problem.
+          Skullcandy is only for the ones that can handle it — and "Live Life on Full Blast"
+          is what that looks like across every channel, format, and activation.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER NAV ─────────────────────────────────────────── -->
+  <div class="container">
+    <div class="footer-nav">
+      <a href="/work/dceff-campaign/" class="footer-nav-link">
+        <span class="nav-dir">← Previous</span>
+        <span class="nav-title">DCEFF × Levi's</span>
+      </a>
+      <a href="/work/flare/" class="footer-nav-link right">
+        <span class="nav-dir">Next →</span>
+        <span class="nav-title">Flare</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Sanjana Nukala &nbsp;·&nbsp; © 2026</p>
+    <p>Art Direction · Product Design · UI/UX</p>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>

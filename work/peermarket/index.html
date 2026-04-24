@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PeerMarket — a student marketplace UX case study by Sanjana Nukala." />
+  <title>PeerMarket — Sanjana Nukala</title>
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="../../css/case-study.css" />
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M19 5H6C2 5 2 20 11 20C21 20 23 37 13 40H4"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M25 4V40 M25 4L40 40 M40 4V40"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Sanjana Nukala
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/work/" class="active">Work</a>
+      <button data-resume-trigger>Resume</button>
+    </div>
+    <a href="mailto:nukalasanjana8@gmail.com" class="nav-cta">Let's Collaborate</a>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="cs-hero cs-hero-split" style="background:
+    radial-gradient(ellipse 60% 70% at 8% 20%, #f0d9f5 0%, transparent 65%),
+    radial-gradient(ellipse 55% 65% at 92% 80%, #d4edf5 0%, transparent 65%),
+    var(--bg);
+    flex-direction: row; justify-content: flex-start; align-items: flex-end; gap: 60px;">
+    <div class="cs-hero-content" style="flex: 1 1 0; min-width: 0;">
+      <span class="tag dot">UX Research · Interface Design</span>
+      <h1>PeerMarket<br /><em>Student Marketplace</em></h1>
+      <p class="cs-hero-sub t-large">
+        A mobile marketplace designed to help college students buy, sell, rent,
+        and swap items safely and sustainably on campus.
+      </p>
+      <div class="cs-hero-chips">
+        <span class="chip">Figma</span>
+        <span class="chip">FigJam</span>
+        <span class="chip">UX Research</span>
+        <span class="chip">Prototyping</span>
+        <span class="chip">User Interviews</span>
+      </div>
+    </div>
+    <div class="cs-hero-media">
+      <div class="img-frame">
+        <img src="assets/3screens.png" alt="PeerMarket app screens" />
+      </div>
+    </div>
+  </section>
+  <!-- ── IN-PAGE SECTION NAV ───────────────────────────────── -->
+  <nav class="cs-section-nav" aria-label="Jump to section">
+    <a href="#overview">Overview</a>
+    <a href="#problem">Problem</a>
+    <a href="#research">Research</a>
+    <a href="#process">Process</a>
+    <a href="#features">Features</a>
+    <a href="#goals">Goals</a>
+    <a href="#reflection">Reflection</a>
+    <a href="#outcome">Outcome</a>
+  </nav>
+
+  <!-- ── PROJECT INFO STRIP ────────────────────────────────── -->
+  <div class="container">
+    <div class="info-grid reveal">
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Role</p>
+        <p style="font-size:15px; font-weight:500; line-height:1.5">Sole Designer</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Timeline</p>
+        <p style="font-size:15px; font-weight:500">4 weeks · 2025</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Client</p>
+        <p style="font-size:15px; font-weight:500; line-height:1.5">
+          App Team Carolina<br/>UI/UX Apprenticeship
+        </p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Tools</p>
+        <p style="font-size:15px; font-weight:500; line-height:1.5">
+          Figma · FigJam<br/>User Interviews
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OVERVIEW ──────────────────────────────────────────── -->
+  <section id="overview" class="section container reveal">
+    <p class="cs-eyebrow t-label">Project Overview</p>
+    <div class="two-col-wide">
+      <div>
+        <h2 class="cs-title">A campus marketplace built around <em>trust and low effort</em></h2>
+        <p class="t-body">
+          PeerMarket is a mobile student marketplace designed to help college students
+          buy, sell, rent, or swap items safely and efficiently on campus. The initiative
+          advances sustainability through secondhand purchasing while directly addressing
+          the trust, safety, and social anxiety students experience when reaching out to sellers.
+        </p>
+        <p class="t-body" style="margin-top:16px">
+          As the capstone project for an App Team Carolina UI/UX apprenticeship, I
+          managed the full design lifecycle — ideation, research, wireframing, and
+          high-fidelity prototyping in Figma — over four weeks. The project was awarded
+          <strong>Most Impactful Real-World Application</strong>.
+        </p>
+      </div>
+      <div>
+        <h3 style="font-size:17px; font-weight:700; margin-bottom:16px;">Scope</h3>
+        <ul style="display:flex; flex-direction:column; gap:14px;">
+          <li style="display:flex; gap:12px; font-size:14.5px; color:var(--ink-mid);">
+            <span style="color:var(--ink); font-weight:700; flex-shrink:0;">→</span>
+            User research & interviews with college students
+          </li>
+          <li style="display:flex; gap:12px; font-size:14.5px; color:var(--ink-mid);">
+            <span style="color:var(--ink); font-weight:700; flex-shrink:0;">→</span>
+            Competitive analysis of existing platforms
+          </li>
+          <li style="display:flex; gap:12px; font-size:14.5px; color:var(--ink-mid);">
+            <span style="color:var(--ink); font-weight:700; flex-shrink:0;">→</span>
+            Research-driven persona development
+          </li>
+          <li style="display:flex; gap:12px; font-size:14.5px; color:var(--ink-mid);">
+            <span style="color:var(--ink); font-weight:700; flex-shrink:0;">→</span>
+            Wireframing through high-fidelity prototyping
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROBLEM ───────────────────────────────────────────── -->
+  <section id="problem" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">01</span>Problem</p>
+    <h2 class="cs-title">Existing platforms feel <em>unsafe, inconvenient,</em> or socially uncomfortable</h2>
+    <p class="t-body">
+      Students on college campuses regularly need to buy and sell items — textbooks,
+      furniture, clothes, electronics. But the tools they're using weren't built for them.
+      GroupMe posts get buried, Facebook Marketplace feels unsafe, and Instagram stories
+      disappear after 24 hours. Beyond discoverability, deeper friction points emerged
+      around trust and the social cost of reaching out.
+    </p>
+    <div class="callout">
+      <p>
+        "How might we design a campus marketplace that reduces the social and logistical
+        barriers to buying and selling, so that students feel safe, confident, and
+        comfortable throughout the entire experience?"
+      </p>
+    </div>
+    <div class="two-col" style="margin-top:0;">
+      <div>
+        <h3 style="font-size:17px; font-weight:700; margin-bottom:16px;">What students are using today</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="card" style="border-radius:12px; padding:0;">
+            <div class="card-body" style="display:flex; gap:12px; align-items:center; padding:16px 18px;">
+              <span style="font-size:18px;">💬</span>
+              <span style="font-size:14px; font-weight:500;">GroupMe group chats</span>
+            </div>
+          </div>
+          <div class="card" style="border-radius:12px; padding:0;">
+            <div class="card-body" style="display:flex; gap:12px; align-items:center; padding:16px 18px;">
+              <span style="font-size:18px;">📸</span>
+              <span style="font-size:14px; font-weight:500;">Instagram Stories (24-hour posts)</span>
+            </div>
+          </div>
+          <div class="card" style="border-radius:12px; padding:0;">
+            <div class="card-body" style="display:flex; gap:12px; align-items:center; padding:16px 18px;">
+              <span style="font-size:18px;">🌐</span>
+              <span style="font-size:14px; font-weight:500;">Facebook Marketplace</span>
+            </div>
+          </div>
+          <div class="card" style="border-radius:12px; padding:0;">
+            <div class="card-body" style="display:flex; gap:12px; align-items:center; padding:16px 18px;">
+              <span style="font-size:18px;">📌</span>
+              <span style="font-size:14px; font-weight:500;">Physical bulletin boards</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:17px; font-weight:700; margin-bottom:16px;">Core pain points</h3>
+        <div class="process-list" style="margin-top:0;">
+          <div class="process-step" style="padding:18px 0;">
+            <span class="step-num" style="font-size:22px;">⚠</span>
+            <div class="step-body">
+              <h4>Trust & Safety</h4>
+              <p>Quality, pricing, and seller identity are unclear. Students feel uncertain meeting strangers.</p>
+            </div>
+          </div>
+          <div class="process-step" style="padding:18px 0;">
+            <span class="step-num" style="font-size:22px;">😰</span>
+            <div class="step-body">
+              <h4>Social Anxiety</h4>
+              <p>Many students avoid posting or reaching out due to the effort and social discomfort of initiating conversation.</p>
+            </div>
+          </div>
+          <div class="process-step" style="padding:18px 0; border-bottom:none;">
+            <span class="step-num" style="font-size:22px;">🚗</span>
+            <div class="step-body">
+              <h4>Logistics</h4>
+              <p>Transportation and pickup coordination are major barriers for students without cars.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RESEARCH ──────────────────────────────────────────── -->
+  <section id="research" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">02</span>Research & Discovery</p>
+    <h2 class="cs-title">Understanding students <em>in their own words</em></h2>
+    <div class="two-col">
+      <div>
+        <p class="t-body">
+          I interviewed three college students from different campuses to understand
+          their real experiences buying and selling secondhand. Conversations covered
+          what platforms they currently use, what frustrations they encounter, and
+          what would make them more willing to participate in peer-to-peer selling.
+        </p>
+        <p class="t-body" style="margin-top:16px">
+          I also conducted a competitive analysis across four comparable platforms,
+          mapping their strengths and gaps against student needs. From this, two
+          research-driven personas emerged representing the key user archetypes.
+        </p>
+      </div>
+      <div>
+        <h3 style="font-size:17px; font-weight:700; margin-bottom:16px;">Key Insights</h3>
+        <div class="insight-grid" style="grid-template-columns:1fr; margin-top:0;">
+          <div class="insight-card">
+            <h4>Quality & Pricing</h4>
+            <p>Item quality and overpricing are major concerns. Students can't assess items reliably before meeting a seller.</p>
+          </div>
+          <div class="insight-card">
+            <h4>Communication Friction</h4>
+            <p>Many students avoid buying secondhand because reaching out to sellers feels awkward and effortful.</p>
+          </div>
+          <div class="insight-card">
+            <h4>Verification as Trust Signal</h4>
+            <p>Verified student identity would significantly increase willingness to purchase secondhand from peers.</p>
+          </div>
+          <div class="insight-card">
+            <h4>Location Matters</h4>
+            <p>Transportation is a major limiting factor. Campus-specific pickup locations would unlock participation for many students.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 56px;">
+      <p class="t-label" style="margin-bottom: 20px;">Interview Personas</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        <div class="img-expand-wrap" style="height: 200px; background: #111827; box-shadow: var(--shadow-md);">
+          <img src="assets/persona1.png" alt="Persona 1: Diva, Georgia Tech student" data-lightbox />
+        </div>
+        <div class="img-expand-wrap" style="height: 200px; background: #111827; box-shadow: var(--shadow-md);">
+          <img src="assets/persona2.png" alt="Persona 2: Meera, UNC Chapel Hill student" data-lightbox />
+        </div>
+        <div class="img-expand-wrap" style="height: 200px; background: #111827; box-shadow: var(--shadow-md);">
+          <img src="assets/persona3.png" alt="Persona 3: Medha, UNC Charlotte student" data-lightbox />
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <img src="assets/Final Project Competitive Analysis.png" alt="Competitive analysis across four student marketplace platforms" data-lightbox style="display:none;" />
+      <button data-comp-analysis style="display:inline-flex; align-items:center; gap:10px; background:var(--bg-warm); border:1px solid var(--border); border-radius:var(--radius-full); padding:12px 20px; font-size:13.5px; font-weight:600; color:var(--ink); cursor:pointer; transition:box-shadow 0.2s, border-color 0.2s;">
+        <span style="font-size:15px;">↗</span> View Competitive Analysis
+      </button>
+    </div>
+
+  </section>
+
+  <!-- ── DESIGN PROCESS ────────────────────────────────────── -->
+  <section id="process" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">03</span>Design Process</p>
+    <h2 class="cs-title">From insights to <em>high-fidelity flows</em></h2>
+    <p class="t-body">
+      With research findings in hand, I translated student pain points directly into
+      product decisions — ensuring every feature had a clear rationale grounded in
+      what users actually expressed in interviews.
+    </p>
+    <div class="process-list">
+      <div class="process-step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h4>Define the Problem Space</h4>
+          <p>Synthesized interview data and competitive analysis into core opportunity areas: trust, communication, logistics, and discovery.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h4>Build Research-Driven Personas</h4>
+          <p>Created two personas representing the primary student archetypes — the socially anxious buyer and the busy seller — to ground every design decision in a real user need.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h4>Wireframe Core Flows</h4>
+          <p>Mapped out the key journeys in FigJam — onboarding with verification, browsing and filtering, the offer flow, and pickup coordination — before moving to pixels.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h4>High-Fidelity Prototyping</h4>
+          <p>Designed polished mobile screens in Figma, iterated on each feature with the specific research-backed rationale in mind, and connected flows into an interactive prototype.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 48px;">
+      <p class="t-label" style="margin-bottom: 20px;">Design Personas</p>
+      <div class="two-col" style="gap: 20px;">
+        <div class="img-expand-wrap" style="height: 280px; background: #111827; box-shadow: var(--shadow-md);">
+          <img src="assets/PeerMarket Personas.png" alt="Design persona: Meera" data-lightbox />
+        </div>
+        <div class="img-expand-wrap" style="height: 280px; background: #111827; box-shadow: var(--shadow-md);">
+          <img src="assets/PeerMarket Personas2.png" alt="Design persona: Diya" data-lightbox />
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── KEY FEATURES ──────────────────────────────────────── -->
+  <section id="features" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">04</span>Key Features</p>
+    <h2 class="cs-title">Six features, each <em>solving a real problem</em></h2>
+    <p class="t-body">
+      Every feature in PeerMarket maps directly back to a pain point surfaced in
+      research. None were added speculatively — each had a student quote behind it.
+    </p>
+
+    <div style="margin-top: 48px;">
+
+      <div class="feature-showcase">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#e8d4f5,#d4edf5);">🎓</div>
+          <h4>Student Verification at Sign-Up</h4>
+          <p>A three-step email verification flow confirms .edu identity — expanding trust without restricting listings to peak enrollment periods only.</p>
+        </div>
+        <div class="feature-showcase-screens">
+          <img src="assets/sign up.png" alt="Sign up screen" />
+          <img src="assets/login.png" alt="Log in screen" />
+        </div>
+      </div>
+
+      <div class="feature-showcase">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#e8d4f5,#d4edf5);">📱</div>
+          <h4>Scrollable Feed with Smart Filters</h4>
+          <p>Vertical item cards with horizontal category filters for fast discovery. Like and save functionality keeps browsing low-commitment.</p>
+        </div>
+        <div class="feature-showcase-screens">
+          <img src="assets/home.png" alt="Browsing feed with category filters" />
+        </div>
+      </div>
+
+      <div class="feature-showcase">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#e8d4f5,#d4edf5);">✅</div>
+          <h4>Clear Item & Trust Indicators</h4>
+          <p>Each listing shows transaction type (sale, rent, or swap), item condition, seller rating, and verification status — reducing misrepresentation concerns.</p>
+        </div>
+        <div class="feature-showcase-screens">
+          <img src="assets/verification.png" alt="Item detail with trust indicators and verified seller badge" />
+        </div>
+      </div>
+
+      <div class="feature-showcase">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#e8d4f5,#d4edf5);">💬</div>
+          <h4>Low-Pressure Messaging & Offers</h4>
+          <p>Automated "Send Offer" messages let sellers accept or decline without small talk. Direct messaging remains available for those who want it.</p>
+        </div>
+        <div class="feature-showcase-screens">
+          <img src="assets/messages.png" alt="Offer flow with accept and decline options" />
+        </div>
+      </div>
+
+      <div class="feature-showcase">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#e8d4f5,#d4edf5);">📍</div>
+          <h4>Structured Pickup & Payment Flow</h4>
+          <p>Users confirm a campus pickup location and payment method before sending an offer — reducing safety concerns and post-deal logistics anxiety.</p>
+        </div>
+        <div class="feature-showcase-screens">
+          <img src="assets/pickup+payment.png" alt="Pickup location and payment selection before sending offer" />
+        </div>
+      </div>
+
+      <div class="feature-showcase">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#e8d4f5,#d4edf5);">📋</div>
+          <h4>Order Tracking & Listing Management</h4>
+          <p>Purchase history and an active listings view with draft and sold statuses give both buyers and sellers full visibility and control.</p>
+        </div>
+        <div class="feature-showcase-screens">
+          <img src="assets/orders.png" alt="Purchase history orders tab" />
+          <img src="assets/listings.png" alt="Active listings and sold items management" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── DESIGN GOALS ──────────────────────────────────────── -->
+  <section id="goals" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">05</span>Design Goals</p>
+    <h2 class="cs-title">What we were <em>optimizing for</em></h2>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <h4>Reduce Barriers</h4>
+        <p>Lower the effort required to post, browse, and complete a transaction so participation feels effortless rather than laborious.</p>
+      </div>
+      <div class="insight-card">
+        <h4>Build Trust Inclusively</h4>
+        <p>Increase confidence through verification and clear item information without artificially narrowing the pool of available listings.</p>
+      </div>
+      <div class="insight-card">
+        <h4>Support Anxious Users</h4>
+        <p>Design communication flows that let socially anxious students participate fully without being forced into open-ended conversation.</p>
+      </div>
+      <div class="insight-card">
+        <h4>Encourage Sustainability</h4>
+        <p>Make secondhand the obvious, convenient default for students — reducing waste and promoting circular consumption on campus.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REFLECTION ────────────────────────────────────────── -->
+  <section id="reflection" class="section container reveal">
+    <p class="cs-eyebrow t-label"><span class="num">06</span>Reflection</p>
+    <h2 class="cs-title">What I <em>learned</em></h2>
+    <ul class="reflection-list">
+      <li><strong>Research is a design tool:</strong> Grounding every feature in a direct user quote made design decisions faster and more defensible. It's easier to say no to scope creep when you have a clear "why" behind every "yes."</li>
+      <li><strong>Reducing friction is a form of accessibility:</strong> Designing for social anxiety wasn't a niche consideration — it made the product better for everyone. Low-pressure defaults benefit all users, not just those who need them.</li>
+      <li><strong>Trust is systemic, not cosmetic:</strong> A verification badge alone doesn't create trust. Trust comes from the sum of small, consistent signals — clear item info, transparent pricing, structured communication, and safe pickup flows working together.</li>
+      <li><strong>Constraints sharpen focus:</strong> Four weeks and a solo role forced clear prioritization. The constraint of shipping a complete, coherent prototype — not just screens — was one of the most valuable aspects of the apprenticeship structure.</li>
+    </ul>
+  </section>
+
+  <!-- ── OUTCOME ───────────────────────────────────────────── -->
+  <div id="outcome" class="container reveal">
+    <div class="outcome-strip">
+      <h2>Most Impactful<br/><em>Real-World Application</em></h2>
+      <div class="outcome-body">
+        <p>
+          PeerMarket was Voted 'Most Impactful Real-World Application' in the App Team Carolina
+          apprenticeship — recognized for its research-grounded approach, cohesive
+          visual design, and the depth of thinking behind each interaction. The project
+          demonstrated that designing for underserved emotional needs like social anxiety
+          can be both a human and a product win.
+        </p>
+        <a href="https://www.figma.com/proto/JK4Cfpi49a3XIgxEAmvsc0/PeerMarket-App?node-id=61-304&t=mVWp7tDVtAqmnYj0-1" target="_blank" rel="noopener" class="outcome-link">
+          View Prototype
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER NAV ─────────────────────────────────────────── -->
+  <div class="container">
+    <div class="footer-nav reveal">
+      <a href="/work/" class="footer-nav-link">
+        <span class="nav-dir">← Back</span>
+        <span class="nav-title">All Works</span>
+      </a>
+      <a href="/work/depression-dashboard/" class="footer-nav-link right">
+        <span class="nav-dir">Next →</span>
+        <span class="nav-title">Depression Hotspots Dashboard</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Sanjana Nukala &nbsp;·&nbsp; © 2026</p>
+    <p>Product & UI/UX Designer</p>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('[data-comp-analysis]');
+      const img = btn && btn.previousElementSibling;
+      if (btn && img) {
+        btn.addEventListener('mouseenter', () => { btn.style.boxShadow = 'var(--shadow-md)'; btn.style.borderColor = 'var(--ink-soft)'; });
+        btn.addEventListener('mouseleave', () => { btn.style.boxShadow = ''; btn.style.borderColor = ''; });
+        btn.addEventListener('click', () => img.dispatchEvent(new MouseEvent('click')));
+      }
+    });
+  </script>
+</body>
+</html>

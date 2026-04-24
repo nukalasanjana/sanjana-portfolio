@@ -1,0 +1,185 @@
+/* ============================================================
+   HOME.CSS — index.html specific styles
+   ============================================================ */
+
+/* ── HERO ────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 140px var(--page-pad) 80px;
+  background:
+    radial-gradient(ellipse 60% 70% at 8%  20%, #cee3f5 0%, transparent 60%),
+    radial-gradient(ellipse 55% 65% at 92% 80%, #f5e8d3 0%, transparent 60%),
+    var(--bg);
+  position: relative; overflow: hidden;
+}
+.hero-eyebrow {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-soft);
+  margin-bottom: 24px;
+  opacity: 0; animation: fadeUp 0.7s 0.1s ease forwards;
+}
+.hero h1 {
+  font-size: clamp(52px, 7vw, 100px);
+  font-weight: 800; letter-spacing: -0.04em;
+  line-height: 0.97;
+  opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards;
+}
+.hero h1 em {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.hero-sub {
+  margin-top: 28px;
+  max-width: 520px;
+  opacity: 0; animation: fadeUp 0.8s 0.35s ease forwards;
+}
+.hero-actions {
+  margin-top: 44px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  opacity: 0; animation: fadeUp 0.8s 0.45s ease forwards;
+}
+.hero-scroll-hint {
+  position: absolute; bottom: 36px; right: var(--page-pad);
+  display: flex; align-items: center; gap: 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-soft);
+  opacity: 0; animation: fadeUp 0.8s 0.65s ease forwards;
+}
+.hero-scroll-hint::before {
+  content: ""; width: 28px; height: 1px; background: var(--ink-soft);
+}
+
+/* ── MARQUEE ─────────────────────────────────────────────── */
+.marquee-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden; padding: 16px 0;
+  background: white;
+}
+.marquee-track {
+  display: flex; gap: 40px; width: max-content;
+  animation: marquee 22s linear infinite;
+}
+.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+.marquee-item {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-soft);
+  white-space: nowrap;
+}
+.marquee-item::after {
+  content: "✦"; font-size: 8px; color: var(--ink-soft);
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── ABOUT STRIP ─────────────────────────────────────────── */
+.about-strip {
+  padding: var(--section-pad) 0;
+  border-bottom: 1px solid var(--border);
+}
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.about-text h2 {
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.08; margin-bottom: 24px;
+}
+.about-text h2 em {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+}
+.about-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 24px; margin-top: 40px;
+}
+.stat-item .stat-num {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800; letter-spacing: -0.04em;
+  line-height: 1;
+}
+.stat-item .stat-num em {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+}
+.stat-item p {
+  font-size: 13px; color: var(--ink-soft); margin-top: 6px;
+  font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* ── SKILLS LIST ─────────────────────────────────────────── */
+.skills-list {
+  display: flex; flex-direction: column; gap: 0;
+}
+.skill-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+}
+.skill-row:first-child { border-top: 1px solid var(--border); }
+.skill-name  { font-size: 15px; font-weight: 600; }
+.skill-level { font-size: 13px; color: var(--ink-soft); }
+
+/* ── WORK GRID (home preview) ────────────────────────────── */
+.work-preview {
+  padding: var(--section-pad) 0;
+  border-bottom: 1px solid var(--border);
+}
+.work-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 48px;
+}
+.work-header h2 {
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800; letter-spacing: -0.015em; line-height: 1.2;
+}
+.work-header h2 em {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+}
+.work-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.work-card { position: relative; display: block; }
+.work-card .work-thumb {
+  width: 100%; aspect-ratio: 4/3;
+  background: linear-gradient(135deg, var(--bg-cool), var(--bg-warm));
+  border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.work-card:hover .work-thumb {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.work-card .work-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.work-info { margin-top: 16px; }
+.work-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 10px;
+}
+.work-tag {
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-soft);
+  background: var(--tag-bg); border-radius: var(--radius-full);
+  padding: 3px 10px;
+}
+.work-info h3 {
+  font-size: clamp(15px, 1.5vw, 19px); font-weight: 800;
+  letter-spacing: -0.01em; line-height: 1.3; transition: opacity 0.2s;
+}
+.work-card:hover .work-info h3 { opacity: 0.5; }
+
+/* ── RESPONSIVE: HOME ────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .work-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .hero h1 { font-size: clamp(44px, 11vw, 70px); }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .work-grid  { grid-template-columns: 1fr; }
+  .work-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+}

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Flare — Real-time community emergency alert platform built with Next.js, FastAPI, and Supabase. 2nd Place at Pearl Hacks 2026." />
+  <title>Flare — Sanjana Nukala</title>
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="../../css/case-study.css" />
+  <style>
+    /* ── Flare tokens ─────────────────────────────────────── */
+    :root {
+      --flare-navy:   #0d1b3e;
+      --flare-mid:    #1a2d5a;
+      --flare-red:    #e63946;
+      --flare-red-lt: #fdecea;
+      --flare-blue:   #3a7bd5;
+      --flare-glow:   rgba(230,57,70,0.12);
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .cs-hero.flare-hero {
+      background:
+        radial-gradient(ellipse 55% 60% at 5% 15%, rgba(58,123,213,.14) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 55% at 90% 85%, rgba(230,57,70,.10) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    /* ── Award badge ──────────────────────────────────────── */
+    .award-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #fff8e6, #fff3d6);
+      border: 1px solid rgba(200,160,40,.25);
+      border-radius: 99px;
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #8a6810;
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+    }
+    .award-badge::before {
+      content: "🏆";
+      font-size: 14px;
+    }
+
+    /* ── Feature cards (override icon gradient for Flare) ─── */
+    .flare-icon {
+      background: linear-gradient(135deg, rgba(58,123,213,.18), rgba(230,57,70,.15));
+    }
+
+    /* ── Tech stack grid ──────────────────────────────────── */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 36px;
+    }
+    .tech-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 20px;
+      text-align: center;
+    }
+    .tech-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    .tech-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .tech-card p {
+      font-size: 12px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    /* ── Architecture diagram (text-based) ───────────────── */
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 36px 0;
+      overflow-x: auto;
+    }
+    .arch-box {
+      flex: 1;
+      min-width: 140px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .arch-box .arch-layer {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+    }
+    .arch-box h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .arch-box p {
+      font-size: 12px;
+      color: var(--ink-mid);
+      line-height: 1.5;
+    }
+    .arch-arrow {
+      font-size: 20px;
+      color: var(--ink-soft);
+      padding: 0 8px;
+      flex-shrink: 0;
+    }
+
+    /* ── Alert preview strip ──────────────────────────────── */
+    .alert-demo {
+      background: var(--flare-navy);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .alert-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--flare-red);
+      flex-shrink: 0;
+      margin-top: 4px;
+      box-shadow: 0 0 0 4px rgba(230,57,70,.25);
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(230,57,70,.25); }
+      50%       { box-shadow: 0 0 0 8px rgba(230,57,70,.1); }
+    }
+    .alert-demo-content h4 {
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .alert-demo-content p {
+      color: rgba(255,255,255,.55);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .alert-meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .alert-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.1);
+      color: rgba(255,255,255,.65);
+    }
+    .alert-chip.verified {
+      background: rgba(58,213,100,.15);
+      color: #4ade80;
+    }
+
+    /* ── Credibility bar ──────────────────────────────────── */
+    .credibility-bar-wrap {
+      margin-top: 16px;
+    }
+    .credibility-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,.45);
+      margin-bottom: 8px;
+    }
+    .credibility-bar {
+      height: 6px;
+      background: rgba(255,255,255,.1);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .credibility-fill {
+      height: 100%;
+      width: 82%;
+      background: linear-gradient(90deg, var(--flare-blue), var(--flare-red));
+      border-radius: 99px;
+    }
+
+    /* ── Outcome strip override ───────────────────────────── */
+    .outcome-strip.flare { background: var(--flare-navy); }
+
+    /* ── cs-section spacing ───────────────────────────────── */
+    .cs-section { padding: var(--section-pad) 0; border-bottom: 1px solid var(--border); }
+    .cs-section:last-of-type { border-bottom: none; }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .tech-grid { grid-template-columns: repeat(2, 1fr); }
+      .arch-flow { flex-direction: column; gap: 8px; }
+      .arch-arrow { transform: rotate(90deg); }
+    }
+    @media (max-width: 600px) {
+      .tech-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M19 5H6C2 5 2 20 11 20C21 20 23 37 13 40H4"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M25 4V40 M25 4L40 40 M40 4V40"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Sanjana Nukala
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/work/" class="active">Work</a>
+      <button data-resume-trigger>Resume</button>
+    </div>
+    <a href="mailto:nukalasanjana8@gmail.com" class="nav-cta">Let's Collaborate</a>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="cs-hero flare-hero cs-hero-split">
+    <div class="cs-hero-content">
+      <div class="award-badge">2nd Place — TRIAD STEM Hack · Pearl Hacks 2026</div>
+      <span class="tag dot">Full Stack Development · Real-Time Systems · Hackathon</span>
+      <h1>Flare —<br /><em>Community Emergency Alerts</em></h1>
+      <p class="cs-hero-sub t-large">
+        A real-time community emergency alert platform built in 24 hours — enabling decentralized
+        incident reporting and community verification to deliver faster, more reliable safety alerts.
+      </p>
+      <div class="cs-hero-chips">
+        <span class="chip">Next.js</span>
+        <span class="chip">React</span>
+        <span class="chip">FastAPI</span>
+        <span class="chip">Supabase</span>
+        <span class="chip">Real-Time</span>
+        <span class="chip">Full-Stack</span>
+      </div>
+      <div class="cs-scroll-hint">Scroll to explore</div>
+    </div>
+    <div class="cs-hero-media">
+      <div class="img-frame">
+        <img src="assets/home.png" alt="Flare — Community Emergency Alerts platform shown on a laptop" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IN-PAGE SECTION NAV ───────────────────────────────── -->
+  <nav class="cs-section-nav" aria-label="Jump to section">
+    <a href="#overview">Overview</a>
+    <a href="#problem">The Problem</a>
+    <a href="#features">Features</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#process">Process</a>
+    <a href="#reflection">Reflection</a>
+  </nav>
+
+  <!-- ── PROJECT INFO STRIP ────────────────────────────────── -->
+  <div class="container">
+    <div class="info-grid reveal">
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Event</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">Pearl Hacks 2026</p>
+        <p style="font-size:13px;color:var(--ink-soft)">UNC Chapel Hill</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Award</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">2nd Place</p>
+        <p style="font-size:13px;color:var(--ink-soft)">TRIAD STEM Hack</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Timeline</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">24 Hours</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Hackathon sprint</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Role</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:4px">Full-Stack Development</p>
+        <p style="font-size:13px;color:var(--ink-soft)">Frontend · Backend · Real-Time</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 1 — OVERVIEW
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="overview">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">01 /</span> Overview</p>
+        <h2 class="cs-title">Community-Powered<br /><em>Emergency Response</em></h2>
+      </div>
+      <div class="two-col-wide reveal" style="margin-top:32px">
+        <div>
+          <p class="t-body">
+            Flare is a real-time community emergency alert platform built during Pearl Hacks 2026 —
+            a 24-hour hackathon at UNC Chapel Hill. The project tackled a core gap in emergency
+            communication: official alerts are slow because they require top-down verification.
+            Flare flips this model by putting community members at the center.
+          </p>
+          <p class="t-body" style="margin-top:16px">
+            Users report hazards — fires, floods, accidents — and the platform uses a
+            <strong>decentralized credibility system</strong> driven by community upvotes to
+            determine when a report becomes an official alert. Once a report crosses a
+            verification threshold, nearby users are automatically notified in real time.
+          </p>
+          <p class="t-body" style="margin-top:16px">
+            The project won <strong>2nd Place for the TRIAD STEM Hack</strong>, demonstrating
+            the potential for community-powered technology to improve situational awareness
+            and emergency response at the local level.
+          </p>
+
+          <a href="https://devpost.com/software/flare-tmu49f" target="_blank" rel="noopener" class="outcome-link" style="margin-top:28px;background:var(--flare-navy);color:white;">
+            View on Devpost
+          </a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="insight-card">
+            <h4>The Core Insight</h4>
+            <p>Community members at the scene know about an emergency before any official source does. Flare captures that distributed knowledge and turns it into verified alerts — automatically.</p>
+          </div>
+          <div class="insight-card">
+            <h4>The Constraint</h4>
+            <p>24 hours. One shot. We had to identify a focused MVP, pick the right stack for real-time functionality, and ship something that actually worked by demo time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 — THE PROBLEM
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="problem" style="background:linear-gradient(180deg,#f5f8ff 0%,var(--bg) 100%)">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">02 /</span> The Problem</p>
+        <h2 class="cs-title">Emergency Alerts<br /><em>Are Too Slow</em></h2>
+        <p class="t-body" style="max-width:620px;margin-top:12px">
+          Traditional emergency communication is top-down. Alerts only reach people after
+          official verification — a process that takes time when time is the one thing
+          people in danger don't have.
+        </p>
+      </div>
+
+      <div class="two-col reveal" style="margin-top:40px">
+        <div>
+          <h4 style="font-size:17px;font-weight:700;margin-bottom:12px">The Gap in Existing Systems</h4>
+          <p class="t-body">
+            In fast-moving situations — a building fire, a flash flood, a traffic accident — the
+            people closest to the event know first. But there's no easy way for that ground-level
+            knowledge to surface into a warning system quickly. By the time an official alert
+            goes out, critical minutes have passed.
+          </p>
+          <p class="t-body" style="margin-top:14px">
+            Existing community apps like Citizen or Nextdoor surface reports, but they don't
+            have a structured credibility mechanism that distinguishes a verified incident from
+            a rumor — and they don't automatically escalate confirmed reports into safety alerts.
+          </p>
+        </div>
+        <div>
+          <h4 style="font-size:17px;font-weight:700;margin-bottom:12px">What Flare Answers</h4>
+          <ul class="reflection-list" style="margin-top:0">
+            <li>How do we surface ground-level emergency reports faster than official channels?</li>
+            <li>How do we verify crowd-sourced reports without a central authority?</li>
+            <li>How do we deliver real-time alerts to nearby users the moment a threshold is crossed?</li>
+            <li>How do we give emergency responders a live operational view of all active incidents?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 — FEATURES
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="features">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">03 /</span> Core Features</p>
+        <h2 class="cs-title">What Flare<br /><em>Actually Does</em></h2>
+        <p class="t-body" style="max-width:580px;margin-top:12px">
+          Four interlocking pieces that together form a complete emergency communication loop —
+          from first report to verified alert to responder dashboard.
+        </p>
+      </div>
+
+      <div class="feature-grid reveal">
+        <div class="feature-card">
+          <div class="feature-icon flare-icon">🚨</div>
+          <h4>Hazard Reporting</h4>
+          <p>Users report incidents — fires, floods, accidents — with location and incident type in seconds. Reports enter the system immediately and are visible to nearby users.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon flare-icon">👍</div>
+          <h4>Community Verification</h4>
+          <p>Reports gain credibility through upvotes from other users in the area. Each upvote is a data point — the more confirmation, the higher the credibility score.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon flare-icon">⚡</div>
+          <h4>Credibility Threshold</h4>
+          <p>Once a report crosses a defined verification threshold, it automatically elevates to an official alert — triggering real-time notifications to nearby users.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon flare-icon">📊</div>
+          <h4>Admin Dashboard</h4>
+          <p>Emergency responders and administrators get a live analytics view: total alerts raised, reports submitted, and users notified — all updating in real time.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon flare-icon">📍</div>
+          <h4>Location-Aware Alerts</h4>
+          <p>Alerts are geofenced — only users near the incident receive notifications. Proximity determines relevance, keeping alerts actionable and noise-free.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon flare-icon">🔄</div>
+          <h4>Real-Time Updates</h4>
+          <p>The entire platform syncs live via Supabase's real-time subscriptions — no page refreshes, no polling. The UI reflects the current state of every incident instantly.</p>
+        </div>
+      </div>
+
+      <!-- Live alert demo visual -->
+      <div class="reveal" style="margin-top:48px">
+        <p class="t-label" style="margin-bottom:16px">Live Alert — What a verified report looks like</p>
+        <div class="alert-demo">
+          <div class="alert-dot"></div>
+          <div class="alert-demo-content" style="flex:1">
+            <h4>Structure Fire — 200 Block of Franklin St</h4>
+            <p>Reported by 3 community members · First report 4 minutes ago · Chapel Hill, NC</p>
+            <div class="alert-meta">
+              <span class="alert-chip verified">✓ Verified Alert</span>
+              <span class="alert-chip">Fire</span>
+              <span class="alert-chip">14 notified nearby</span>
+            </div>
+            <div class="credibility-bar-wrap">
+              <div class="credibility-label">
+                <span>Community credibility score</span>
+                <span>82 / 100</span>
+              </div>
+              <div class="credibility-bar">
+                <div class="credibility-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 4 — ARCHITECTURE
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="architecture" style="background:linear-gradient(180deg,#0d1b3e,#0f2248)">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label" style="color:rgba(255,255,255,.4)"><span class="num">04 /</span> Technical Architecture</p>
+        <h2 class="cs-title" style="color:white">The Stack Behind<br /><em style="color:#6ba3e8">Real-Time Alerts</em></h2>
+        <p class="t-body" style="max-width:600px;margin-top:12px;color:rgba(255,255,255,.6)">
+          Every technology choice was made with one constraint in mind: this had to work —
+          live, in a demo, in 24 hours. We chose tools we trusted and that played well together.
+        </p>
+      </div>
+
+      <div class="tech-grid reveal" style="margin-top:40px">
+        <div class="tech-card">
+          <div class="tech-icon">▲</div>
+          <h4>Next.js</h4>
+          <p>Server-side rendering, routing, and API routes for a fast, SEO-friendly frontend.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">⚛</div>
+          <h4>React</h4>
+          <p>Component architecture and state management for a dynamic, real-time UI.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">⚡</div>
+          <h4>FastAPI</h4>
+          <p>Python backend for high-performance API endpoints — incident creation, upvotes, and alert logic.</p>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon">🟢</div>
+          <h4>Supabase</h4>
+          <p>PostgreSQL database with real-time subscriptions — the backbone of live incident updates across all connected clients.</p>
+        </div>
+      </div>
+
+      <!-- Architecture flow -->
+      <div class="reveal" style="margin-top:48px">
+        <p class="t-label" style="color:rgba(255,255,255,.35);margin-bottom:20px">Data flow — Report to Alert</p>
+        <div class="arch-flow">
+          <div class="arch-box">
+            <p class="arch-layer">User</p>
+            <h4>Incident Report</h4>
+            <p>Location, type, description submitted via Next.js frontend</p>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-box">
+            <p class="arch-layer">Backend</p>
+            <h4>FastAPI</h4>
+            <p>Validates report, writes to Supabase, returns confirmation</p>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-box">
+            <p class="arch-layer">Database</p>
+            <h4>Supabase</h4>
+            <p>Stores report, tracks upvotes, broadcasts changes in real time</p>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-box">
+            <p class="arch-layer">Alert Logic</p>
+            <h4>Threshold Check</h4>
+            <p>Credibility score crosses threshold → incident elevates to official alert</p>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-box">
+            <p class="arch-layer">Notification</p>
+            <h4>Real-Time Push</h4>
+            <p>Nearby users receive live alert via Supabase real-time subscription</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout reveal" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);margin-top:40px">
+        <p style="color:rgba(255,255,255,.75)">
+          "Supabase's real-time subscriptions were the key bet. Instead of polling the database
+          every few seconds, clients subscribe directly to changes in the incidents table —
+          so the moment a report's credibility score updates or an alert is triggered, every
+          connected client updates without any user action. That's what makes Flare feel live."
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 5 — PROCESS
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="process">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">05 /</span> Process</p>
+        <h2 class="cs-title">Building a Platform<br /><em>in 24 Hours</em></h2>
+      </div>
+      <div class="process-list reveal">
+        <div class="process-step">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <h4>Defining MVP Scope — Hour 1</h4>
+            <p>
+              The 24-hour constraint is ruthless about scope. The first hour was spent answering
+              one question: what is the smallest version of this that still makes the idea legible?
+              We landed on the core loop: report → upvote → verify → alert. Everything else
+              was a nice-to-have.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <h4>Choosing the Stack for Real-Time</h4>
+            <p>
+              The platform only works if updates are live — a refresh-based system doesn't capture
+              the urgency of emergency alerts. Supabase's real-time subscriptions were the deciding
+              factor in the stack choice. It meant we could wire the database directly to the UI
+              without building a separate WebSocket layer, which saved us hours.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <h4>Building the Credibility System</h4>
+            <p>
+              The upvote threshold was the core algorithm. Too low, and false reports slip through.
+              Too high, and legitimate emergencies get stuck in pending status. We tuned the
+              threshold iteratively during the build — testing with simulated reports to find the
+              right balance between speed and accuracy.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">4</span>
+          <div class="step-body">
+            <h4>Frontend & Backend in Parallel</h4>
+            <p>
+              With FastAPI handling the backend and Next.js on the frontend, we split work and
+              reunited at the API contract. Defining the request/response shapes early meant
+              we could build in parallel without blocking each other — critical when time is the
+              primary constraint.
+            </p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">5</span>
+          <div class="step-body">
+            <h4>Admin Dashboard — Final Push</h4>
+            <p>
+              The analytics dashboard for emergency responders came together in the final hours.
+              Because Supabase was already broadcasting all data changes in real time, surfacing
+              metrics — total alerts, reports submitted, users notified — was more about query
+              design than new infrastructure. The hard work was already done.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 6 — REFLECTION
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="reflection">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">06 /</span> Reflection</p>
+        <h2 class="cs-title">What I Took<br /><em>Away</em></h2>
+      </div>
+      <div class="two-col reveal" style="margin-top:36px">
+        <div>
+          <ul class="reflection-list">
+            <li>Real-time infrastructure is a design constraint. The choice of Supabase shaped every downstream decision — from how we structured data to how the UI updated.</li>
+            <li>Community trust systems are harder than they look. A simple upvote counter is easy to build; a credibility system that resists abuse and produces accurate results takes real architectural thought.</li>
+            <li>24 hours is enough to build something meaningful. With focused scope and the right stack, a hackathon can produce a working product — not just a prototype.</li>
+            <li>Splitting work by API contract works. Defining the interface first and building in parallel was the only way to ship both a polished frontend and a real backend in one day.</li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="insight-card">
+            <h4>Biggest Technical Bet</h4>
+            <p>Supabase real-time subscriptions over polling. It paid off — the live UI was the most compelling part of the demo and the reason the platform felt like a real product.</p>
+          </div>
+          <div class="insight-card">
+            <h4>What I'd Do Differently</h4>
+            <p>Spend more time on the credibility algorithm. The threshold we shipped worked, but a proper model accounting for user history and report location density would make Flare much more robust against false reports.</p>
+          </div>
+          <div class="insight-card">
+            <h4>What This Confirmed</h4>
+            <p>I can hold the full stack in my head at once — data model, API design, and UI state — and make decisions across all three layers. That's the skill I'm most proud of developing here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OUTCOME STRIP ──────────────────────────────────────── -->
+  <div class="container">
+    <div class="outcome-strip flare reveal">
+      <h2>2nd Place —<br /><em>TRIAD STEM Hack</em></h2>
+      <div class="outcome-body">
+        <p>
+          Built in 24 hours at Pearl Hacks 2026. Flare demonstrated that community-powered
+          technology can meaningfully improve emergency situational awareness — and that
+          the right stack makes real-time feel effortless.
+        </p>
+        <a href="https://devpost.com/software/flare-tmu49f" target="_blank" rel="noopener" class="outcome-link">
+          View on Devpost
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER NAV ─────────────────────────────────────────── -->
+  <div class="container">
+    <div class="footer-nav">
+      <a href="/work/peermarket/" class="footer-nav-link">
+        <span class="nav-dir">← Previous</span>
+        <span class="nav-title">PeerMarket</span>
+      </a>
+      <a href="/work/depression-dashboard/" class="footer-nav-link right">
+        <span class="nav-dir">Next →</span>
+        <span class="nav-title">Depression Dashboard</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Sanjana Nukala &nbsp;·&nbsp; © 2026</p>
+    <p>Full-Stack Development · Product Design · UI/UX</p>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>
