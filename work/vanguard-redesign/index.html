@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Vanguard Year in Review Redesign — UX Research & Design case study by Sanjana Nukala. Redesigning Vanguard's YIR feature for retirement-age investors at UNC Hussman School of Journalism." />
+  <title>Vanguard Year in Review — Sanjana Nukala</title>
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="../../css/case-study.css" />
+  <style>
+    /* ── Vanguard tokens ──────────────────────────────────────── */
+    :root {
+      --vg-navy:    #1c2d5e;
+      --vg-mid:     #2e4a8a;
+      --vg-red:     #c8102e;
+      --vg-red-lt:  #fceaed;
+      --vg-gold:    #c9a843;
+      --vg-gold-lt: #fdf7e3;
+      --vg-light:   #eef3fb;
+    }
+
+    /* ── Hero ─────────────────────────────────────────────────── */
+    .cs-hero.vg-hero {
+      background:
+        radial-gradient(ellipse 60% 70% at 5% 20%, rgba(28,45,94,.10) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 92% 82%, rgba(200,16,46,.07) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    /* ── Client badge ─────────────────────────────────────────── */
+    .client-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--vg-light);
+      border: 1px solid rgba(28,45,94,.2);
+      border-radius: 99px;
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--vg-navy);
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+    }
+
+    /* ── Hero prototype CTA ───────────────────────────────────── */
+    .hero-proto-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--vg-navy);
+      color: white;
+      border-radius: 99px;
+      padding: 14px 28px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 28px;
+      transition: opacity .2s;
+    }
+    .hero-proto-cta::after { content: "→"; font-size: 15px; }
+    .hero-proto-cta:hover  { opacity: .85; }
+
+    /* ── Info grid — 5 cols ───────────────────────────────────── */
+    .info-grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .info-grid-5 .info-cell { padding: 0 22px; border-right: 1px solid var(--border); }
+    .info-grid-5 .info-cell:first-child { padding-left: 0; }
+    .info-grid-5 .info-cell:last-child  { border-right: none; }
+
+    /* ── Problem cards ────────────────────────────────────────── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .problem-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .problem-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--vg-navy), var(--vg-mid));
+    }
+    .problem-num {
+      display: block;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 40px;
+      color: var(--vg-navy);
+      opacity: .25;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .problem-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 10px; letter-spacing: -.01em; }
+    .problem-card p  { font-size: 13.5px; color: var(--ink-mid); line-height: 1.65; }
+
+    /* ── Methodology box ──────────────────────────────────────── */
+    .methodology-box {
+      background: var(--vg-light);
+      border: 1px solid rgba(28,45,94,.15);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 28px;
+    }
+    .methodology-box h4 {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--vg-navy); margin-bottom: 14px;
+    }
+    .methodology-box ul { display: flex; flex-direction: column; gap: 8px; }
+    .methodology-box li {
+      display: flex; gap: 10px;
+      font-size: 14px; color: var(--ink-mid); line-height: 1.6;
+    }
+    .methodology-box li::before { content: "·"; color: var(--vg-navy); font-weight: 700; flex-shrink: 0; }
+
+    /* ── Participant cards ────────────────────────────────────── */
+    .participant-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .participant-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      text-align: center;
+    }
+    .p-img-wrap {
+      width: 100%; height: 130px;
+      background: var(--vg-light);
+      overflow: hidden;
+    }
+    .p-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .p-info { padding: 14px 12px 16px; }
+    .p-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--vg-navy); margin-bottom: 6px; }
+    .p-detail { font-size: 12px; color: var(--ink-mid); line-height: 1.5; }
+    .p-detail strong { display: block; color: var(--ink); font-weight: 600; font-size: 12.5px; margin-bottom: 2px; }
+
+    /* ── Pull quote ───────────────────────────────────────────── */
+    .pull-quote {
+      border-left: 3px solid var(--vg-navy);
+      padding: 20px 28px;
+      margin: 32px 0;
+      background: var(--bg-warm);
+      border-radius: 0 12px 12px 0;
+    }
+    .pull-quote p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(17px, 1.8vw, 21px);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    .pull-quote cite {
+      display: block;
+      margin-top: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink-soft); font-style: normal;
+    }
+
+    /* ── Findings layout ──────────────────────────────────────── */
+    .positive-list { display: flex; flex-direction: column; }
+    .positive-item {
+      display: flex; gap: 12px;
+      padding: 13px 0; border-bottom: 1px solid var(--border);
+      font-size: 14px; color: var(--ink-mid); line-height: 1.65;
+    }
+    .positive-item:last-child { border-bottom: none; }
+    .positive-item::before { content: "✓"; color: #2d7a4f; font-weight: 700; flex-shrink: 0; }
+
+    /* ── Severity tiers ───────────────────────────────────────── */
+    .severity-tier { margin-bottom: 24px; }
+    .severity-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .severity-badge {
+      font-size: 11px; font-weight: 700; letter-spacing: .04em;
+      padding: 4px 12px; border-radius: 99px;
+    }
+    .severity-badge.critical { background: #fceaea; color: #c62828; }
+    .severity-badge.major    { background: #fff3e0; color: #e65100; }
+    .severity-badge.minor    { background: #fff8e1; color: #b57d00; }
+    .severity-item {
+      display: flex; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+      font-size: 13.5px; color: var(--ink-mid); line-height: 1.65;
+    }
+    .severity-item:last-child { border-bottom: none; }
+    .severity-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+    .severity-body p { font-size: 13.5px; color: var(--ink-mid); line-height: 1.65; }
+    .severity-quote { font-style: italic; color: var(--ink-soft); font-size: 12.5px; margin-top: 5px; }
+
+    /* ── Persona cards ────────────────────────────────────────── */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .persona-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: white;
+    }
+    .persona-card.my-persona { border-color: var(--vg-navy); }
+    .persona-img-wrap {
+      width: 100%; height: 160px;
+      background: var(--vg-light);
+      overflow: hidden;
+    }
+    .persona-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .persona-body { padding: 18px 18px 20px; }
+    .my-persona-tag {
+      display: inline-block;
+      font-size: 10px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase;
+      background: var(--vg-navy); color: white;
+      border-radius: 99px; padding: 3px 10px;
+      margin-bottom: 10px;
+    }
+    .persona-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; letter-spacing: -.01em; }
+    .persona-card p  { font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+
+    /* ── Full-width image with expand ─────────────────────────── */
+    .cs-img-full {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-top: 28px;
+    }
+    .cs-img-full img { width: 100%; display: block; }
+
+    /* ── Principle callout ────────────────────────────────────── */
+    .principle-callout {
+      background: var(--vg-navy);
+      color: white;
+      border-radius: 16px;
+      padding: 36px 40px;
+      margin-top: 36px;
+    }
+    .principle-callout .quote-text {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(17px, 1.9vw, 22px);
+      line-height: 1.5;
+      margin-bottom: 16px;
+      color: white;
+    }
+    .principle-callout p { font-size: 14px; color: rgba(255,255,255,.65); line-height: 1.7; }
+
+    /* ── Audience brief ───────────────────────────────────────── */
+    .audience-brief {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 32px;
+    }
+    .audience-brief h4 {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--ink-soft); margin-bottom: 14px;
+    }
+    .audience-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 24px; }
+    .audience-list li {
+      display: flex; gap: 10px;
+      font-size: 13.5px; color: var(--ink-mid); line-height: 1.55;
+    }
+    .audience-list li::before { content: "→"; color: var(--vg-navy); font-weight: 700; flex-shrink: 0; }
+
+    /* ── Flow diagram cards ───────────────────────────────────── */
+    .flow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+    .flow-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      background: white;
+    }
+    .flow-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--vg-navy); margin-bottom: 12px;
+    }
+    .flow-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 16px; letter-spacing: -.01em; }
+    .flow-steps { display: flex; flex-direction: column; gap: 5px; }
+    .flow-step {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 12.5px; color: var(--ink-mid); line-height: 1.5;
+    }
+    .flow-step-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--vg-navy); flex-shrink: 0; margin-top: 5px;
+    }
+    .flow-step.entry .flow-step-dot { background: var(--vg-red); }
+    .flow-step.end .flow-step-dot   { background: var(--vg-gold); }
+    .flow-step.preferred { color: var(--ink); font-weight: 500; }
+
+    /* ── Decision cards ───────────────────────────────────────── */
+    .decision-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
+    .decision-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      background: var(--bg-warm);
+    }
+    .decision-card.my-contribution {
+      border-color: rgba(200,16,46,.3);
+      background: var(--vg-red-lt);
+    }
+    .my-contribution-tag {
+      display: inline-block;
+      font-size: 10px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase;
+      background: var(--vg-red); color: white;
+      border-radius: 99px; padding: 3px 10px; margin-bottom: 12px;
+    }
+    .decision-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px;
+    }
+    .decision-card h4 { font-size: 15px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 8px; }
+    .decision-section { margin-top: 14px; }
+    .decision-section h5 {
+      font-size: 11px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px;
+    }
+    .decision-section p { font-size: 13px; color: var(--ink-mid); line-height: 1.65; }
+
+    /* ── Ideation contribution list ───────────────────────────── */
+    .ideation-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+    .ideation-item {
+      display: flex; gap: 10px;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+      font-size: 14px; color: var(--ink-mid); line-height: 1.6;
+    }
+    .ideation-item::before { content: "↗"; color: var(--vg-navy); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .ideation-item strong { color: var(--ink); }
+
+    /* ── Three-step design timeline ───────────────────────────── */
+    .design-timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
+    .dt-step { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .dt-step-img {
+      height: 200px;
+      background: linear-gradient(135deg, var(--vg-light), #dce9f7);
+      overflow: hidden;
+    }
+    .dt-step-img img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
+    .dt-step-body { padding: 20px 20px 22px; }
+    .dt-step-num {
+      display: block;
+      font-family: var(--serif); font-style: italic;
+      font-size: 28px; color: var(--vg-navy); opacity: .4;
+      margin-bottom: 6px;
+    }
+    .dt-step-body h4 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+    .dt-step-body p  { font-size: 12.5px; color: var(--ink-soft); line-height: 1.6; }
+
+    /* ── Prototype CTA banner ─────────────────────────────────── */
+    .proto-banner {
+      background: var(--vg-navy);
+      border-radius: 20px;
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      margin: 48px 0 40px;
+    }
+    .proto-banner h3 {
+      color: white;
+      font-size: clamp(20px, 2.2vw, 28px);
+      font-weight: 800; letter-spacing: -.02em;
+    }
+    .proto-banner h3 em {
+      font-family: var(--serif); font-style: italic; font-weight: 400;
+      color: rgba(255,255,255,.65);
+    }
+    .proto-banner p { color: rgba(255,255,255,.55); font-size: 14px; margin-top: 6px; }
+    .proto-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: white; color: var(--vg-navy);
+      border-radius: 99px; padding: 14px 28px;
+      font-size: 14px; font-weight: 700;
+      white-space: nowrap; flex-shrink: 0; transition: opacity .2s;
+    }
+    .proto-btn::after { content: "→"; font-size: 14px; }
+    .proto-btn:hover { opacity: .85; }
+
+    /* ── Feature showcase Vanguard backgrounds ────────────────── */
+    .feature-showcase-screens.vg-bg-light { background: linear-gradient(135deg, var(--vg-light), #dce9f7); }
+    .feature-showcase-screens.vg-bg-gold  { background: linear-gradient(135deg, var(--vg-gold-lt), #fdf0ca); }
+    .feature-showcase-screens.vg-bg-warm  { background: linear-gradient(135deg, #f0eeff, #e8f5ea); }
+    .feature-showcase.reverse { flex-direction: row-reverse; }
+
+    /* ── Feature media (image / video inside showcase) ────────── */
+    .feature-showcase-screens { overflow: hidden; }
+    .feature-img {
+      max-height: 380px;
+      max-width: 100%;
+      width: auto;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.14);
+      flex-shrink: 1;
+      object-fit: contain;
+      cursor: zoom-in;
+      transition: opacity .2s;
+    }
+    .feature-img:hover { opacity: .88; }
+    .feature-video {
+      max-height: 380px;
+      max-width: 100%;
+      width: auto;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.14);
+      flex-shrink: 1;
+      display: block;
+    }
+    /* ── Zoom cursor on all thumbnail images ──────────────────── */
+    .p-img-wrap img,
+    .persona-img-wrap img,
+    .cs-img-full img,
+    .cs-hero-media img { cursor: zoom-in; }
+    /* ── Card-sort image: cap height so it doesn't tower over text */
+    .two-col-wide .img-expand-wrap { max-height: 340px; overflow: hidden; }
+
+    /* ── Why It Works matrix ──────────────────────────────────── */
+    .why-matrix {
+      margin-top: 32px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .why-matrix-head {
+      display: grid; grid-template-columns: 1.4fr 2.6fr 2fr;
+      background: var(--vg-navy); padding: 12px 24px; gap: 24px;
+    }
+    .why-matrix-head span {
+      font-size: 10px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: rgba(255,255,255,.5);
+    }
+    .why-matrix-row {
+      display: grid; grid-template-columns: 1.4fr 2.6fr 2fr;
+      padding: 16px 24px; gap: 24px;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .why-matrix-row:last-child  { border-bottom: none; }
+    .why-matrix-row:nth-child(even) { background: var(--bg-warm); }
+    .why-matrix-row:nth-child(odd)  { background: white; }
+    .why-feature { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .why-benefit { font-size: 13px; color: var(--ink-mid); line-height: 1.55; }
+    .why-persona { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+
+    /* ── Contribution layout ──────────────────────────────────── */
+    .contribution-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 56px; margin-top: 36px; }
+    .contribution-col h4 {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--ink-soft); margin-bottom: 16px;
+    }
+    .contribution-items { display: flex; flex-direction: column; }
+    .contribution-item {
+      display: flex; gap: 12px;
+      padding: 13px 0; border-bottom: 1px solid var(--border);
+      font-size: 14px; color: var(--ink-mid); line-height: 1.65;
+    }
+    .contribution-item:last-child { border-bottom: none; }
+    .contribution-item::before { content: "—"; color: var(--vg-navy); font-weight: 600; flex-shrink: 0; }
+    .contribution-item.highlight { color: var(--ink); }
+
+    /* ── Reflection beats ─────────────────────────────────────── */
+    .reflection-beats { display: flex; flex-direction: column; }
+    .reflection-beat { padding: 32px 0; border-bottom: 1px solid var(--border); }
+    .reflection-beat:last-child { border-bottom: none; }
+    .beat-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--vg-navy); margin-bottom: 12px;
+    }
+    .reflection-beat p { font-size: 16px; color: var(--ink-mid); line-height: 1.8; max-width: 700px; }
+
+    /* ── cs-section spacing ───────────────────────────────────── */
+    .cs-section { padding: var(--section-pad) 0; border-bottom: 1px solid var(--border); }
+    .cs-section:last-of-type { border-bottom: none; }
+
+    /* ── Walkthrough videos ───────────────────────────────────── */
+    .walkthrough-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 16px;
+    }
+    .walkthrough-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: white;
+    }
+    .walkthrough-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--vg-navy);
+      padding: 14px 18px 10px;
+    }
+    .walkthrough-video {
+      width: 100%;
+      display: block;
+      background: #000;
+      max-height: 380px;
+    }
+    .walkthrough-caption {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      padding: 10px 18px 16px;
+    }
+
+    /* ── Outcome strip ────────────────────────────────────────── */
+    .outcome-strip.vg { background: var(--vg-navy); }
+
+    /* ── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 1000px) {
+      .info-grid-5       { grid-template-columns: repeat(3, 1fr); }
+      .info-grid-5 .info-cell { padding: 16px 16px; border-right: none; border-bottom: 1px solid var(--border); }
+      .persona-grid      { grid-template-columns: repeat(2, 1fr); }
+      .participant-grid  { grid-template-columns: repeat(3, 1fr); }
+      .design-timeline   { grid-template-columns: 1fr; }
+      .decision-grid     { grid-template-columns: 1fr; }
+      .proto-banner      { flex-direction: column; align-items: flex-start; }
+      .contribution-grid { grid-template-columns: 1fr; gap: 40px; }
+      .why-matrix-head,
+      .why-matrix-row    { grid-template-columns: 1.4fr 2.6fr; }
+      .why-persona       { display: none; }
+    }
+    @media (max-width: 700px) {
+      .participant-grid  { grid-template-columns: repeat(2, 1fr); }
+      .problem-grid      { grid-template-columns: 1fr; }
+      .flow-grid         { grid-template-columns: 1fr; }
+      .persona-grid      { grid-template-columns: 1fr; }
+      .ideation-cols     { grid-template-columns: 1fr; }
+      .audience-list     { grid-template-columns: 1fr; }
+      .why-matrix-head,
+      .why-matrix-row    { grid-template-columns: 1fr; }
+      .why-matrix-head span:not(:first-child) { display: none; }
+      .why-benefit, .why-persona { display: none; }
+      .info-grid-5       { grid-template-columns: 1fr 1fr; }
+      .feature-showcase.reverse { flex-direction: column; }
+      .proto-banner      { padding: 28px 24px; }
+      .feature-img, .feature-video { max-height: 280px; }
+      .walkthrough-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M19 5H6C2 5 2 20 11 20C21 20 23 37 13 40H4"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M25 4V40 M25 4L40 40 M40 4V40"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Sanjana Nukala
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/work/" class="active">Work</a>
+      <a href="/playground/">Playground</a>
+      <button data-resume-trigger>Resume</button>
+    </div>
+    <a href="mailto:sanjananukala0@gmail.com" class="nav-cta">Let's Collaborate</a>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="cs-hero vg-hero cs-hero-split">
+    <div class="cs-hero-content">
+      <div class="client-badge">Vanguard × UNC Hussman School of Journalism</div>
+      <span class="tag dot">UX Research · Interaction Design</span>
+      <h1>Vanguard Year in Review Redesign</h1>
+      <p class="cs-hero-sub t-large">
+        Transform the Vanguard Year in Review into an adaptive and interactive financial experience
+        that adjusts to each user's needs, compares progress over time, explores future
+        possibilities, and remains accessible to revisit and understand.
+      </p>
+      <div class="cs-hero-chips">
+        <span class="chip">Figma</span>
+        <span class="chip">Usability Testing</span>
+        <span class="chip">Card Sorting</span>
+        <span class="chip">Personas</span>
+        <span class="chip">User Flows</span>
+        <span class="chip">Hi-Fi Prototype</span>
+      </div>
+      <a href="https://www.figma.com/proto/Iqll8Bz8Rkt6PhjmucP6gL/Client-Pitch-Prototype?node-id=2123-22965&t=qRHwCwBOQdAPuTis-1" class="hero-proto-cta">Explore the Prototype</a>
+      <div class="cs-scroll-hint">Scroll to explore</div>
+    </div>
+    <div class="cs-hero-media">
+      <div class="img-frame">
+        <img src="assets/hero-image.png" alt="Vanguard Year in Review — redesigned welcome screen showing the Guided/Self-Directed toggle" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IN-PAGE SECTION NAV ───────────────────────────────── -->
+  <nav class="cs-section-nav" aria-label="Jump to section">
+    <a href="#challenge">Challenge</a>
+    <a href="#research">Research</a>
+    <a href="#structure">Structure</a>
+    <a href="#process">Process</a>
+    <a href="#design">Design</a>
+    <a href="#contribution">My Role</a>
+    <a href="#reflection">Reflection</a>
+  </nav>
+
+  <!-- ── PROJECT INFO STRIP ────────────────────────────────── -->
+  <div class="container">
+    <div class="info-grid-5 reveal">
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Role</p>
+        <p style="font-size:15px;font-weight:600;line-height:1.4">UX Researcher<br/>&amp; Designer</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Client</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:3px">Vanguard</p>
+        <p style="font-size:12px;color:var(--ink-soft)">× UNC Hussman</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Team</p>
+        <p style="font-size:13px;color:var(--ink-mid);line-height:1.6">Sanjana Nukala<br/>Nora Lyons<br/>Bettina George<br/>Francesca Fabiano-Grossi<br/>Ben Eggleston</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Timeline</p>
+        <p style="font-size:15px;font-weight:600;margin-bottom:3px">Jan – May 2026</p>
+        <p style="font-size:12px;color:var(--ink-soft)">MEJO 581</p>
+      </div>
+      <div class="info-cell">
+        <p class="t-label" style="margin-bottom:10px">Tools</p>
+        <p style="font-size:13px;color:var(--ink-mid);line-height:1.65">Figma<br/>Card Sorting<br/>Think-Aloud Testing</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 1 — THE CHALLENGE
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="challenge">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">01 /</span> The Challenge</p>
+        <h2 class="cs-title">The <em>Problem</em></h2>
+        <p class="t-body" style="max-width:660px;margin-top:12px">
+          Vangaurd wanted a redesign for their "Year in Review" feature as clients often underutilize it due to misunderstanding and lack of clarity regarding its benefits and specific features. The redesign targets retirees and those aged 50+ approaching retirement. This group represents a wide spectrum of financial literacy and comfort with technology. <br />
+          <br />The goal of this redesign is to show retirees exactly how Digital Advisor helps them, making the "Year in Review" more personal and easy to understand. By focusing on what retirees care about most, the redesign aims to turn confusion into confidence, encouraging them to use the feature to stay engaged and take clear steps toward their financial goals.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 — RESEARCH
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="research" style="background:linear-gradient(180deg,#f3f7fc 0%,var(--bg) 100%)">
+    <div class="container">
+
+      <!-- 2a — Who We Talked To -->
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">02a /</span> Research</p>
+        <h2 class="cs-title">Getting to Know<br/><em>Our Users</em></h2>
+        <p class="t-body" style="max-width:680px;margin-top:12px">
+          Before designing anything, we needed to understand how our users actually think about
+          their finances and use the website. We ran listening sessions over zoom with
+          investors 50+ to hear about their priorities, their relationship with financial tools,
+          and what it means to feel "on track." Then we used moderated usability
+          tests to have them test Vanguard's existing prototype.
+        </p>
+      </div>
+
+      <div class="methodology-box reveal">
+        <h4>Methodology</h4>
+        <ul>
+          <li>5 participants, ages 50–67</li>
+          <li>Mixed levels of financial literacy and technical expertise</li>
+          <li>Moderated remote sessions over Zoom, 40–60 min each</li>
+          <li>Think-aloud protocol across 5 tasks</li>
+          <li>Likert scale evaluation + post-test interview</li>
+        </ul>
+      </div>
+
+      <!-- Participant cards with actual images -->
+      <div class="reveal" style="margin-top:36px">
+        <p class="t-label" style="margin-bottom:16px">Participant profiles</p>
+        <div class="participant-grid">
+          <div class="participant-card">
+            <div class="p-img-wrap">
+              <img src="assets/Persona1.png" alt="Participant 1 — Professor &amp; Dean" />
+            </div>
+            <div class="p-info">
+              <p class="p-label">P1</p>
+              <div class="p-detail">
+                <strong>56 years old</strong>
+                Professor &amp; Dean<br/>Quechee, VT
+              </div>
+            </div>
+          </div>
+          <div class="participant-card">
+            <div class="p-img-wrap">
+              <img src="assets/Persona2.png" alt="Participant 2 — Adjunct Professor" />
+            </div>
+            <div class="p-info">
+              <p class="p-label">P2</p>
+              <div class="p-detail">
+                <strong>60 years old</strong>
+                Adjunct Professor<br/>Chapel Hill, NC
+              </div>
+            </div>
+          </div>
+          <div class="participant-card">
+            <div class="p-img-wrap">
+              <img src="assets/Persona3.png" alt="Participant 3 — Software Engineer" />
+            </div>
+            <div class="p-info">
+              <p class="p-label">P3</p>
+              <div class="p-detail">
+                <strong>50 years old</strong>
+                Software Engineer<br/>Cary, NC
+              </div>
+            </div>
+          </div>
+          <div class="participant-card">
+            <div class="p-img-wrap">
+              <img src="assets/Persona4.png" alt="Participant 4 — Professor" />
+            </div>
+            <div class="p-info">
+              <p class="p-label">P4</p>
+              <div class="p-detail">
+                <strong>67 years old</strong>
+                Professor<br/>Greensboro, NC
+              </div>
+            </div>
+          </div>
+          <div class="participant-card">
+            <div class="p-img-wrap">
+              <img src="assets/Persona5.png" alt="Participant 5 — Stay-at-home mom" />
+            </div>
+            <div class="p-info">
+              <p class="p-label">P5</p>
+              <div class="p-detail">
+                <strong>50 years old</strong>
+                Stay-at-home mom<br/>Charlotte, NC
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2b — Key Findings -->
+      <div class="reveal" style="margin-top:64px">
+        <p class="cs-eyebrow t-label"><span class="num">02b /</span> Research</p>
+        <h2 class="cs-title"><em>Key Findings</em></h2>
+      </div>
+
+      <div class="reveal" style="margin-top:28px">
+        <p style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#2d7a4f;margin-bottom:14px">What users liked</p>
+        <div class="positive-list">
+          <div class="positive-item">Visualizations like asset breakdowns, balance changes, retirement gauges were clear and concise even for lower-literacy users</div>
+          <div class="positive-item">Users could easily exit mid-review to edit contributions, then return</div>
+          <div class="positive-item">The option to skip straight to the action checklist was a standout feature</div>
+          <div class="positive-item">The YIR being optional was strongly preferred</div>
+          <div class="positive-item">Get a quick overview of their financial situation</div>
+        </div>
+      </div>
+
+      <div class="pull-quote reveal">
+        <p>"If you had to do it, that would be annoying. They have it like this, that's the way to do it."</p>
+        <cite>Participant on the optional nature of the Year in Review</cite>
+      </div>
+
+      <!-- Severity tiers -->
+      <div class="reveal">
+        <p style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:20px">Problem findings — by severity</p>
+
+        <div class="severity-tier">
+          <div class="severity-header">
+            <span style="font-size:18px">🔴</span>
+            <span class="severity-badge critical">Catastrophic</span>
+          </div>
+          <div class="severity-item">
+            <span class="severity-icon">—</span>
+            <div class="severity-body">
+              <p>The Year in Review <strong>expired on 02/11</strong>. Users couldn't return to it after the expiration date — critical, since many use it for tax season.</p>
+              <p class="severity-quote">"People will need to use the YIR for tax season."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="severity-tier">
+          <div class="severity-header">
+            <span style="font-size:18px">🟠</span>
+            <span class="severity-badge major">Major</span>
+          </div>
+          <div class="severity-item">
+            <span class="severity-icon">—</span>
+            <div class="severity-body">
+              <p>Feature buried on homepage — required scrolling to find.</p>
+              <p class="severity-quote">"I would have liked it if along the top there was a thing that said Year in Review."</p>
+            </div>
+          </div>
+          <div class="severity-item">
+            <span class="severity-icon">—</span>
+            <div class="severity-body">
+              <p>No back button after navigating to Next Steps — users were frustrated.</p>
+            </div>
+          </div>
+          <div class="severity-item">
+            <span class="severity-icon">—</span>
+            <div class="severity-body">
+              <p>No monthly breakdown — only start-of-year to end-of-year data.</p>
+            </div>
+          </div>
+          <div class="severity-item">
+            <span class="severity-icon">—</span>
+            <div class="severity-body">
+              <p>Financial insights too vague to act on — unclear retirement progress.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="severity-tier">
+          <div class="severity-header">
+            <span style="font-size:18px">🟡</span>
+            <span class="severity-badge minor">Minor</span>
+          </div>
+          <div class="severity-item">
+            <span class="severity-icon">—</span>
+            <div class="severity-body">
+              <p>External accounts not visible; managed-account links went nowhere.</p>
+            </div>
+          </div>
+          <div class="severity-item">
+            <span class="severity-icon">—</span>
+            <div class="severity-body">
+              <p>Financial explanations felt redundant for near-retirement users.</p>
+              <p class="severity-quote">"That's not my problem, they're the experts."</p>
+            </div>
+          </div>
+          <div class="severity-item">
+            <span class="severity-icon">—</span>
+            <div class="severity-body">
+              <p>Dismiss/action button positions reversed and inconsistent. Progress dots not interactive — tedious to navigate backwards.</p>
+            </div>
+          </div>
+          <div class="severity-item">
+            <span class="severity-icon">—</span>
+            <div class="severity-body">
+              <p>Inconsistent color palette across graphics.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pull-quote reveal">
+        <p>"If I have to scroll down to look at it, I would ignore it."</p>
+        <cite>Participant on feature discoverability</cite>
+      </div>
+
+      <!-- 2c — Personas -->
+      <div class="reveal" style="margin-top:56px">
+        <p class="cs-eyebrow t-label"><span class="num">02c /</span> Research</p>
+        <h2 class="cs-title">Our Four<br/><em>Personas</em></h2>
+        <p class="t-body" style="max-width:680px;margin-top:12px">
+          We organized our usability findings into scales and mapped participants across them to identify distinct user types and design needs. We made scales that defined how often they check their accounts, trust in automation, preference for detail vs. simplicity, comfort with technology, level of financial education, and emotional confidence. <br />
+          <br /> From this we identified four distinct user types, and they confirmed our findings that: one size does not fit all. Each user type had different needs and preferences, and we had to design an experience that could adapt to them to meet these competing needs.
+        </p>
+      </div>
+
+      <!-- Behavioral scale chart -->
+      <div class="cs-img-full reveal">
+        <div class="img-expand-wrap">
+          <img src="assets/Scales.png" alt="Behavioral scale chart mapping participants across six dimensions to four user types" />
+        </div>
+      </div>
+
+      <div class="persona-grid reveal">
+        <div class="persona-card">
+          <div class="persona-img-wrap">
+            <img src="assets/persona-delegator.png" alt="The Delegator persona" />
+          </div>
+          <div class="persona-body">
+            <h4>The Delegator</h4>
+            <p>Low-tech, hands-off retiree who values simplicity and trust. Prefers financial tools that make decisions for them so they can focus on enjoying retirement.</p>
+          </div>
+        </div>
+        <div class="persona-card">
+          <div class="persona-img-wrap">
+            <img src="assets/persona-careful-explorer.png" alt="The Careful Explorer persona" />
+          </div>
+          <div class="persona-body">
+            <h4>The Careful Explorer</h4>
+            <p>Highly comfortable with technology and moderately financially literate. Actively monitors finances but wants clear explanations and reassurance before making important retirement decisions.</p>
+          </div>
+        </div>
+        <div class="persona-card">
+          <div class="persona-img-wrap">
+            <img src="assets/persona-uncertain-learner.png" alt="The Uncertain Learner persona" />
+          </div>
+          <div class="persona-body">
+            <h4>The Uncertain Learner</h4>
+            <p>Cautious but motivated planner. Wants simple, trustworthy guidance without feeling overwhelmed by complex financial information.</p>
+          </div>
+        </div>
+        <div class="persona-card">
+          <div class="persona-img-wrap">
+            <img src="assets/persona-tech-savvy-monitor.png" alt="The Tech Savvy Monitor persona" />
+          </div>
+          <div class="persona-body">
+            <h4>The Tech Savvy Monitor</h4>
+            <p>Highly tech-savvy and financially sophisticated. Wants detailed data, advanced tools, and full control — no oversimplified explanations.</p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="audience-brief reveal">
+        <h4>Audience Brief</h4>
+        <ul class="audience-list">
+          <li>Age 50+, approaching or in retirement</li>
+          <li>Different financial literacy levels</li>
+          <li>Varying comfort with technology</li>
+          <li>Struggle with small text, dense screens, long reading sessions</li>
+          <li>Need tools that feel trustworthy, simple, and personalized</li>
+          <li>Want to revisit insights later via saved reports or PDFs</li>
+        </ul>
+      </div>
+
+      <!-- Key problems identified through research -->
+      <div class="reveal" style="margin-top:64px">
+        <p class="t-label" style="margin-bottom:16px">Key problems we identified through our research</p>
+        <div class="problem-grid">
+          <div class="problem-card">
+            <span class="problem-num">1</span>
+            <h4>Financial Tracking</h4>
+            <p>Users nearing or in retirement want to see annual financial trends to track their investments over time to identify any patterns or insights over the years. </p>
+          </div>
+          <div class="problem-card">
+            <span class="problem-num">2</span>
+            <h4>Different Finance Experience</h4>
+            <p>Users with different financial backgrounds had very different reactions to the same content and graphics. One experience was trying to serve everyone and ending up serving no one fully.</p>
+          </div>
+          <div class="problem-card">
+            <span class="problem-num">3</span>
+            <h4>User Preferences</h4>
+            <p>Users across different age demographics and backgrounds lacked features that could make the experience more accessible. Many were frustrated with each page’s layout and preferred the website where they could choose what to look at. </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 — STRUCTURE & THINKING
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="structure">
+    <div class="container">
+
+      <!-- 3a — Card Sort -->
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">03a /</span> Structure &amp; Thinking</p>
+        <h2 class="cs-title">From Research to<br/><em>Architecture</em></h2>
+      </div>
+
+      <div class="two-col-wide reveal" style="margin-top:36px">
+        <div>
+          <p class="t-body">
+            As we moved into design, we used the card sort method to to group the different features and the way users interacted with them. Rather than diving straight into the structure we used the card sort to organize the sequence. We noticed a general structure that seemed to resonate: start with familiar, reassuring information (overall
+            account health), then layer in complexity (projections, comparisons, simulators)
+            only after users feel grounded in their data.
+        </div>
+        <div>
+          <div class="img-expand-wrap" style="border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--vg-light)">
+            <img src="assets/card-sort.png" alt="Card sort results showing how users naturally grouped financial information" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 3b — User Flows -->
+      <div class="reveal" style="margin-top:64px">
+        <p class="cs-eyebrow t-label"><span class="num">03b /</span> Structure &amp; Thinking</p>
+        <h2 class="cs-title">Two Paths Through<br/><em>the Review</em></h2>
+        <p class="t-body" style="max-width:620px;margin-top:12px">
+          Based on this idea we experimented with 2 flows. Flow 1 centers on the Guided/Self-Directed toggle.
+          Flow 2 leads with animation and theme customization. However, both share the same
+          preferred path through the core content.
+        </p>
+      </div>
+
+
+      <!-- Actual flow diagrams -->
+      <div class="screenshot-pair reveal" style="margin-top:24px">
+        <div class="screenshot-frame" style="height:360px">
+          <div class="img-expand-wrap" style="height:100%">
+            <img src="assets/flow1.png" alt="Flow 1 — Toggle-focused user flow diagram with all branches and decision points" />
+          </div>
+        </div>
+        <div class="screenshot-frame" style="height:360px">
+          <div class="img-expand-wrap" style="height:100%">
+            <img src="assets/flow2.png" alt="Flow 2 — Animation-focused user flow diagram" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 3c — Three Key Structural Decisions -->
+      <div class="reveal" style="margin-top:64px">
+        <p class="cs-eyebrow t-label"><span class="num">03c /</span> Structure &amp; Thinking</p>
+        <h2 class="cs-title">Why We Structured<br/><em>It This Way</em></h2>
+      </div>
+
+      <div class="decision-grid reveal">
+        <div class="decision-card">
+          <p class="decision-label">Decision 1</p>
+          <h4>Toggle at Entry</h4>
+          <div class="decision-section">
+            <h5>The decision</h5>
+            <p>Guided vs. Self-Directed mode selection before any content loads.</p>
+          </div>
+          <div class="decision-section">
+            <h5>The reasoning</h5>
+            <p>Digital and financial literacy vary enormously in the 50+ audience. A single toggle at entry serves both groups without requiring two separate structures."This allows the sequence to stay the same, regardless of the type of user, and maintains a predictable path.
+          </div>
+        </div>
+
+        <div class="decision-card">
+          <p class="decision-label">Decision 2</p>
+          <h4>What-If Simulator Placed Late in the Flow</h4>
+          <div class="decision-section">
+            <h5>The decision</h5>
+            <p>The simulator appears on the Contributions page and Retirement Goal page — not at the start.</p>
+          </div>
+          <div class="decision-section">
+            <h5>The reasoning</h5>
+            <p>I argued for this placement specifically because users need to feel comfortable with the numbers and insights before experimenting with hypotheticals. Placing it earlier creates decision anxiety. When users are already looking at their contributions and start wondering "what-if," they are more likely to naturally engage with this feature. This is directly traceable to my card sort sequence.</p>
+          </div>
+        </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 4 — DESIGN PROCESS
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="process" style="background:linear-gradient(180deg,#f3f7fc 0%,var(--bg) 100%)">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">04 /</span> Design Process</p>
+        <h2 class="cs-title">From Sticky Notes<br/><em>to Screens</em></h2>
+      </div>
+
+      <!-- 4a — Ideation -->
+      <div class="reveal" style="margin-top:36px">
+        <h3 style="font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px">Ideation</h3>
+        <p class="t-body" style="max-width:660px">
+          Our team ran a design thinking session over Zoom, moving from illogical ideas →
+          original ideas → refined ideas using "Yes AND" buildouts to develop each concept.
+          My contributions that made it into the final design:
+        </p>
+      </div>
+
+      <div class="ideation-cols reveal" style="margin-top:24px">
+        <div class="ideation-item">
+          <span>Interactive visualizations with large, tappable graphics → <strong>the animated donut chart and bar comparisons</strong></span>
+        </div>
+        <div class="ideation-item">
+          <span>What-if simulator for contributions and retirement age → <strong>integrated into Contributions and Retirement Goal screens</strong></span>
+        </div>
+        <div class="ideation-item">
+          <span>Voiceover feature for accessibility → <strong>optional audio overlay throughout the flow</strong></span>
+        </div>
+        <div class="ideation-item">
+          <span>PDF download / save-to-profile → <strong>the End of Report export feature</strong></span>
+        </div>
+        <div class="ideation-item">
+          <span>Personalized goal-setting at entry → <strong>became the Guided/Advanced toggle mode</strong></span>
+        </div>
+      </div>
+
+      <!-- Ideation boards -->
+      <div class="screenshot-pair reveal" style="margin-top:28px">
+        <div class="screenshot-frame" style="height:320px">
+          <div class="img-expand-wrap" style="height:100%">
+            <img src="assets/original-ideas.png" alt="Original ideas from design thinking session — sticky note board" />
+          </div>
+        </div>
+        <div class="screenshot-frame" style="height:320px">
+          <div class="img-expand-wrap" style="height:100%">
+            <img src="assets/refined-ideas.png" alt="Refined ideas from design thinking session — developed concepts" />
+          </div>
+        </div>
+      </div>
+      <p style="font-size:12.5px;color:var(--ink-soft);margin-top:12px;font-style:italic">Original ideas (left) refined through "Yes AND" buildouts into actionable features (right).</p>
+
+      <!-- 4b — Screen Specification -->
+      <div class="reveal" style="margin-top:56px">
+        <h3 style="font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px">Screen-by-Screen Specification</h3>
+        <p class="t-body" style="max-width:660px">
+          Before touching Figma's visual layer, we built a full content specification —
+          11 screens, each with defined content, new features, data visualization types,
+          button actions, and UI elements. This helped connect our research findings
+          and the prototype: specifying what every screen needed to accomplish before
+          designing how it would look.
+        </p>
+      </div>
+
+      <!-- 4c — Three-Step Progression -->
+      <div class="reveal" style="margin-top:48px">
+        <h3 style="font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px">Flows → Specification → Hi-Fi</h3>
+        <p class="t-body" style="max-width:620px">
+          The design progressed through three phases, each building on the
+          last, with research guiding every structural choice.
+        </p>
+      </div>
+
+      <div class="design-timeline reveal">
+        <div class="dt-step">
+          <div class="dt-step-img">
+            <img src="assets/flow1.png" alt="User flow diagram — mapping every branch and decision point" />
+          </div>
+          <div class="dt-step-body">
+            <span class="dt-step-num">1</span>
+            <h4>User Flows</h4>
+            <p>"Mapping every branch, decision point, and preferred path."</p>
+          </div>
+        </div>
+        <div class="dt-step">
+          <div class="dt-step-img">
+            <img src="assets/refined-ideas.png" alt="Refined concepts — content hierarchy and interaction spec" />
+          </div>
+          <div class="dt-step-body">
+            <span class="dt-step-num">2</span>
+            <h4>Content Specification</h4>
+            <p>"Defining content, hierarchy, and interaction for each screen before styling."</p>
+          </div>
+        </div>
+        <div class="dt-step">
+          <div class="dt-step-img">
+            <img src="assets/toggle-feature.png" alt="High-fidelity prototype — final design within Vanguard's visual system" />
+          </div>
+          <div class="dt-step-body">
+            <span class="dt-step-num">3</span>
+            <h4>Hi-Fi Prototype</h4>
+            <p>"The final prototype, built within Vanguard's visual system."</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 5 — THE FINAL DESIGN
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="design">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">05 /</span> The Final Design</p>
+        <h2 class="cs-title">The<br/><em>Redesign</em></h2>
+      </div>
+
+      <!-- Prototype Walkthroughs -->
+      <div class="reveal" style="margin-top:40px">
+        <p class="t-label" style="margin-bottom:16px">Prototype Walkthroughs</p>
+        <div class="walkthrough-grid">
+          <div class="walkthrough-card">
+            <p class="walkthrough-label">Beginner Mode</p>
+            <video controls class="walkthrough-video">
+              <source src="assets/beginner-walkthrough.mov" type="video/mp4" />
+              <source src="assets/beginner-walkthrough.mov" type="video/quicktime" />
+            </video>
+            <p class="walkthrough-caption">Guided experience — simplified explanations and a curated path through the review</p>
+          </div>
+          <div class="walkthrough-card">
+            <p class="walkthrough-label">Advanced Mode</p>
+            <video controls class="walkthrough-video">
+              <source src="assets/advanced-walkthrough.mov" type="video/mp4" />
+              <source src="assets/advanced-walkthrough.mov" type="video/quicktime" />
+            </video>
+            <p class="walkthrough-caption">Self-directed experience — full data access, detailed charts, and advanced features</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prototype CTA banner -->
+      <div class="proto-banner reveal">
+        <div>
+          <h3>See It In Action —<br/><em>Explore the Full Prototype</em></h3>
+          <p>11 screens · Adaptive modes · Interactive visualizations · PDF export</p>
+        </div>
+        <a href="https://www.figma.com/proto/Iqll8Bz8Rkt6PhjmucP6gL/Client-Pitch-Prototype?node-id=2123-22965&t=qRHwCwBOQdAPuTis-1" class="proto-btn">Explore the Full Prototype</a>
+      </div>
+
+      <!-- Feature 1 — The Toggle -->
+      <div class="feature-showcase reveal">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,var(--vg-light),#dce9f7)">⚙️</div>
+          <h4>The Toggle</h4>
+          <p>
+            To account for varying financial literacy, we added a Guided vs. Self-Directed toggle at the start of the Year in Review. This gives users immediate control: "Guided Mode" simplifies language and visuals for casual investors, while "Self-Directed Mode" provides the deep analytics advanced users expect. This manual choice ensures accuracy and personalization without extra steps needed from something like a survey.
+          </p>
+        </div>
+        <div class="feature-showcase-screens vg-bg-light">
+          <img src="assets/toggle-feature.png" alt="Welcome screen showing the Guided/Self-Directed toggle with Start review and Skip to checklist buttons" class="feature-img" />
+        </div>
+      </div>
+
+      <!-- Feature 2 — Interactivity (reversed) -->
+      <div class="feature-showcase reverse reveal">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#e8f5ea,#d4edf5)">✨</div>
+          <h4>Interactivity &amp; Accessibility</h4>
+          <p>
+            The original YIR was a static scroll. Our redesign replaced this passive experience with
+            interaction: subtle animations draw attention to key data, milestone pop-ups
+            celebrate achievements, and every graphic is tappable for deeper detail. The optional
+            voiceover feature, one of my original suggestions, builds on our research that some
+            retirees struggle with dense on-screen text. This adds a layer of accessibility without
+            cluttering the experience. Larger fonts and high-contrast illustrations also
+            support readability throughout.
+          </p>
+        </div>
+        <div class="feature-showcase-screens vg-bg-warm">
+          <video autoplay muted loop playsinline class="feature-video">
+            <source src="assets/interactivity-feature.mov" type="video/mp4" />
+            <source src="assets/interactivity-feature.mov" type="video/quicktime" />
+          </video>
+        </div>
+      </div>
+
+      <!-- Feature 3 — Comparison -->
+      <div class="feature-showcase reveal">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,var(--vg-light),#dce9f7)">📊</div>
+          <h4>Year-Over-Year Comparison</h4>
+          <p>
+            One of our major usability findings was that users wanted to see progress over time,
+            not just a brief overview of the current year. Our redesign adds "You vs. You Last Year"
+            comparisons, and a dedicated archive of past
+            Year in Reviews organized by year. For users closer to retirement, an optional
+            Quarter in Review provides even more detail as their financial progress becomes more important.
+          </p>
+        </div>
+        <div class="feature-showcase-screens vg-bg-light">
+          <img src="assets/year-over-year-feature.png" alt="Year-over-year comparison showing previous vs. current retirement funding status gauges" class="feature-img" />
+        </div>
+      </div>
+
+      <!-- Feature 4 — What-If Simulator (reversed) -->
+      <div class="feature-showcase reverse reveal">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,var(--vg-red-lt),#fdf0ca)">🎚️</div>
+          <h4>What-If Simulator</h4>
+          <p>
+            The what-if simulator and its placement was one of my original ideas. It appears on the Contributions page
+            and the Retirement Goal page: the exact moments when users are already engaged with
+            their own data and naturally start asking "what if I changed something?" The inputs on this overlay let users adress immediate concerns and allow of actionable insights.
+          </p>
+        </div>
+        <div class="feature-showcase-screens vg-bg-gold">
+          <img src="assets/what-if-simulator-feature.png" alt="What-if simulator with sliders for monthly contribution, retirement age, and income goal showing projected balance and likelihood" class="feature-img" />
+        </div>
+      </div>
+
+      <!-- Feature 5 — PDF Export & Archive -->
+      <div class="feature-showcase reveal">
+        <div class="feature-showcase-text">
+          <div class="feature-icon" style="background:linear-gradient(135deg,var(--vg-light),#dce9f7)">📥</div>
+          <h4>PDF Export &amp; Archive</h4>
+          <p>
+            The YIR expiration was the single most catastrophic problem we found. Users couldn't
+            return to it after 02/11, even when they needed it for tax season. The PDF export
+            directly solves this by letting users keep their reviews for later use. The archive lets users revisit any past Year
+            in Review on demand. For the segment of the 50+ audience that prefers a tangible
+            document over an app experience, this is the feature that makes the whole redesign
+            actually useful in the long run.
+          </p>
+        </div>
+        <div class="feature-showcase-screens vg-bg-light">
+          <img src="assets/archive-feature.png" alt="Archive of past Year in Review reports organized by year" class="feature-img" />
+          <img src="assets/download-pdf-feature.png" alt="Save YIR as PDF feature on the end screen" class="feature-img" />
+        </div>
+      </div>
+
+      <!-- Why It Works matrix -->
+      <div class="reveal" style="margin-top:56px">
+        <p class="cs-eyebrow t-label" style="margin-bottom:16px">Why it works — feature summary</p>
+        <div class="why-matrix">
+          <div class="why-matrix-head">
+            <span>Feature</span>
+            <span>What it solves</span>
+            <span>Who it serves</span>
+          </div>
+          <div class="why-matrix-row">
+            <div class="why-feature">Guided / Self-Directed Toggle</div>
+            <div class="why-benefit">One experience that works for both high- and low-literacy users without splitting the structure</div>
+            <div class="why-persona">The Delegator · The Tech Savvy Monitor</div>
+          </div>
+          <div class="why-matrix-row">
+            <div class="why-feature">Interactive Animations &amp; Voiceover</div>
+            <div class="why-benefit">Replaces passive scrolling with engaging interaction; addresses accessibility for users who struggle with dense text</div>
+            <div class="why-persona">The Uncertain Learner · The Delegator</div>
+          </div>
+          <div class="why-matrix-row">
+            <div class="why-feature">Year-Over-Year Comparison</div>
+            <div class="why-benefit">Turns a snapshot into a story — users see progress, not just a number</div>
+            <div class="why-persona">All personas</div>
+          </div>
+          <div class="why-matrix-row">
+            <div class="why-feature">What-If Simulator</div>
+            <div class="why-benefit">Empowers users to explore retirement scenarios at the exact moment they're already engaged with their data</div>
+            <div class="why-persona">The Careful Explorer · The Tech Savvy Monitor</div>
+          </div>
+          <div class="why-matrix-row">
+            <div class="why-feature">PDF Export &amp; Archive</div>
+            <div class="why-benefit">Permanently solves the expiration problem — report available any time, no login required, tax-season ready</div>
+            <div class="why-persona">All personas</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 6 — MY CONTRIBUTION
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="contribution" style="background:linear-gradient(180deg,#f3f7fc 0%,var(--bg) 100%)">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">06 /</span> My Role</p>
+        <h2 class="cs-title"><em>My Role</em></h2>
+      </div>
+
+      <div class="contribution-grid reveal">
+        <div>
+          <div class="contribution-col">
+            <h4>The Team Accomplished</h4>
+            <div class="contribution-items">
+              <div class="contribution-item">A complete UX pipeline: listening sessions, moderated usability testing with 5 participants ages 50–67</div>
+              <div class="contribution-item">Behavioral persona development </div>
+              <div class="contribution-item">Card sort informing information architecture</div>
+              <div class="contribution-item">Two full user flows with 11+ annotated screens</div>
+              <div class="contribution-item">A high-fidelity Figma prototype pitched directly to the Vanguard client team</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="contribution-col">
+            <h4>What I Specifically Contributed</h4>
+            <div class="contribution-items">
+              <div class="contribution-item highlight">Wrote many of the core think-aloud task scenarios for the usability test that the five tasks participants completed during testing</div>
+              <div class="contribution-item">Identified major and minor problems from my individual participant's session</div>
+              <div class="contribution-item">Built out the Careful Explorer persona (technically literate, moderately confident — the user type most similar to my own usability test participant)</div>
+              <div class="contribution-item highlight">Brainstormed the ideas for interactive visualizations, what-if simulator, voiceover, and PDF export — all four appear in the final design</div>
+              <div class="contribution-item">Used my card sort results as the structural backbone of Flow 1's screen sequence. I also was a primary contributer for flow 1.</div>
+            <div class="contribution-item">Encouraged team dynamics and collaboration, especially with the ideation process.</div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 7 — REFLECTION
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cs-section" id="reflection">
+    <div class="container">
+      <div class="reveal">
+        <p class="cs-eyebrow t-label"><span class="num">07 /</span> Reflection</p>
+        <h2 class="cs-title">What I<br/><em>Took Away</em></h2>
+      </div>
+
+      <div class="reflection-beats reveal" style="margin-top:36px">
+        <div class="reflection-beat">
+          <p class="beat-label">What I'd Improve</p>
+          <p>
+            There were many insights we got from our initial research that I would have loved to implement as well. For example, a smaller detail we noticed from the research was that some users didn’t like the style of the graphics or the number of pages in the YIR. I think it would be interesting to explore different style choices or reduce some of the existing screens to adress smaller insights like this. 
+          </p>
+        </div>
+        <div class="reflection-beat">
+          <p class="beat-label">What Surprised Me</p>
+          <p>
+            I was really surprised how different types of users interact with products. When I initially went through the Vanguard site, there were some problematic points I noticed that I expected us to fix but when we gathered our insights I was surprised to find how frustrated users got over small details I ignored. In regards to the process of creating the redesign, I was surprised by the challenges of working on a project like this with a team. While, I think the end product ended up much better because of our collaboration, I was surprised to see the different approaches to design and brainstorming my teammates had and it was a learning process to combine our vision into one. 
+          </p>
+        </div>
+        <div class="reflection-beat">
+          <p class="beat-label">What I Learned and How This Shaped My Thinking</p>
+          <p>
+            I learned how crucial UX research is to the process of UX design. When I first started this class I thought UX design mostly included creating Figma designs and making things look more aesthetically pleasing and structured. However, through this project I was able to build on my empathy driven design skills and create designs that truly resonate with user needs. I learned how important it is to delve into each aspect of the UX process and how these small steps impact the a cohesive and effective final product. I also learned how doing user research is not just understanding who they are and their demographics but understanding how they think. This was a lesson I especially learned through building our user personas because they all ended up being based on how a user interacts with a financial site, like how often they checked their accounts or how they approached a financial decision. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── OUTCOME STRIP ──────────────────────────────────────── -->
+  <div class="container">
+    <div class="outcome-strip vg reveal">
+      <h2>Pitched to<br/><em>Vanguard</em></h2>
+      <div class="outcome-body">
+        <p>
+          A complete UX research and design pipeline — from moderated usability testing with
+          five retirement-age participants to a high-fidelity Figma prototype — pitched directly
+          to the Vanguard client team. Five features, one cohesive flow, and a behavioral design
+          framework that serves every user type without splitting the experience.
+        </p>
+        <a href="#" class="outcome-link" style="background:white;color:var(--vg-navy)">
+          Explore the Prototype
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER NAV ─────────────────────────────────────────── -->
+  <div class="container">
+    <div class="footer-nav reveal">
+      <a href="/work/flare/" class="footer-nav-link">
+        <span class="nav-dir">← Previous</span>
+        <span class="nav-title">Flare</span>
+      </a>
+      <a href="/work/" class="footer-nav-link right">
+        <span class="nav-dir">All Work →</span>
+        <span class="nav-title">Back to Projects</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Sanjana Nukala &nbsp;·&nbsp; © 2026</p>
+    <p>UX Research · Interaction Design · Full-Stack Development</p>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+
+  <!-- ── Page-level lightbox: wires every case-study image ──── -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Create overlay (main.js only creates one when [data-lightbox] exists — it won't here)
+      const overlay = document.createElement('div');
+      overlay.className = 'lightbox-overlay';
+      overlay.innerHTML =
+        '<button class="lightbox-close" aria-label="Close image">✕</button>' +
+        '<img src="" alt="" />';
+      document.body.appendChild(overlay);
+
+      const lbImg   = overlay.querySelector('img');
+      const closeBtn = overlay.querySelector('.lightbox-close');
+
+      const openLb = (src, alt) => {
+        lbImg.src = src;
+        lbImg.alt = alt || '';
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      };
+      const closeLb = () => {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      };
+
+      // Every image that should expand — excludes the nav logo SVG
+      const SELECTORS = [
+        '.cs-hero-media img',
+        '.participant-grid img',
+        '.cs-img-full img',
+        '.persona-grid img',
+        '.two-col-wide img',
+        '.screenshot-pair img',
+        '.design-timeline .dt-step-img img',
+        '.feature-showcase-screens img',
+      ].join(', ');
+
+      document.querySelectorAll(SELECTORS).forEach(img => {
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', () => openLb(img.src, img.alt));
+      });
+
+      // Close on backdrop click (but not on the image itself)
+      overlay.addEventListener('click', e => { if (e.target !== lbImg) closeLb(); });
+      closeBtn.addEventListener('click', closeLb);
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeLb();
+      });
+    });
+  </script>
+</body>
+</html>
