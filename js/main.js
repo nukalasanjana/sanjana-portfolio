@@ -2,53 +2,108 @@
    MAIN.JS — Shared scripts across all pages
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+class SiteHeader extends HTMLElement {
+  connectedCallback() {
+    if (this.dataset.rendered === 'true') return;
 
-  // ── Mobile Hamburger Menu ────────────────────────────────
-  const nav = document.querySelector('.nav');
-  if (nav) {
-    const hamburger = document.createElement('button');
-    hamburger.className = 'nav-hamburger';
-    hamburger.setAttribute('aria-label', 'Open menu');
-    const iconOpen  = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><line x1="2" y1="4.5" x2="16" y2="4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="9" x2="16" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="13.5" x2="16" y2="13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+    const path = window.location.pathname;
+    const isHome = path === '/' || path === '/index.html';
+    const isWork = path === '/work/' || path.startsWith('/work/') || path === '/work';
+    const isPlayground = path === '/playground/' || path.startsWith('/playground/') || path === '/playground';
+
+    const iconOpen = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><line x1="2" y1="4.5" x2="16" y2="4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="9" x2="16" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="13.5" x2="16" y2="13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
     const iconClose = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><line x1="3" y1="3" x2="15" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="3" x2="3" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
-    hamburger.innerHTML = iconOpen;
-    nav.appendChild(hamburger);
 
-    const mobileMenu = document.createElement('div');
-    mobileMenu.className = 'nav-mobile-menu';
-    mobileMenu.innerHTML = `
-      <a href="/">Home</a>
-      <a href="/work/">Work</a>
-      <a href="/playground/">Playground</a>
-      <button data-resume-trigger-mobile>Resume</button>
-      <div class="mobile-cta"><a href="mailto:nukalasanjana8@gmail.com">Let's Collaborate ↗</a></div>
+    this.innerHTML = `
+      <header class="site-header">
+        <nav class="nav">
+          <a href="/" class="nav-logo" aria-label="Home">
+            <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M19 5H6C2 5 2 20 11 20C21 20 23 37 13 40H4"
+                    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M25 4V40 M25 4L40 40 M40 4V40"
+                    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Sanjana Nukala
+          </a>
+          <div class="nav-links">
+            <a href="/"${isHome ? ' class="active"' : ''}>Home</a>
+            <a href="/work/"${isWork ? ' class="active"' : ''}>Work</a>
+            <a href="/playground/"${isPlayground ? ' class="active"' : ''}>Playground</a>
+          </div>
+          <button class="nav-cta" data-resume-trigger>Resume</button>
+          <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">${iconOpen}</button>
+        </nav>
+
+        <div class="nav-mobile-menu" aria-hidden="true">
+          <a href="/"${isHome ? ' class="active"' : ''}>Home</a>
+          <a href="/work/"${isWork ? ' class="active"' : ''}>Work</a>
+          <a href="/playground/"${isPlayground ? ' class="active"' : ''}>Playground</a>
+          <button data-resume-trigger-mobile>Resume</button>
+        </div>
+      </header>
     `;
-    document.body.appendChild(mobileMenu);
 
-    let menuOpen = false;
-    const toggleMenu = (open) => {
-      menuOpen = open;
-      mobileMenu.classList.toggle('open', menuOpen);
-      document.body.style.overflow = menuOpen ? 'hidden' : '';
-      hamburger.setAttribute('aria-label', menuOpen ? 'Close menu' : 'Open menu');
-      hamburger.innerHTML = menuOpen ? iconClose : iconOpen;
+    this.menuOpen = false;
+    this.header = this.querySelector('.nav');
+    this.mobileMenu = this.querySelector('.nav-mobile-menu');
+    this.hamburger = this.querySelector('.nav-hamburger');
+
+    this.updateHeaderHeight = () => {
+      const height = Math.ceil(this.header.getBoundingClientRect().height);
+      this.style.setProperty('--site-header-height', `${height}px`);
     };
 
-    hamburger.addEventListener('click', () => toggleMenu(!menuOpen));
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => toggleMenu(false));
-    });
+    this.toggleMenu = (open) => {
+      this.menuOpen = open;
+      this.mobileMenu.classList.toggle('open', this.menuOpen);
+      document.body.style.overflow = this.menuOpen ? 'hidden' : '';
+      this.hamburger.setAttribute('aria-label', this.menuOpen ? 'Close menu' : 'Open menu');
+      this.hamburger.setAttribute('aria-expanded', String(this.menuOpen));
+      this.hamburger.innerHTML = this.menuOpen ? iconClose : iconOpen;
+      this.mobileMenu.setAttribute('aria-hidden', String(!this.menuOpen));
+    };
 
-    // Set active states for mobile menu links
-    const path = window.location.pathname;
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      const href = a.getAttribute('href');
-      if (href && path.includes(href) && href !== '/') a.classList.add('active');
-      else if (href === '/' && path === '/') a.classList.add('active');
+    this.onDocumentClick = (event) => {
+      if (this.menuOpen && !this.contains(event.target)) {
+        this.toggleMenu(false);
+      }
+    };
+
+    this.onKeydown = (event) => {
+      if (event.key === 'Escape' && this.menuOpen) {
+        this.toggleMenu(false);
+      }
+    };
+
+    this.hamburger.addEventListener('click', () => this.toggleMenu(!this.menuOpen));
+    this.mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => this.toggleMenu(false));
     });
+    const mobileResumeTrigger = this.querySelector('[data-resume-trigger-mobile]');
+    if (mobileResumeTrigger) {
+      mobileResumeTrigger.addEventListener('click', () => this.toggleMenu(false));
+    }
+
+    this.updateHeaderHeight();
+    window.addEventListener('resize', this.updateHeaderHeight, { passive: true });
+    document.addEventListener('click', this.onDocumentClick);
+    document.addEventListener('keydown', this.onKeydown);
+    this.dataset.rendered = 'true';
   }
 
+  disconnectedCallback() {
+    window.removeEventListener('resize', this.updateHeaderHeight);
+    document.removeEventListener('click', this.onDocumentClick);
+    document.removeEventListener('keydown', this.onKeydown);
+  }
+}
+
+if (!customElements.get('site-header')) {
+  customElements.define('site-header', SiteHeader);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
   // ── Scroll Reveal ────────────────────────────────────────
   const reveals = document.querySelectorAll('.reveal');
   if (reveals.length) {
@@ -63,17 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     );
     reveals.forEach(el => revealObserver.observe(el));
   }
-
-  // ── Active Nav Link ──────────────────────────────────────
-  const currentPath = window.location.pathname;
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    const href = link.getAttribute('href');
-    if (href && currentPath.includes(href) && href !== '/') {
-      link.classList.add('active');
-    } else if (href === '/' && currentPath === '/') {
-      link.classList.add('active');
-    }
-  });
 
   // ── Work Filter (work page only) ─────────────────────────
   const filterBtns   = document.querySelectorAll('.filter-btn');
@@ -152,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getResumeSrc() {
       const depth = window.location.pathname.replace(/\/$/, '').split('/').filter(Boolean).length;
-      return '../'.repeat(depth) + "resources/Sanjana Nukala's Resume 3.5.26.pdf";
+      return encodeURI('../'.repeat(depth) + 'resources/Resumes/Sanjana_Nukala_Product_Resume _7:29:26.pdf');
     }
 
     const frame    = modal.querySelector('.resume-modal-frame');

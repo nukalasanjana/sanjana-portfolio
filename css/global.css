@@ -69,6 +69,7 @@ ul   { list-style: none; }
 .divider    { border: none; border-top: 1px solid var(--border); }
 
 /* ── NAV ─────────────────────────────────────────────────── */
+site-header { display: block; }
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
@@ -99,6 +100,7 @@ ul   { list-style: none; }
   border-radius: var(--radius-full); padding: 10px 20px;
   font-size: 13.5px; font-weight: 600;
   display: flex; align-items: center; gap: 6px;
+  border: none; cursor: pointer; font-family: var(--sans);
   transition: opacity 0.2s;
 }
 .nav-cta::after { content: "↗"; font-size: 12px; }
@@ -273,12 +275,16 @@ ul   { list-style: none; }
   border-radius: 8px; padding: 0; flex-shrink: 0;
   color: var(--ink); transition: background 0.2s;
 }
+.nav-hamburger svg,
+.nav-hamburger line {
+  pointer-events: none;
+}
 .nav-hamburger:hover { background: rgba(0,0,0,0.04); }
 
 /* ── MOBILE NAV MENU ─────────────────────────────────────── */
 .nav-mobile-menu {
   display: none;
-  position: fixed; top: 65px; left: 0; right: 0; z-index: 99;
+  position: fixed; top: calc(var(--site-header-height, 65px) + 1px); left: 0; right: 0; z-index: 120;
   background: var(--bg); border-top: 1px solid var(--border);
   padding: 12px 20px 28px;
   flex-direction: column; gap: 2px;
@@ -296,17 +302,6 @@ ul   { list-style: none; }
 .nav-mobile-menu a:hover,
 .nav-mobile-menu button:hover { background: rgba(0,0,0,0.04); }
 .nav-mobile-menu a.active { background: var(--ink); color: white; }
-.nav-mobile-menu .mobile-cta {
-  margin-top: 10px; padding-top: 10px;
-  border-top: 1px solid var(--border);
-}
-.nav-mobile-menu .mobile-cta a {
-  display: block; text-align: center;
-  background: var(--ink); color: white;
-  border-radius: var(--radius-full);
-  font-weight: 600; padding: 13px 24px;
-}
-.nav-mobile-menu .mobile-cta a:hover { opacity: 0.85; background: var(--ink); }
 
 /* ── RESPONSIVE UTILITY GRIDS ────────────────────────────── */
 .rg-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -315,15 +310,16 @@ ul   { list-style: none; }
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 900px) {
   :root { --page-pad: 20px; }
-  .nav-cta { display: none; }
   .footer-nav { flex-direction: column; gap: 40px; text-align: center; }
   .footer-nav-link.right { text-align: center; }
   .site-footer { flex-direction: column; gap: 10px; text-align: center; }
   .rg-3 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
+  .nav-cta { display: none; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
+  .nav-hamburger { position: relative; z-index: 121; }
 }
 @media (max-width: 600px) {
   #resume-modal { padding: 12px; }

@@ -10,25 +10,7 @@
 </head>
 <body>
 
-  <!-- ── NAV ──────────────────────────────────────────────── -->
-  <nav class="nav">
-    <div class="nav-logo">
-      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M19 5H6C2 5 2 20 11 20C21 20 23 37 13 40H4"
-              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M25 4V40 M25 4L40 40 M40 4V40"
-              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Sanjana Nukala
-    </div>
-    <div class="nav-links">
-      <a href="/" class="active">Home</a>
-      <a href="/work/">Work</a>
-      <a href="/playground/">Playground</a>
-      <button data-resume-trigger>Resume</button>
-    </div>
-    <a href="mailto:sanjananukala0@gmail.com" class="nav-cta">Let's Collaborate</a>
-  </nav>
+  <site-header></site-header>
 
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <section class="hero">
@@ -70,6 +52,62 @@
       <span class="marquee-item">Strategy</span>
     </div>
   </div>
+
+  <!-- ── WORK PREVIEW ──────────────────────────────────────── -->
+  <section class="work-preview">
+    <div class="container">
+      <div class="work-header reveal">
+        <h2>Selected<br/><em>Work</em></h2>
+        <a href="/work/" class="btn btn-light">All Projects</a>
+      </div>
+
+      <div class="work-grid">
+
+        <!-- ── Work Card 1 ── -->
+        <a href="/work/vanguard-redesign/" class="work-card reveal">
+          <div class="work-thumb">
+            <img src="work/vanguard-redesign/assets/vanguard-mock.png" alt="Vanguard Year in Review Redesign" onerror="this.style.display='none'" />
+          </div>
+          <div class="work-info">
+            <div class="work-tags">
+              <span class="work-tag">UX Research</span>
+              <span class="work-tag">UI/UX Design</span>
+            </div>
+            <h3>Vanguard Year in Review</h3>
+          </div>
+        </a>
+
+        <!-- ── Work Card 2 ── -->
+        <a href="/work/flare/" class="work-card reveal">
+          <div class="work-thumb">
+            <img src="resources/flare/flare_mockup.png" alt="Flare: Emergency Alerts Platform" onerror="this.style.display='none'" />
+          </div>
+          <div class="work-info">
+            <div class="work-tags">
+              <span class="work-tag">Full Stack</span>
+              <span class="work-tag">Hackathon</span>
+            </div>
+            <h3>Flare: Emergency Alerts Platform</h3>
+          </div>
+        </a>
+
+        <!-- ── Work Card 3 ── -->
+        <a href="/work/tripshare/" class="work-card reveal">
+          <div class="work-thumb">
+            <img src="resources/tripshare/tripshare_mockup.png" alt="TripShare" onerror="this.style.display='none'" />
+          </div>
+          <div class="work-info">
+            <div class="work-tags">
+              <span class="work-tag">Web Development</span>
+              <span class="work-tag">UI/UX</span>
+            </div>
+            <h3>TripShare</h3>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
 
   <!-- ── ABOUT ─────────────────────────────────────────────── -->
   <section class="about-strip">
@@ -113,104 +151,6 @@
             <span class="skill-level">FastAPI · Supabase · Java · Kotlin</span>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── WORK PREVIEW ──────────────────────────────────────── -->
-  <section class="work-preview">
-    <div class="container">
-      <div class="work-header reveal">
-        <h2>Selected<br/><em>Work</em></h2>
-        <a href="/work/" class="btn btn-light">All Projects</a>
-      </div>
-
-      <div class="work-grid">
-
-        <!-- ── Work Card 1 ── -->
-        <a href="work/peermarket/" class="work-card reveal">
-          <div class="work-thumb">
-            <img src="/resources/peermarket/iPhone 17 Pro Dual Floating Yellow Screen Mockup.png" alt="PeerMarket" onerror="this.style.display='none'" />
-          </div>
-          <div class="work-info">
-            <div class="work-tags">
-              <span class="work-tag">UX Research</span>
-              <span class="work-tag">Interface Design</span>
-            </div>
-            <h3>PeerMarket</h3>
-          </div>
-        </a>
-
-        <!-- ── Work Card 2 ── -->
-        <a href="/work/depression-dashboard/" class="work-card reveal">
-          <div class="work-thumb">
-            <img src="resources/depression-dashboard/depression-dashboard-mockup.png" alt="Depression Hotspots Dashboard" onerror="this.style.display='none'" />
-          </div>
-          <div class="work-info">
-            <div class="work-tags">
-              <span class="work-tag">Data Visualization</span>
-              <span class="work-tag">Interface Design</span>
-            </div>
-            <h3>Depression Hotspots Dashboard</h3>
-          </div>
-        </a>
-
-        <!-- ── Work Card 3 ── -->
-        <a href="/work/dceff-campaign/" class="work-card reveal">
-          <div class="work-thumb">
-            <img src="resources/dceffxlevis/dceff-mockup.png" alt="DCEFF × Levi's Campaign" onerror="this.style.display='none'" />
-          </div>
-          <div class="work-info">
-            <div class="work-tags">
-              <span class="work-tag">Art Direction</span>
-              <span class="work-tag">Visual Storytelling</span>
-            </div>
-            <h3>DCEFF × Levi's Campaign</h3>
-          </div>
-        </a>
-
-        <!-- ── Work Card 4 ── -->
-        <a href="/work/skullcandy-campaign/" class="work-card reveal">
-          <div class="work-thumb">
-            <img src="resources/skullcandy/skullcandy mockup.png" alt="Skullcandy Campaign" onerror="this.style.display='none'" />
-          </div>
-          <div class="work-info">
-            <div class="work-tags">
-              <span class="work-tag">Art Direction</span>
-              <span class="work-tag">Brand Marketing</span>
-            </div>
-            <h3>Skullcandy Campaign</h3>
-          </div>
-        </a>
-
-        <!-- ── Work Card 5 ── -->
-        <a href="/work/flare/" class="work-card reveal">
-          <div class="work-thumb">
-            <img src="resources/flare/flare_mockup.png" alt="Flare: Emergency Alerts Platform" onerror="this.style.display='none'" />
-          </div>
-          <div class="work-info">
-            <div class="work-tags">
-              <span class="work-tag">Full Stack</span>
-              <span class="work-tag">Hackathon</span>
-            </div>
-            <h3>Flare: Emergency Alerts Platform</h3>
-          </div>
-        </a>
-
-        <!-- ── Work Card 6 ── -->
-        <a href="/work/tripshare/" class="work-card reveal">
-          <div class="work-thumb">
-            <img src="resources/tripshare/tripshare_mockup.png" alt="TripShare" onerror="this.style.display='none'" />
-          </div>
-          <div class="work-info">
-            <div class="work-tags">
-              <span class="work-tag">Web Development</span>
-              <span class="work-tag">UI/UX</span>
-            </div>
-            <h3>TripShare</h3>
-          </div>
-        </a>
-
       </div>
     </div>
   </section>
